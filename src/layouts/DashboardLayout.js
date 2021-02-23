@@ -28,7 +28,7 @@ function DashboardLayout(props) {
 
     return (
         <div className="c-layout">
-            <Sidebar />
+            <Sidebar history={props.history}/>
             <div className="c-wrapper-content">
                 <Switch>{getRoutes(routes)}</Switch>
             </div>

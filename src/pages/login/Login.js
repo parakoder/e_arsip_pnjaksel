@@ -13,7 +13,8 @@ const Login = (props) => {
 				<div className='col-lg-6 col-xl-6 col-md-6 col-sm-12 left'>
 					<img
 						className='imgLogo'
-						src='../../assets/images/pajs.png'
+						// src='../../assets/images/pajs.png'
+						src={require('../../assets/images/pajs.png').default}
 						alt='logo.png'
 					/>
 				</div>

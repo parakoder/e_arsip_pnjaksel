@@ -10,10 +10,89 @@
     flex: 0 0 228px;
     flex-direction: column;
     width: 228px;
-    padding: 0;
     box-shadow: 0;
-    // padding-top: 50px;
     height: 100vh;
     z-index: 1030 !important;
     background-color: #FAFAFA;
+    padding: 60px 29px 70px 29px;
+    // margin-bottom: 10px;
+
+
+    .c-sidebar-brand{
+        display: inline-flex;
+        width: 170px;
+        overflow: hidden;
+
+        .sidebar-brand-logo{
+            width: 30px !important;
+            min-width: 30px;
+            height: 30px !important;
+            background: #FAFAFA;
+            border: 1px solid #CACCCF;
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .sidebar-brand-text{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 10px;
+            text-align: left;
+        }
+    }
+
+    .sidebar-nav {
+        position: relative;
+        display: flex;
+        flex: 1 1;
+        flex-direction: column;
+        padding: 0;
+        margin-bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        list-style: none;
+        margin-top: 50px;
+        
+        .sidebar-nav-item{
+            width: inherit;
+            text-decoration: none;
+
+            .sidebar-nav-link{
+                display: flex;
+                flex: 1 1;
+                align-items: center;
+                text-decoration: none;
+                white-space: nowrap;
+                list-style: none;
+                color: #000000;
+                font-size: 15px;
+                font-weight: normal;
+
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: 1px solid #E8E8E8;
+                margin-bottom: 10px;
+
+                .sidebar-nav-link-img{
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+
+    .c-sidebar-logout{
+        // font-family: Montserrat;
+        // font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+
+        padding: 10px;
+        // cursor: pointer;
+        color: #25282B;
+        
+    }
+
+
+        
 }
