@@ -1,0 +1,36 @@
+.wrapperAbout {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+
+    .card-about {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #CCCCCC;
+        margin: 10px;
+        border-radius: 5px;
+        padding: 50px;
+
+        .title  {
+            text-align: start;
+            font-weight: bold;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: row;
+
+            .subtitle {
+                font-weight: 300;
+                flex: 1;
+                text-align: start;
+            }
+
+            .info {
+                font-weight: bold;
+                flex: 1;
+                text-align: start;
+            }
+        }
+    }
+}

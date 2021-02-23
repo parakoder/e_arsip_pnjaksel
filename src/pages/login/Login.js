@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Gap from '../../components/Gap';
-import './login.css';
+import './login.scss';
 
 import { BsChevronLeft } from 'react-icons/bs';
 
@@ -9,11 +9,14 @@ const Login = (props) => {
 
 	return (
 		<div>
-			<div className='row wrapper'>
+			<div className='row wrapperLogin'>
 				<div className='col-lg-6 col-xl-6 col-md-6 col-sm-12 left'>
 					<img
 						className='imgLogo'
+<<<<<<< Updated upstream
 						// src='../../assets/images/pajs.png'
+=======
+>>>>>>> Stashed changes
 						src={require('../../assets/images/pajs.png').default}
 						alt='logo.png'
 					/>
