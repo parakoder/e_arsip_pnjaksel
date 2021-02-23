@@ -20,7 +20,7 @@
 }
 
 .right {
-    background-color: yellow;
+    /* background-color: yellow; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +41,7 @@
     border: 1px solid #CACCCF;
     background-color: #FAFAFA;
     border-radius: 5px;
-    height: 35px;
+    height: 40px;
     text-indent: 12px;
 }
 
@@ -55,4 +55,10 @@
 
 .cannot-login {
     cursor: pointer;
+}
+
+.back-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

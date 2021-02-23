@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Gap from '../../components/Gap';
 import './login.css';
 
-const Login = () => {
+import { BsChevronLeft } from 'react-icons/bs';
+
+const Login = (props) => {
 	const [fragment, setFragment] = useState('loginA');
 
 	return (
@@ -26,7 +28,12 @@ const Login = () => {
 						<Gap height={20} />
 						<input className='input' placeholder='Password' />
 						<Gap height={50} />
-						<button className='btn-login'>Login</button>
+						<button
+							className='btn-login'
+							onClick={() => props.history.push('/sys/home')}
+						>
+							Login
+						</button>
 						<Gap height={20} />
 						<a
 							onClick={() => setFragment('loginB')}
@@ -38,9 +45,12 @@ const Login = () => {
 					</div>
 				) : (
 					<div className='col-lg-6 col-xl-6 col-md-6 col-sm-12 right'>
-						<p onClick={() => setFragment('loginA')} className='subtitle'>
-							Kembali ke Login
-						</p>
+						<div className='back-btn' style={{ cursor: 'pointer' }}>
+							<BsChevronLeft size={20} />
+							<div onClick={() => setFragment('loginA')} className='subtitle'>
+								Kembali ke Login
+							</div>
+						</div>
 						<Gap height={30} />
 						<p className='title'>Bermasalah dengan Login?</p>
 
