@@ -1,25 +1,45 @@
-import logo from './logo.svg';
+import {
+	Switch,
+	Route,
+	Redirect
+  } from "react-router-dom";
 import './App.css';
+import './styles/customStyle.scss'
+import DashboardLayout from './layouts/DashboardLayout'
+import Login from './pages/login/Login'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const PrivateRoute = ({ component: Component, ...rest }) => (
+		<Route {...rest} render={props =>
+			//   checkAuth() ? (
+			<Component {...props} />
+			// )
+			// 		: (
+			// 	  <Redirect to={{
+			// 	pathname: '/signin',
+			// 	state: { from: props.location }
+			// 			}} 
+						
+						
+			//   />
+			// 	)
+		} />
+	);
+
+	
+	return (
+		<div className="App">
+			<Switch>
+				<PrivateRoute path={'/sys'}
+					component={DashboardLayout}
+				/>
+				<Route path="/login" component={Login} />
+				<Redirect from="/" to="/login" />
+			</Switch>
+		</div>
+	);
 }
 
 export default App;
