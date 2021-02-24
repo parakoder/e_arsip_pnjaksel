@@ -1,0 +1,82 @@
+
+
+.txtWelcome {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: start;
+}
+
+.wrapperGraph {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .graph {
+        display: flex;
+        flex: 1;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #FAFAFA;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #E8E8E8;
+
+    }
+
+    .cardRekap {
+        width: 410px;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #FAFAFA;
+        border: 1px solid #E8E8E8;
+
+        .titleRekap {
+            text-align: start;
+            font-weight: bold;
+        }
+
+        .infoRekap {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .subtitleRekap {
+            font-weight: 300;
+            font-size: 16px;
+        }
+
+        .valueRekap {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+    }
+}
+
+.wrapperSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .titleSection {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .dateSection {
+        display: flex;
+        flex-direction: row;
+
+        .txtLastUpdate {
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .txtValueLastUpdate {
+            font-weight: 600;
+            color: #25282B;
+            font-size: 12px;
+        }
+    }
+}
