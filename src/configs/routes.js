@@ -48,6 +48,21 @@ const routes = [
 		),
 		layout: '/sys',
 	},
+	{
+		path: '/archive',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve(import('../pages/archive/Archive')), 1500);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
 ];
 
 export default routes;

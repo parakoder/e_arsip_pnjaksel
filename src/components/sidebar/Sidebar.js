@@ -68,17 +68,17 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
-						to='/sys/arsip'
+						to='/sys/archive'
 						activeClassName='active'
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/arsip') ? (
+						{currentLocation.includes('/sys/archive') ? (
 							<RiArchiveDrawerFill
 								className='sidebar-nav-link-img'
 								size={18}
 								style={
-									currentLocation.includes('/sys/arsip') ? onActiveImg : null
+									currentLocation.includes('/sys/archive') ? onActiveImg : null
 								}
 							/>
 						) : (
@@ -86,11 +86,11 @@ function Sidebar(props) {
 								className='sidebar-nav-link-img'
 								size={18}
 								style={
-									currentLocation.includes('/sys/arsip') ? onActiveImg : null
+									currentLocation.includes('/sys/archive') ? onActiveImg : null
 								}
 							/>
 						)}
-						Arsip
+						Archive
 					</NavLink>
 				</li>
 				<li className='sidebar-nav-item'>
