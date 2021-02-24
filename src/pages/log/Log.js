@@ -6,21 +6,25 @@ import { HiFilter } from 'react-icons/hi';
 
 const Log = () => {
 	return (
-		<div className='wrapperLog'>
-			<div className='headerLog'>
-				<div className='wrapperInput'>
-					<FiSearch size={20} />
-					<Gap width={10} />
-					<input className='input' placeholder='Cari Data' />
-				</div>
-				<Gap width={20} />
-				<div className='wrapperFilter'>
-					<HiFilter size={20} />
-					<Gap width={10} />
-					<div>Filter Data</div>
+		<div className='c-main'>
+			<div className='container-fluid custom-container-fluid fade show mb-5'>
+				<div className='wrapperLog'>
+					<div className='headerLog'>
+						<div className='wrapperInput'>
+							<FiSearch size={20} />
+							<Gap width={10} />
+							<input className='input' placeholder='Cari Data' />
+						</div>
+						<Gap width={20} />
+						<div className='wrapperFilter'>
+							<HiFilter size={20} />
+							<Gap width={10} />
+							<div>Filter Data</div>
+						</div>
+					</div>
+					<div></div>
 				</div>
 			</div>
-			<div></div>
 		</div>
 	);
 };
