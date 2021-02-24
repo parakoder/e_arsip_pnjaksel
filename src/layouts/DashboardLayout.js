@@ -8,7 +8,7 @@ function DashboardLayout(props) {
 
     const getRoutes = routeList => {
         return routeList.map((prop, key) => {
-            console.log('prop.layout', prop.layout)
+            // console.log('prop.layout', prop.layout)
             if (prop.layout === "/sys") {
                 return (
                     <Route

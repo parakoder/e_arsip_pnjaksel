@@ -16,11 +16,115 @@
     flex-basis: auto;
     flex-shrink: 0;
     flex-grow: 1;
-    overflow: auto;
+    // overflow: auto;
+    // min-width: 350px;
 }
 
 .custom-container-fluid{
     padding-top: 44px !important;
     padding-left: 30px !important;
     padding-right: 30px !important;
+}
+
+//table main
+
+.c-table-main {
+    width: 100%;
+    overflow: auto;
+    padding: 1px;
+    
+    
+    .table-main{
+        width: 100%;
+
+        .table-main-thead{
+            font-weight: 600;
+            font-size: 14px;
+            background: #CACCCF;
+            
+            tr {
+                
+                // border: 1px solid #E8E8E8;
+    
+                .table-main-th{
+                    padding: 12px;
+                    border-left: 1px solid #E8E8E8;
+                    border-right: 1px solid #E8E8E8;
+                }
+            }
+        }
+    
+        .table-main-tbody{
+            background: #FAFAFA;
+            font-size: 13px;
+            color: #25282B;
+    
+            tr {
+                // border: 1px solid #E8E8E8;
+    
+                .table-main-td {
+                    padding: 7px;
+                    border: 1px solid #E8E8E8;
+                }
+            }
+        }
+    
+       
+    
+        tr:last-child th:first-child {
+            border-top-left-radius: 3px;
+            border-left: none !important;
+        }
+        tr:last-child th:last-child {
+            border-top-right-radius: 3px;
+            border-right: none !important;
+        }
+    }
+}
+
+
+
+// table tr:last-child td:last-child {
+//     border-bottom-right-radius: 10px;
+
+
+// custom view
+
+.text-input-title-1 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #000000;
+    text-indent: 1rem;
+}
+
+.form-input-1{
+    background: #FAFAFA;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    width: 100%;
+    height: 40px;
+    text-indent: 1rem;
+}
+
+
+//margin 
+
+.mb-10px{
+    margin-bottom: 10px;
+}
+
+.mb-20px {
+    margin-bottom: 20px;
+}
+
+.mb-30px {
+    margin-bottom: 30px;
+}
+
+.ml-20px {
+    margin-left: 20px;
+}
+
+.mr-20px {
+    margin-right: 20px;
 }

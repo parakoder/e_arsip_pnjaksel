@@ -2,14 +2,19 @@
     display: flex;
     flex-direction: column;
     // padding: 30px;
+    position: relative;
+
 
     .headerArchive {
-        display: flex;
-        flex-direction: row;
+        display: inline-flex;
+ 
+        // flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         // background-color: red;
-        height: 50px;
+        // height: 50px;
+        height: 100%;
 
 
         .btn-tambah {
@@ -22,6 +27,9 @@
             align-items: center;
             flex-direction: row;
             border-radius: 3px;
+            min-width: 150px;
+            border: none;
+            cursor: pointer;
         }
 
         .headerTools {
@@ -64,4 +72,24 @@
         }
 
     }
+}
+
+.c-archive-back-btn{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 50px;
+    text-align: left;
+    padding-left: 30px;
+
+    .archive-back-btn{
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+.c-archive-form {
+    padding: 0px 110px !important;
+    text-align: left;
 }

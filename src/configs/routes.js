@@ -49,6 +49,21 @@ const routes = [
 		layout: '/sys',
 	},
 	{
+		path: '/archive/tambah',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve(import('../pages/archive/AddArchive')), 1500);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
 		path: '/archive',
 		name: 'Archive',
 		component: Lazyloading(
