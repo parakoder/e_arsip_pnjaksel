@@ -40,6 +40,15 @@ function AddArchive(props) {
                             />
                         </div>
                     </div>
+                    <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                        <div className="form-input-group mb-30px">
+                            <p className="text-input-title-1">Nomor Perkara</p>
+                            <input 
+                                className="form-input-1"
+                            />
+                        </div>
+                       
+                    </div>
                 </div>
             </div>
         </div>
