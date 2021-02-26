@@ -17,11 +17,12 @@ function Sidebar(props) {
 	const onActiveCss = {
 		// color: '#2893E1'
 		fontWeight: 'bold',
-		backgroundColor: '#E8E8E8',
+		backgroundColor: '#5F764F',
+		color: '#FFF',
 	};
 
 	const onActiveImg = {
-		color: '25282B',
+		color: '#FFF',
 	};
 
 	const currentLocation = window.location.pathname;
@@ -30,9 +31,14 @@ function Sidebar(props) {
 		<div className='c-sidebar c-sidebar-dark c-sidebar-lg-show c-sidebar-fixed ml-auto'>
 			{/* <div style={{  height: '100vh' }}> */}
 			<div className='c-sidebar-brand'>
-				<div className='sidebar-brand-logo'></div>
+				<img
+					className='sidebar-brand-logo'
+					src={require('../../assets/images/pajs.png').default}
+					alt='icon'
+				/>
+
 				<div className='sidebar-brand-text'>
-					E-Arsip Pengadilan Tinggi jakarta Selatan
+					e-Arsip Pengadilan Tinggi Jakarta Selatan
 				</div>
 			</div>
 
@@ -57,6 +63,7 @@ function Sidebar(props) {
 							<HiOutlineHome
 								className='sidebar-nav-link-img'
 								size={18}
+								color='#5F764F'
 								style={
 									currentLocation.includes('/sys/home') ? onActiveImg : null
 								}
@@ -85,6 +92,7 @@ function Sidebar(props) {
 							<RiArchiveDrawerLine
 								className='sidebar-nav-link-img'
 								size={18}
+								color='#5F764F'
 								style={
 									currentLocation.includes('/sys/archive') ? onActiveImg : null
 								}
@@ -113,6 +121,7 @@ function Sidebar(props) {
 							<RiStackLine
 								className='sidebar-nav-link-img'
 								size={18}
+								color='#5F764F'
 								style={
 									currentLocation.includes('/sys/log') ? onActiveImg : null
 								}
@@ -141,6 +150,7 @@ function Sidebar(props) {
 							<HiOutlineInformationCircle
 								className='sidebar-nav-link-img'
 								size={18}
+								color='#5F764F'
 								style={
 									currentLocation.includes('/sys/about') ? onActiveImg : null
 								}
@@ -155,7 +165,9 @@ function Sidebar(props) {
 				className='c-sidebar-logout'
 				onClick={() => props.history.push('/login')}
 			>
-				<span style={{ cursor: 'pointer' }}>Logout</span>
+				<span className='txt-logout' style={{ cursor: 'pointer' }}>
+					Logout
+				</span>
 			</div>
 
 			{/* </div>  */}

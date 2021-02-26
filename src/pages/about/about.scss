@@ -1,15 +1,31 @@
 .wrapperAbout {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     box-sizing: border-box;
 
     .card-about {
         display: flex;
+        flex: 1;
         flex-direction: column;
         border: 1px solid #CCCCCC;
         margin: 10px;
         border-radius: 5px;
         padding: 50px;
+        width: 75vw;
+        background-color: white;
+
+        .wrapper-detail {
+            display: flex;
+            flex-direction: row;
+
+            .left {
+                flex: 1;
+            }
+
+            .right {
+                flex: 2;
+            }
+        }
 
         .title  {
             text-align: start;
