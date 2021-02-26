@@ -1,3 +1,11 @@
+@import '../../styles/colors.scss';
+
+@mixin flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .wrapperLogin {
     display: flex;
     height: 100vh;
@@ -6,26 +14,42 @@
 
 
     .left {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        @include flex-center();
         align-items: center;
+        background-image: url('../../assets/images/bgLogin.png');
+        background-size: cover;
 
         .imgLogo {
-            // width: 100px;
             height: 250px;
             object-fit: cover;
+        }
+
+        .t1{
+            color: $red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .t2{
+            color: $primaryDark;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .t3{
+            color: $primaryDark;
+            font-size: 20px;
+            font-weight: 500;
         }
     }
 
     .right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        @include flex-center();
+        padding-left: 10vw;
+        padding-right: 10vw;
 
         .title {
             text-align: start;
             font-weight: bold;
+            font-size: 22px;
         }
 
         .subtitle {
@@ -33,16 +57,38 @@
         }
 
         .input {
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            padding-right: 12px;
             border: 1px solid #CACCCF;
             background-color: #FAFAFA;
             border-radius: 5px;
             height: 40px;
-            text-indent: 12px;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .input2 {
+            border: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+        }
+
+        .titleInput {
+            font-weight: 500;
+            text-align: start;
+            margin: 0;
+        }
+
+        .iconInput {
+            color: $primarySoft;
         }
 
         .btn-login {
             border-radius: 5px;
-            background-color: #CACCCF;
+            background-color: $primarySoft;
             color: white;
             border: none;
             height: 35px;
@@ -50,12 +96,37 @@
 
         .cannot-login {
             cursor: pointer;
+            color: $primarySoft;
+            text-decoration: none;
         }
 
         .back-btn {
             display: flex;
             flex-direction: row;
             align-items: center;
+        }
+
+        .txt-back {
+            color: $primaryDark;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .btn-support {
+            background-color: $grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+        }
+
+        .txt-support {
+            color: black;
+            font-weight: 600;
+            background-color: $grey;
+            padding: 10px;
+            border-radius: 3px;
         }
     }
 }
