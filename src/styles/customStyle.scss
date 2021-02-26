@@ -22,7 +22,7 @@
 }
 
 .custom-container-fluid{
-    padding-top: 44px !important;
+    padding-top: 40px !important;
     padding-left: 30px !important;
     padding-right: 30px !important;
 }
@@ -41,7 +41,8 @@
         .table-main-thead{
             font-weight: 600;
             font-size: 14px;
-            background: #CACCCF;
+            background: #5F764F;
+            color: #ffffff;
 
             tr {
 
@@ -67,6 +68,11 @@
                     padding: 7px;
                     border: 1px solid #E8E8E8;
                 }
+                
+            }
+
+            .table-main-nth-child:nth-child(even) {
+                background-color: #8BA577;
             }
         }
 
@@ -112,6 +118,10 @@
 
 .mb-10px{
     margin-bottom: 10px;
+}
+
+.mb-15px{
+    margin-bottom: 15px;
 }
 
 .mb-20px {

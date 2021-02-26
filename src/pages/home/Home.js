@@ -82,7 +82,7 @@ function Home(props) {
 
                         <tbody className="table-main-tbody">
                             {dtTableHome === null ? null : dtTableHome.map((dt, i) =>
-                                <tr key={i}>
+                                <tr key={i} className="table-main-nth-child">
                                     <td className="table-main-td">{dt.id}</td>
                                     <td className="table-main-td" style={{textAlign: 'left'}}>{dt.name}</td>
                                     <td className="table-main-td">{dt.email}</td>

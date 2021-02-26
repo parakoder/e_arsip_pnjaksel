@@ -29,13 +29,13 @@ function Archive(props) {
 							Tambah Data
 						</button>
 						<div className='headerTools '>
-							<div className='wrapperInput mr-20px mb-10px' >
+							<div className='wrapperInput mb-10px' >
 								<FiSearch size={20} />
 								<Gap width={10} />
 								<input className='input' placeholder='Cari Data' />
 							</div>
 							{/* <Gap width={20} /> */}
-							<div className='wrapperFilter  mb-10px'>
+							<div className='wrapperFilter  mb-10px ml-20px'>
 								<HiFilter size={20} />
 								<Gap width={10} />
 								<div>Filter Data</div>
@@ -75,7 +75,7 @@ function Archive(props) {
 
                         <tbody className="table-main-tbody">
                             {dtTableArchive === null ? null : dtTableArchive.map((dt, i) =>
-                                <tr key={i}>
+                                <tr key={i} className="table-main-nth-child">
                                     <td className="table-main-td">{dt.id}</td>
                                     <td className="table-main-td" style={{textAlign: 'left'}}>{dt.website}</td>
                                     <td className="table-main-td">{dt.website}</td>
