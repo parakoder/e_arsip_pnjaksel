@@ -65,18 +65,30 @@
                 background-color: #FAFAFA;
             }
 
-            .wrapperFilter {
-                width: 150px;
+            .wrapperFilter-date {
+                max-width: 160px;
+                
+                
+                .filter-date{
+                    width: 100% !important;
+                    height: 35px;
+                    padding: 10px 20px 10px 32px;
+                    border: 1px solid #8BA577;
+                    border-radius: 3px;
+                }
+
+                .react-datepicker__tab-loop  .react-datepicker-popper{
+                    margin-left: -300px !important;
+                }
+            }
+
+            .print-btn{
+                background: #768E7C;
+                border-radius: 3px;
+                border: none;
                 height: 35px;
-                background-color: #FAFAFA;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                padding: 5px;
-                border-radius: 5px;
-                border: 1px solid grey;
-                cursor: pointer;
+                width: 96px;
+                color: #ffffff;
             }
         }
 

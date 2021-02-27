@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import Gap from '../../components/Gap';
 import { FiSearch } from 'react-icons/fi';
-import { HiFilter } from 'react-icons/hi';
+import { RiCalendar2Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { BiPrinter } from "react-icons/bi";
 import './archive.scss';
 import { MdModeEdit } from "react-icons/md";
 import { CgFileDocument } from "react-icons/cg";
 import ModalDeleteArchive from '../../components/modal/ModalDeleteArchive'
+import DatePicker from "react-datepicker";
 
 
 function Archive(props) {
 
 	const [dtTableArchive, setDtTableArchive] = useState(null)
 
-	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(true)
+	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
@@ -25,6 +27,14 @@ function Archive(props) {
 	const toggleModalDel = () => {
 		setModalDeleteIsOpen(!modalDeleteIsOpen)
 	}
+	
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(null);
+	const onChange = dates => {
+		const [start, end] = dates;
+		setStartDate(start);
+		setEndDate(end);
+	};
 	
 
 	return (
@@ -53,12 +63,30 @@ function Archive(props) {
 								<Gap width={10} />
 								<input className='input' placeholder='Cari Data' />
 							</div>
-							{/* <Gap width={20} /> */}
-							<div className='wrapperFilter  mb-10px ml-20px'>
-								<HiFilter size={20} />
-								<Gap width={10} />
-								<div>Filter Data</div>
+							<div className='wrapperFilter-date  mb-10px ml-20px'>
+								<RiCalendar2Line 
+									style={{position: 'absolute', zIndex: '2', margin: '10px 0px 0px 10px'}}
+								/>
+								<DatePicker 
+									className="filter-date"
+									monthsShown={2}
+									selected={startDate}
+									onChange={onChange}
+									startDate={startDate}
+									endDate={endDate}
+									selectsRange
+									// inline
+								/>
+								
 							</div>
+
+							<button className='print-btn  mb-10px ml-20px'>
+								<BiPrinter 
+									size={20}
+									style={{marginRight : '10px', marginTop: '-3px'}}
+								/>
+								Print
+							</button>
 						</div>
 					</div>
 					<div></div>
