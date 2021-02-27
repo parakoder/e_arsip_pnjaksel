@@ -54,7 +54,28 @@ const routes = [
 		component: Lazyloading(
 			() => {
 				return new Promise((resolve) => {
-					setTimeout(() => resolve(import('../pages/archive/AddArchive')), 1500);
+					setTimeout(
+						() => resolve(import('../pages/archive/AddArchive')),
+						1500
+					);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
+		path: '/archive/edit',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(
+						() => resolve(import('../pages/archive/EditArchive')),
+						1500
+					);
 				});
 			},
 			{

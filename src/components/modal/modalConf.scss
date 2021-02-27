@@ -1,0 +1,55 @@
+@import '../../styles/colors.scss';
+
+@mixin btn-modal {
+    width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    border: none;
+    font-weight: bold;
+}
+
+.wrapperModal {
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 40vh;
+
+
+    .titleModal {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .descModal {
+        font-weight: 400;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .footerModal {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+
+        .btn-modal-yes-green {
+            @include btn-modal();
+            background-color: $primarySoft;
+            color: white;
+        }
+
+        .btn-modal-yes-red {
+            @include btn-modal();
+            background-color: $errorColor;
+            color: white;
+        }
+
+        .btn-modal-no {
+            @include btn-modal();
+            background-color: white;
+            color: $errorColor;
+        }
+    }
+}

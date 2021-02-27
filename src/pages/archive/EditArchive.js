@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoIosArrowBack, IoMdCloudUpload, IoMdClose } from 'react-icons/io';
 
 import { IoDocumentOutline } from 'react-icons/io5';
-import { RiCalendar2Line } from 'react-icons/ri';
+import { RiCalendar2Line, RiDeleteBinLine } from 'react-icons/ri';
 import Gap from '../../components/Gap';
 import './archive.scss';
 import Calendar from 'react-calendar';
@@ -11,10 +11,10 @@ import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory } from 'react-router';
 
-function AddArchive(props) {
-	const [date, setDate] = useState(new Date());
-
+function EditArchive(props) {
 	let history = useHistory();
+
+	const [date, setDate] = useState(new Date());
 
 	const [showCalendar, setShowCalendar] = useState(false);
 
@@ -180,9 +180,9 @@ function AddArchive(props) {
 					<div className='addFooter row'>
 						<div
 							className='btn-submit mb-20px col-sm-12'
-							onClick={() => console.log('dataarchive', dataArchive)}
 							data-bs-toggle='modal'
-							data-bs-target='#submitModal'
+							data-bs-target='#updateModal'
+							onClick={() => console.log('dataarchive', dataArchive)}
 						>
 							<IoDocumentOutline
 								size={20}
@@ -193,13 +193,45 @@ function AddArchive(props) {
 						</div>
 
 						<div
+							className='btn-delete mb-20px ml-20px col-sm-12'
+							data-bs-toggle='modal'
+							data-bs-target='#deleteModal'
+							onClick={() => console.log('dataarchive', dataArchive)}
+						>
+							<RiDeleteBinLine
+								size={20}
+								color='white'
+								style={{ marginRight: 5 }}
+							/>
+							<div>Delete</div>
+						</div>
+						<div
 							className='btn-cancel ml-20px col-sm-12'
 							data-bs-toggle='modal'
-							data-bs-target='#cancelModal'
+							data-bs-target='#deleteModal'
 						>
 							Cancel
 						</div>
 					</div>
+					<ModalConfirmation
+						id='updateModal'
+						title='Update Data'
+						description='Apa kamu yakin untuk mengupdate Data kedalam Arsip?.'
+						classBtnYes='btn-modal-yes-green'
+						txtBtnYes='Submit'
+						txtBtnNo='Cancel'
+						onSubmit={() => alert('Berhasil Update')}
+					/>
+					<ModalConfirmation
+						id='deleteModal'
+						title='Hapus Data'
+						description='Apa Anda yakin ingin menghapus data? Tindakan ini tidak bisa
+										dikembalikan.'
+						classBtnYes='btn-modal-yes-red'
+						txtBtnYes='Ya, Hapus'
+						txtBtnNo='Cancel'
+						onSubmit={() => alert('Berhasil dihapus')}
+					/>
 					<ModalConfirmation
 						id='cancelModal'
 						title='Batalkan Proses Input Data'
@@ -209,19 +241,10 @@ function AddArchive(props) {
 						txtBtnNo='Cancel'
 						onSubmit={() => history.goBack()}
 					/>
-					<ModalConfirmation
-						id='submitModal'
-						title='Submit Data'
-						description='Apa kamu yakin untuk mensubmit Data kedalam Arsip?'
-						classBtnYes='btn-modal-yes-green'
-						txtBtnYes='Submit'
-						txtBtnNo='Cancel'
-						onSubmit={() => alert('Berhasil Submit')}
-					/>
 				</div>
 			</div>
 		</div>
 	);
 }
 
-export default AddArchive;
+export default EditArchive;
