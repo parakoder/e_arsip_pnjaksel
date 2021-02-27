@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import Gap from '../../components/Gap';
 import './home.scss';
 
+
 function Home(props) {
 
     const [dtTableHome, setDtTableHome] = useState(null)
@@ -20,7 +21,17 @@ function Home(props) {
                 <div className='wrapperGraph row '>
                     <div className="col-xl-8 col-lg-7 col-md-12 col-sm-12 mb-20px">
                         <div className='graph'>
-                            GRAPH HERE
+                            <div className="graph-header">
+                                <div className="title">
+                                    Grafik Jumlah Arsip
+                                </div>
+                                <div className="select-year">
+                                    Tahun 2020
+                                </div>
+                            </div>
+                            <div className="graph-content">
+                                ini graph
+                            </div>
                         </div>
                     </div>
                     <div className='col-xl-4 col-lg-5 col-md-12 col-sm-12 mb-20px'>
