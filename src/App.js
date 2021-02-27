@@ -3,6 +3,8 @@ import './App.css';
 import './styles/customStyle.scss';
 import DashboardLayout from './layouts/DashboardLayout';
 import Login from './pages/login/Login';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -27,7 +29,19 @@ function App() {
 	);
 
 	return (
-		<div className='App'>
+		<div className=''>
+			<ToastContainer
+				className="c-toast-main"
+				position="top-right"
+				hideProgressBar
+				newestOnTop
+				// closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
+			
 			<Switch>
 				<PrivateRoute path={'/sys'} component={DashboardLayout} />
 				<Route path='/login' component={Login} />

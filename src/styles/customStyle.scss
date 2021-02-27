@@ -114,6 +114,44 @@
 }
 
 
+//toast
+
+.c-toast-main {
+    margin-top: 40px !important;
+    width: auto !important;
+
+
+    .Toastify__toast.Toastify__toast--success {
+        min-height: auto !important;
+        background: #F8E086 !important;
+
+        .Toastify__close-button{
+                display: none !important;
+        }
+
+        .Toastify__toast-body{
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+
+}
+
+
+
+// .c-toast-main .Toastify__toast--success{
+//     border-left: 10px solid #39C27A;
+//     border-radius: 8px !important;
+//     background: #C6F8DC;
+//     padding: 8px 8px 8px 0px !important;
+// }
+
+// .c-toast-main .Toastify__close-button--success{
+//     color: #39C27A;
+//     position: relative;
+//     top: -6px;
+// }
+
 //margin
 
 .mb-10px{

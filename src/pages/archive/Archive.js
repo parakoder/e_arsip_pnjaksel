@@ -4,20 +4,39 @@ import { FiSearch } from 'react-icons/fi';
 import { HiFilter } from 'react-icons/hi';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import './archive.scss';
+import { MdModeEdit } from "react-icons/md";
+import { CgFileDocument } from "react-icons/cg";
+import ModalDeleteArchive from '../../components/modal/ModalDeleteArchive'
+
 
 function Archive(props) {
 
 	const [dtTableArchive, setDtTableArchive] = useState(null)
+
+	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(true)
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
         .then(json => setDtTableArchive(json))
 	}, [])
+
+
+	const toggleModalDel = () => {
+		setModalDeleteIsOpen(!modalDeleteIsOpen)
+	}
 	
 
 	return (
 		<div className='c-main'>
+			
+			{modalDeleteIsOpen ? 
+				<ModalDeleteArchive 
+					modal={modalDeleteIsOpen}
+					toggle={toggleModalDel}
+				/>
+				: null
+			}
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
 				<div className='wrapperArchive mb-20px'>
 					<div className='headerArchive'>
@@ -81,8 +100,24 @@ function Archive(props) {
                                     <td className="table-main-td">{dt.website}</td>
                                     <td className="table-main-td">{dt.name}</td>
 									<td className="table-main-td">{dt.name}</td>
-									<td className="table-main-td">{dt.website}</td>
-									<td className="table-main-td">{dt.website}</td>
+									<td className="table-main-td">
+										<CgFileDocument 
+											size={22}
+											style={{
+												cursor: 'pointer'
+											}}
+										/>
+									</td>
+									<td className="table-main-td">
+										<MdModeEdit 
+											size={22}
+											style={{
+												cursor: 'pointer'
+											}}
+
+											onClick={() => props.history.push('/sys/archive/edit')}
+										/>
+									</td>
                                 </tr>
                             )}
                         </tbody>
