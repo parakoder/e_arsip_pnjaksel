@@ -15,7 +15,7 @@ function Archive(props) {
 
 	const [dtTableArchive, setDtTableArchive] = useState(null)
 
-	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
+	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(true)
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
