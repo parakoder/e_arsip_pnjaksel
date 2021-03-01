@@ -4,6 +4,21 @@ import Lazyloading from '../components/loading/LazyLoading';
 
 const routes = [
 	{
+		path: '/check-first-login',
+		name: 'Check Login',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve(import('../pages/CheckFirstLogin')), 1500);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
 		path: '/home',
 		name: 'Home',
 		component: Lazyloading(

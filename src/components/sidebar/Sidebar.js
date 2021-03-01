@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import {
 	HiHome,
@@ -14,6 +15,18 @@ import {
 } from 'react-icons/ri';
 
 function Sidebar(props) {
+
+	const [disableFirstLogin, setDisableFirstLogin] = useState(false)
+
+	useEffect(() => {
+		// if (props.isFirstLogin) {
+		// 	setDisableFirstLogin(true)
+		// } else {
+		// 	setDisableFirstLogin(false)
+		// }
+		setDisableFirstLogin(false)
+	}, [props.isFirstLogin])
+	
 	const onActiveCss = {
 		// color: '#2893E1'
 		fontWeight: 'bold',
@@ -46,6 +59,7 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
+						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
 						to='/sys/home'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -75,6 +89,7 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
+						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
 						to='/sys/archive'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -104,6 +119,7 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
+						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
 						to='/sys/log'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -133,6 +149,7 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
+						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
 						to='/sys/about'
 						activeClassName='active'
 						activeStyle={onActiveCss}

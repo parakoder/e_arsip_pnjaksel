@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
 import Gap from '../../components/Gap';
 import './login.scss';
@@ -66,7 +67,7 @@ const Login = (props) => {
 						<a
 							onClick={() => setFragment('loginB')}
 							className='cannot-login'
-							href
+							// href
 						>
 							Tidak Bisa Login?
 						</a>

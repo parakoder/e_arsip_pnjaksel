@@ -90,12 +90,6 @@
     }
 }
 
-
-
-// table tr:last-child td:last-child {
-//     border-bottom-right-radius: 10px;
-
-
 // custom view
 
 .text-input-title-1 {
@@ -105,6 +99,12 @@
     text-indent: 1rem;
 }
 
+.text-input-title-2 {
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000;
+}
+
 .form-input-1{
     background: #FAFAFA;
     border: 1px solid #CCCCCC;
@@ -112,6 +112,15 @@
     width: 100%;
     height: 40px;
     text-indent: 1rem;
+}
+
+.form-input-2{
+    background: #FAFAFA;
+    border: 1px solid #8BA577;;
+    border-radius: 3px;
+    width: 100%;
+    height: 45px;
+    text-indent: 20px;
 }
 
 
@@ -138,22 +147,11 @@
 
 }
 
-
-
-// .c-toast-main .Toastify__toast--success{
-//     border-left: 10px solid #39C27A;
-//     border-radius: 8px !important;
-//     background: #C6F8DC;
-//     padding: 8px 8px 8px 0px !important;
-// }
-
-// .c-toast-main .Toastify__close-button--success{
-//     color: #39C27A;
-//     position: relative;
-//     top: -6px;
-// }
-
 //margin
+
+.mt-120px {
+    margin-top: 120px;
+}
 
 .mb-10px{
     margin-bottom: 10px;
@@ -169,6 +167,10 @@
 
 .mb-30px {
     margin-bottom: 30px;
+}
+
+.mb-50px {
+    margin-bottom: 50px;
 }
 
 .ml-20px {
