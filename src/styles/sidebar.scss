@@ -95,12 +95,11 @@
         vertical-align: bottom;
         background-color: white;
         padding: 10px;
+        padding-bottom: 20px;
         color: $errorColor;
         background-image: url('../assets/images/bgLogin2.png');
-        background-size: cover;
-        height: 200px;
-
-        padding-bottom: 40px;
+        background-size:contain;
+        height: 100px;
 
         .txt-logout {
             vertical-align: bottom;

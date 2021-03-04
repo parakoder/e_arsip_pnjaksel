@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
 	HiHome,
@@ -13,10 +13,10 @@ import {
 	RiStackFill,
 	RiStackLine,
 } from 'react-icons/ri';
+import { IoPersonOutline } from 'react-icons/io5';
 
 function Sidebar(props) {
-
-	const [disableFirstLogin, setDisableFirstLogin] = useState(false)
+	const [disableFirstLogin, setDisableFirstLogin] = useState(false);
 
 	useEffect(() => {
 		// if (props.isFirstLogin) {
@@ -24,9 +24,9 @@ function Sidebar(props) {
 		// } else {
 		// 	setDisableFirstLogin(false)
 		// }
-		setDisableFirstLogin(false)
-	}, [props.isFirstLogin])
-	
+		setDisableFirstLogin(false);
+	}, [props.isFirstLogin]);
+
 	const onActiveCss = {
 		// color: '#2893E1'
 		fontWeight: 'bold',
@@ -59,7 +59,9 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
-						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
 						to='/sys/home'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -83,24 +85,28 @@ function Sidebar(props) {
 								}
 							/>
 						)}
-						Home
+						Beranda
 					</NavLink>
 				</li>
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
-						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
-						to='/sys/archive'
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
+						to='/sys/archive-pidana'
 						activeClassName='active'
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/archive') ? (
+						{currentLocation.includes('/sys/archive-pidana') ? (
 							<RiArchiveDrawerFill
 								className='sidebar-nav-link-img'
 								size={18}
 								style={
-									currentLocation.includes('/sys/archive') ? onActiveImg : null
+									currentLocation.includes('/sys/archive-pidana')
+										? onActiveImg
+										: null
 								}
 							/>
 						) : (
@@ -109,17 +115,57 @@ function Sidebar(props) {
 								size={18}
 								color='#5F764F'
 								style={
-									currentLocation.includes('/sys/archive') ? onActiveImg : null
+									currentLocation.includes('/sys/archive-pidana')
+										? onActiveImg
+										: null
 								}
 							/>
 						)}
-						Archive
+						Arsip Pidana
 					</NavLink>
 				</li>
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
-						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
+						to='/sys/archive-perdata'
+						activeClassName='active'
+						activeStyle={onActiveCss}
+						aria-current='true'
+					>
+						{currentLocation.includes('/sys/archive-perdata') ? (
+							<RiArchiveDrawerFill
+								className='sidebar-nav-link-img'
+								size={18}
+								style={
+									currentLocation.includes('/sys/archive-perdata')
+										? onActiveImg
+										: null
+								}
+							/>
+						) : (
+							<RiArchiveDrawerLine
+								className='sidebar-nav-link-img'
+								size={18}
+								color='#5F764F'
+								style={
+									currentLocation.includes('/sys/archive-perdata')
+										? onActiveImg
+										: null
+								}
+							/>
+						)}
+						Arsip Perdata
+					</NavLink>
+				</li>
+				<li className='sidebar-nav-item'>
+					<NavLink
+						className='sidebar-nav-link'
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
 						to='/sys/log'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -149,7 +195,41 @@ function Sidebar(props) {
 				<li className='sidebar-nav-item'>
 					<NavLink
 						className='sidebar-nav-link'
-						style={disableFirstLogin ? {pointerEvents: 'none', opacity: 0.5} : null}
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
+						to='/sys/account'
+						activeClassName='active'
+						activeStyle={onActiveCss}
+						aria-current='true'
+					>
+						{currentLocation.includes('/sys/account') ? (
+							<IoPersonOutline
+								className='sidebar-nav-link-img'
+								size={18}
+								style={
+									currentLocation.includes('/sys/account') ? onActiveImg : null
+								}
+							/>
+						) : (
+							<IoPersonOutline
+								className='sidebar-nav-link-img'
+								size={18}
+								color='#5F764F'
+								style={
+									currentLocation.includes('/sys/account') ? onActiveImg : null
+								}
+							/>
+						)}
+						Akun
+					</NavLink>
+				</li>
+				<li className='sidebar-nav-item'>
+					<NavLink
+						className='sidebar-nav-link'
+						style={
+							disableFirstLogin ? { pointerEvents: 'none', opacity: 0.5 } : null
+						}
 						to='/sys/about'
 						activeClassName='active'
 						activeStyle={onActiveCss}
@@ -173,7 +253,7 @@ function Sidebar(props) {
 								}
 							/>
 						)}
-						About
+						Tentang
 					</NavLink>
 				</li>
 			</ul>

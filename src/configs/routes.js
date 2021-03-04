@@ -49,6 +49,21 @@ const routes = [
 		layout: '/sys',
 	},
 	{
+		path: '/account',
+		name: 'Account',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve(import('../pages/account/Account')), 1500);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
 		path: '/about',
 		name: 'About',
 		component: Lazyloading(
@@ -64,13 +79,13 @@ const routes = [
 		layout: '/sys',
 	},
 	{
-		path: '/archive/tambah',
+		path: '/archive-pidana/tambah',
 		name: 'Archive',
 		component: Lazyloading(
 			() => {
 				return new Promise((resolve) => {
 					setTimeout(
-						() => resolve(import('../pages/archive/AddArchive')),
+						() => resolve(import('../pages/archive_pidana/AddArchive')),
 						1500
 					);
 				});
@@ -82,13 +97,13 @@ const routes = [
 		layout: '/sys',
 	},
 	{
-		path: '/archive/edit',
+		path: '/archive-pidana/edit',
 		name: 'Archive',
 		component: Lazyloading(
 			() => {
 				return new Promise((resolve) => {
 					setTimeout(
-						() => resolve(import('../pages/archive/EditArchive')),
+						() => resolve(import('../pages/archive_pidana/EditArchive')),
 						1500
 					);
 				});
@@ -100,12 +115,69 @@ const routes = [
 		layout: '/sys',
 	},
 	{
-		path: '/archive',
+		path: '/archive-pidana',
 		name: 'Archive',
 		component: Lazyloading(
 			() => {
 				return new Promise((resolve) => {
-					setTimeout(() => resolve(import('../pages/archive/Archive')), 1500);
+					setTimeout(
+						() => resolve(import('../pages/archive_pidana/Archive')),
+						1500
+					);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
+		path: '/archive-perdata/tambah',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(
+						() => resolve(import('../pages/archive_perdata/AddArchive')),
+						1500
+					);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
+		path: '/archive-perdata/edit',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(
+						() => resolve(import('../pages/archive_perdata/EditArchive')),
+						1500
+					);
+				});
+			},
+			{
+				fallback: <ProgressBar />,
+			}
+		),
+		layout: '/sys',
+	},
+	{
+		path: '/archive-perdata',
+		name: 'Archive',
+		component: Lazyloading(
+			() => {
+				return new Promise((resolve) => {
+					setTimeout(
+						() => resolve(import('../pages/archive_perdata/Archive')),
+						1500
+					);
 				});
 			},
 			{
