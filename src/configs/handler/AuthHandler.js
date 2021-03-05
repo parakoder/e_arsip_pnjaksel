@@ -1,5 +1,6 @@
 import LoginApi from '../services/LoginApi';
 import base64 from 'base-64';
+import { HandlerAPI } from '../services/HandlerAPI';
 
 export const LoginHandler = async (username, password) => {
 	const raw = {
@@ -25,5 +26,19 @@ export const LoginHandler = async (username, password) => {
 	} catch (error) {
 		console.log('errrrr', error);
 		return Promise.reject(error);
+	}
+};
+
+export const LogoutHandler = async (token) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/unauth`,
+			'post',
+			null,
+			{ token: token }
+		);
+		console.log('res awal logout', response);
+	} catch (error) {
+		console.log('error awal logout', error);
 	}
 };

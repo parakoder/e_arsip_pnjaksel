@@ -14,6 +14,7 @@ import {
 	RiStackLine,
 } from 'react-icons/ri';
 import { IoPersonOutline } from 'react-icons/io5';
+import { LogoutHandler } from '../../configs/handler/AuthHandler';
 
 function Sidebar(props) {
 	const [disableFirstLogin, setDisableFirstLogin] = useState(false);
@@ -39,6 +40,16 @@ function Sidebar(props) {
 	};
 
 	const currentLocation = window.location.pathname;
+
+	const logout = async () => {
+		try {
+			const token = await localStorage.getItem('@token');
+			const response = await LogoutHandler(token);
+			console.log('resps logout', response);
+		} catch (error) {
+			console.log('error', error);
+		}
+	};
 
 	return (
 		<div className='c-sidebar c-sidebar-dark c-sidebar-lg-show c-sidebar-fixed ml-auto'>
@@ -260,7 +271,8 @@ function Sidebar(props) {
 
 			<div
 				className='c-sidebar-logout'
-				onClick={() => props.history.push('/login')}
+				// onClick={() => props.history.push('/login')}
+				onClick={logout}
 			>
 				<span className='txt-logout' style={{ cursor: 'pointer' }}>
 					Logout
