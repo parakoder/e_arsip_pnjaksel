@@ -5,11 +5,33 @@ import './login.scss';
 
 import { BsChevronLeft } from 'react-icons/bs';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { LoginHandler } from '../../configs/handler/AuthHandler';
 
 const Login = (props) => {
 	const [fragment, setFragment] = useState('loginA');
 
 	const [showPass, setShowPass] = useState(false);
+
+	const [error, setError] = useState(false);
+
+	const [authForm, setAuthForm] = useState({
+		username: '',
+		password: '',
+	});
+
+	const login = async () => {
+		try {
+			const response = await LoginHandler(authForm.username, authForm.password);
+			if (response.status === 200) {
+				props.history.push('/sys/home');
+			} else {
+				setError(true);
+			}
+			console.log('res login', response);
+		} catch (error) {
+			console.log('err login', error);
+		}
+	};
 
 	return (
 		<div>
@@ -32,15 +54,41 @@ const Login = (props) => {
 							Masuk dengan ID dan Password yang terdaftar dalam sistem untuk
 							mengakses Dashboard e-Arsip.{' '}
 						</p>
-						<p className='titleInput'>ID</p>
-						<input className='input' placeholder='Masukkan Email atau ID' />
+						<div className='titleInputWrapper'>
+							<p className='titleInput'>NIK / ID</p>
+							{error ? (
+								<p className='txtAuthError'>
+									NIK / ID yang anda masukkan salah
+								</p>
+							) : null}
+						</div>
+						<input
+							className={error ? 'input-error' : 'input'}
+							placeholder='Masukkan Email atau ID'
+							type='text'
+							onChange={(e) => {
+								setAuthForm({ ...authForm, username: e.target.value });
+								setError(false);
+							}}
+						/>
 						<Gap height={20} />
-						<p className='titleInput'>Password</p>
-						<div className='input'>
+						<div className='titleInputWrapper'>
+							<p className='titleInput'>Password</p>
+							{error ? (
+								<p className='txtAuthError'>
+									Kata Sandi yang anda masukkan salah
+								</p>
+							) : null}
+						</div>
+						<div className={error ? 'input-error' : 'input'}>
 							<input
 								className='input2'
 								type={showPass ? 'text' : 'password'}
 								placeholder='Masukkan Password'
+								onChange={(e) => {
+									setAuthForm({ ...authForm, password: e.target.value });
+									setError(false);
+								}}
 							/>
 							{showPass ? (
 								<AiOutlineEyeInvisible
@@ -59,7 +107,8 @@ const Login = (props) => {
 						<Gap height={50} />
 						<button
 							className='btn-login'
-							onClick={() => props.history.push('/sys/home')}
+							// onClick={() => props.history.push('/sys/home')}
+							onClick={login}
 						>
 							Login
 						</button>
