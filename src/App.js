@@ -33,14 +33,15 @@ function App() {
 		<div className=''>
 			<ToastContainer
 				className="c-toast-main"
-				position="top-right"
-				hideProgressBar
-				newestOnTop
-				// closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
+				// position="top-right"
+				// hideProgressBar
+				// newestOnTop
+				// // closeOnClick
+				// rtl={false}
+				// // pauseOnFocusLoss
+				// draggable
+				// // pauseOnHover
+				// autoClose={100000}
 			/>
 			
 			<Switch>
