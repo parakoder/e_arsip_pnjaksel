@@ -12,7 +12,7 @@ function DashboardLayout(props) {
 
     useEffect(() => {
         if (isFirstLogin === true) {
-            // setIsFirstLogin(true)
+            setIsFirstLogin(true)
             props.history.push('/sys/check-first-login')
         }
     }, [isFirstLogin])

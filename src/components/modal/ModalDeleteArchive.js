@@ -2,7 +2,8 @@ import React, {  } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss'
 import { OnSuccess } from '../../components/toast/CustomToast'
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { RiDeleteBinLine } from "react-icons/ri";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
 
 function ModalDeleteArchive(props) {
 
@@ -23,10 +24,12 @@ function ModalDeleteArchive(props) {
                     <button className="apply"
                         onClick={() => {
                             OnSuccess({
-                                icon: <RiDeleteBinLine
-                                        size={20}
-                                    />,
-                                text: 'Data perkara 36 966 692 783 berhasil di Hapus dari Arsip'
+                                icon: <IoCheckmarkCircleSharp
+                                    size={22}
+                                    color={'#27AE60'}
+                                />,
+                                title: 'Data Perkara berhasil di Simpan',
+                                text: 'Data perkara 36 966 692 783 berhasil di Hapus dari Arsip' 
                             }) 
                                 
                          
