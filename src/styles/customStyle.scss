@@ -1,3 +1,11 @@
+
+@mixin txt-input {
+    border-radius: 3px;
+    width: 100%;
+    height: 45px;
+    text-indent: 1rem;
+}
+
 .c-layout{
     width: 100vw;
     height: 100vh;
@@ -69,7 +77,7 @@
                     padding: 7px;
                     border: 1px solid #E8E8E8;
                 }
-                
+
             }
 
             .table-main-nth-child:nth-child(even) {
@@ -106,21 +114,21 @@
 }
 
 .form-input-1{
+    @include txt-input();
     background: #FAFAFA;
     border: 1px solid #CCCCCC;
-    border-radius: 3px;
-    width: 100%;
-    height: 40px;
-    text-indent: 1rem;
 }
 
 .form-input-2{
+    @include txt-input();
     background: #FAFAFA;
     border: 1px solid #8BA577;;
-    border-radius: 3px;
-    width: 100%;
-    height: 45px;
-    text-indent: 20px;
+}
+
+.form-input-3{
+    @include txt-input();
+    background: #F2F2F2;
+    border: 1px solid #8BA577;;
 }
 
 

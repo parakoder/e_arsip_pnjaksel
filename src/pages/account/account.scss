@@ -1,0 +1,51 @@
+@import '../../styles/colors.scss';
+
+@mixin btn {
+    width: 210px;
+    height: 35px;
+    background-color: $primaryDark;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 95px;
+    min-width: 150px;
+    border: none;
+    cursor: pointer;
+}
+
+.wrapperAkun {
+    display: flex;
+    flex-direction: row;
+
+    @media screen and (max-width: 900px) {
+        display: flex;
+        flex-direction: column;
+      }
+
+    .infoAkun {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .passAkun {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .title {
+        text-align: start;
+        font-weight: bold;
+    }
+
+    .btn-submit {
+        @include btn();
+        box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
