@@ -13,7 +13,7 @@ const ModalConfirmation = ({
 	return (
 		<div className='modal' id={id} tabIndex='-1' aria-hidden>
 			<div className='modal-dialog modal-dialog-centered' id='exampleModal'>
-				<div class='modal-content'>
+				<div className='modal-content'>
 					<div className='wrapperModal'>
 						<div className='titleModal'>{title}</div>
 						<div className='descModal'>{description}</div>

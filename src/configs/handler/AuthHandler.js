@@ -19,7 +19,7 @@ export const LoginHandler = async (username, password) => {
 		console.log('respon trycatch', response);
 
 		if (response.data.data !== null) {
-			localStorage.setItem('@token', response.data.data.access_token);
+			localStorage.setItem('@user', JSON.stringify(response.data.data));
 		}
 
 		return Promise.resolve(response.data);

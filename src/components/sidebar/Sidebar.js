@@ -43,9 +43,11 @@ function Sidebar(props) {
 
 	const logout = async () => {
 		try {
-			const token = await localStorage.getItem('@token');
-			const response = await LogoutHandler(token);
-			console.log('resps logout', response);
+			const datUser = JSON.parse(localStorage.getItem('@user'));
+			if (datUser !== null) {
+				const response = await LogoutHandler(datUser.access_token);
+				console.log('resps logout', response);
+			}
 		} catch (error) {
 			console.log('error', error);
 		}

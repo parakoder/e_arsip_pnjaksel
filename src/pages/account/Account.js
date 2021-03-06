@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './account.scss';
-import { IoDocumentOutline } from 'react-icons/io5';
 
 const Account = () => {
+	const [dataUser, setDataUser] = useState({
+		name: '',
+		username: '',
+	});
+
+	useEffect(() => {
+		const getDataUser = () => {
+			const datUser = JSON.parse(localStorage.getItem('@user'));
+
+			if (datUser !== null) {
+				setDataUser({ name: datUser.name, username: datUser.username });
+			}
+		};
+
+		getDataUser();
+	}, []);
+
 	return (
 		<div className='c-main'>
 			<div className='container-fluid custom-container-fluid fade show mb-5px'>
-				<p className='txtWelcome mb-50px'>Selamat Datang, Kim Jong Unch!</p>
+				<p className='txtWelcome mb-50px'>Selamat Datang, {dataUser.name}!</p>
 				<div className='wrapperAkun'>
 					<div className='infoAkun'>
 						<p className='title mb-30px'>Informasi Akun</p>
@@ -15,14 +31,14 @@ const Account = () => {
 							className='form-input-3 mb-20px'
 							placeholder='Jordi Alba'
 							disabled
-							// value={dataArchive.no_perkara}
+							value={dataUser.name}
 						/>
 						<p className='text-input-title-1'>NIK / ID</p>
 						<input
 							className='form-input-3'
 							placeholder='317506546461651'
 							disabled
-							// value={dataArchive.no_perkara}
+							value={dataUser.username}
 						/>
 					</div>
 					<div className='passAkun'>

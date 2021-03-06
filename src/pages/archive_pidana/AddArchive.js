@@ -10,6 +10,8 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory } from 'react-router';
+import DatePicker from 'react-datepicker';
+import { YearPicker } from 'react-dropdown-date';
 
 function AddArchive(props) {
 	const [date, setDate] = useState(new Date());
@@ -37,6 +39,8 @@ function AddArchive(props) {
 		setDataArchive({ ...dataArchive, file: e.name });
 	};
 
+	const [year, setYear] = useState(2021);
+
 	return (
 		<div className='c-main'>
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
@@ -47,7 +51,7 @@ function AddArchive(props) {
 							color={'#000000'}
 							style={{ marginRight: '18px', marginTop: '-2px' }}
 						/>
-						Kembali ke Arsip
+						Kembali ke Arsip Pidana
 					</div>
 				</div>
 
@@ -55,14 +59,47 @@ function AddArchive(props) {
 					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Nomor Perkara</p>
-							<input
+							<div className='form-input-perkara'>
+								<input
+									placeholder='1234'
+									className='input-sub-perkara'
+									maxLength='4'
+									type='text'
+									pattern='\d*'
+								/>
+								<span className='input-txt-perkara'>/ PDN /</span>
+								<input
+									placeholder='SUS'
+									className='input-sub-perkara'
+									maxLength='3'
+								/>
+								<span className='input-txt-perkara'>/</span>
+								<YearPicker
+									defaultValue={'Tahun'}
+									start={1980} // default is 1900
+									end={2030} // default is current year
+									reverse // default is ASCENDING
+									required={true} // default is false
+									value={year} // mandatory
+									onChange={(year) => {
+										// mandatory
+										setYear(year);
+									}}
+									id={'year'}
+									name={'year'}
+									classes={'classes'}
+									optionClasses={'option classes'}
+								/>
+								<span className='input-txt-perkara'>/ PNJS</span>
+							</div>
+							{/* <input
 								className='form-input-1'
 								placeholder='Masukkan Nomor Perkara'
 								value={dataArchive.no_perkara}
 								onChange={(e) =>
 									setDataArchive({ ...dataArchive, no_perkara: e.target.value })
 								}
-							/>
+							/> */}
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>BOX</p>
@@ -89,8 +126,6 @@ function AddArchive(props) {
 								}
 							/>
 						</div>
-					</div>
-					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Tanggal Pengiriman</p>
 							<div className='wrapperDate'>
@@ -123,8 +158,10 @@ function AddArchive(props) {
 								</div>
 							) : null}
 						</div>
+					</div>
+					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
-							<p className='text-input-title-1'>Upload PDF Arsip</p>
+							<p className='text-input-title-1'>Upload PDF Arsip Pidana</p>
 							<div className='wrapperUpload'>
 								{dataArchive.file === '' ? (
 									<>
@@ -141,14 +178,7 @@ function AddArchive(props) {
 									</>
 								) : (
 									<div className='wrapperUploaded'>
-										<div
-											style={{
-												display: 'flex',
-												flexDirection: 'row',
-												justifyContent: 'space-between',
-												alignItems: 'center',
-											}}
-										>
+										<div className='doc-uploaded'>
 											<div>{dataArchive.file}</div>
 											<IoMdClose
 												onClick={() =>
@@ -157,19 +187,10 @@ function AddArchive(props) {
 												color='red'
 											/>
 										</div>
-										<div
-											style={{
-												display: 'flex',
-												alignSelf: 'flex-end',
-												flexDirection: 'row',
-												alignItems: 'center',
-											}}
-										>
-											<IoMdCloudUpload size={20} color='#5F764F' />
+										<div className='btn-reupload'>
+											<IoMdCloudUpload size={20} color='white' />
 											<Gap width={10} />
-											<div style={{ color: '#5F764F' }}>
-												Upload Dokumen Lain
-											</div>
+											<div style={{ color: 'white' }}>Upload Dokumen Lain</div>
 										</div>
 									</div>
 								)}
