@@ -6,7 +6,9 @@ import './home.scss';
 import { YearPicker } from 'react-dropdown-date';
 import { Bar } from 'react-chartjs-2';
 import { GraphPerYearHandler } from '../../configs/handler/GraphHandler';
+import { GetLogActivity } from '../../configs/handler/HomeHandler';
 import { GetArsipSum } from '../../configs/handler/ArsipHandler';
+import moment from 'moment'
 
 function Home(props) {
 	const [dtTableHome, setDtTableHome] = useState(null);
@@ -26,10 +28,30 @@ function Home(props) {
 
 		getName();
 
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then((response) => response.json())
-			.then((json) => setDtTableHome(json));
+		// fetch('https://jsonplaceholder.typicode.com/users')
+		// 	.then((response) => response.json())
+		// 	.then((json) => setDtTableHome(json));
 	}, []);
+
+
+	const getLogDt = () => {
+		var row = 10
+
+		GetLogActivity(row)
+			.then(res => {
+				if (res && res.data ) {
+					console.log('res log', res.data)
+					setDtTableHome(res.data)
+				}
+			})
+			.catch((err) => {
+				console.log('err graph gome', err);
+			});
+	}
+
+	useEffect(() => {
+		getLogDt()
+	}, [])
 
 	const [year, setYear] = useState(2021);
 
@@ -227,11 +249,11 @@ function Home(props) {
 												className='table-main-td'
 												style={{ textAlign: 'left' }}
 											>
-												{dt.name}
+												{dt.user}
 											</td>
-											<td className='table-main-td'>{dt.email}</td>
-											<td className='table-main-td'>{dt.username}</td>
-											<td className='table-main-td'>{dt.website}</td>
+											<td className='table-main-td'>{moment(dt.tanggal).utc().format('yyyy-MM-DD')}</td>
+											<td className='table-main-td'>{moment(dt.waktu,'h:mm ').format('h:mm ')}</td>
+											<td className='table-main-td'>{dt.aktifitas}</td>
 										</tr>
 								  ))}
 						</tbody>

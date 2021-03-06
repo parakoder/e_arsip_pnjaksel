@@ -49,6 +49,7 @@ function Sidebar(props) {
 				const response = await LogoutHandler(datUser.access_token);
 				console.log('resps logout', response);
 				if (response.status === 200) {
+					localStorage.clear()
 					history.replace('/');
 				}
 			}
