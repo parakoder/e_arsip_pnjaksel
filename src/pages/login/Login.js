@@ -10,6 +10,8 @@ import { OnError } from '../../components/toast/CustomToast'
 import { MdError } from "react-icons/md";
 
 const Login = (props) => {
+	
+
 	const [fragment, setFragment] = useState('loginA');
 
 	const [showPass, setShowPass] = useState(false);
@@ -25,7 +27,11 @@ const Login = (props) => {
 		try {
 			const response = await LoginHandler(authForm.username, authForm.password);
 			if (response.status === 200) {
-				props.history.push('/sys/home');
+				const lclstrg = localStorage.getItem('@user') ? JSON.parse(localStorage.getItem('@user')) : null
+				if (lclstrg !== null) {
+					props.history.push('/sys/home');
+				}
+				
 			} else if (response.status === 403) {
 				OnError({
 					title: 'Terjadi Kesalahan',

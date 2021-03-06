@@ -7,15 +7,26 @@ import '../styles/sidebar.scss'
 
 
 function DashboardLayout(props) {
+    const lclstrg = localStorage.getItem('@user') ? JSON.parse(localStorage.getItem('@user')) : null
+    const check_fist_login = lclstrg.is_first_login ? lclstrg.is_first_login : null
     
     const [isFirstLogin, setIsFirstLogin] = useState(false)
 
     useEffect(() => {
-        if (isFirstLogin === true) {
-            setIsFirstLogin(true)
-            props.history.push('/sys/check-first-login')
+        if (check_fist_login !== null) {
+            if (check_fist_login === true) {
+                props.history.push('/sys/check-first-login')
+                setIsFirstLogin(check_fist_login)
+            } else {
+                setIsFirstLogin(check_fist_login)
+            }
         }
-    }, [isFirstLogin])
+
+        // if (isFirstLogin === true ) {
+        //     setIsFirstLogin(true)
+        //     props.history.push('/sys/check-first-login')
+        // }
+    }, [isFirstLogin, lclstrg])
 
     const getRoutes = routeList => {
         return routeList.map((prop, key) => {
