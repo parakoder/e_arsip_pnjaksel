@@ -4,6 +4,8 @@ import Gap from '../../components/Gap';
 import './home.scss';
 import { YearPicker } from 'react-dropdown-date';
 import { Bar } from 'react-chartjs-2';
+import { GraphPerYearHandler } from '../../configs/handler/GraphHandler';
+import { GetArsipSum } from '../../configs/handler/ArsipHandler';
 
 function Home(props) {
 	const [dtTableHome, setDtTableHome] = useState(null);
@@ -29,8 +31,6 @@ function Home(props) {
 	}, []);
 
 	const [year, setYear] = useState(2021);
-
-	const a = require('../../components/graph.json');
 
 	const [stateGraph, setStateGraph] = useState({
 		labels: [
@@ -65,26 +65,50 @@ function Home(props) {
 		],
 	});
 
+	const [sumArsip, setSumArsip] = useState(null);
+
 	useEffect(() => {
-		setStateGraph({
-			...stateGraph,
-			datasets: [
-				{
-					label: a.data.pdn,
-					backgroundColor: 'rgba(248,224,134,1)',
-					borderColor: 'rgba(248,224,134,1)',
-					borderWidth: 1,
-					data: a.data.pidana,
-				},
-				{
-					label: a.data.pdt,
-					backgroundColor: 'rgba(118,142,124,1)',
-					borderColor: 'rgba(118,142,124,1)',
-					borderWidth: 1,
-					data: a.data.perdata,
-				},
-			],
-		});
+		GraphPerYearHandler(year)
+			.then((res) => {
+				console.log('res grapg gome', res);
+				if (res.status === 200) {
+					setStateGraph({
+						...stateGraph,
+						datasets: [
+							{
+								label: 'Pidana',
+								backgroundColor: 'rgba(248,224,134,1)',
+								borderColor: 'rgba(248,224,134,1)',
+								borderWidth: 1,
+								data: res.data.dataPidana,
+							},
+							{
+								label: 'Perdata',
+								backgroundColor: 'rgba(118,142,124,1)',
+								borderColor: 'rgba(118,142,124,1)',
+								borderWidth: 1,
+								data: res.data.dataPerdata,
+							},
+						],
+					});
+				}
+			})
+			.catch((err) => {
+				console.log('err graph gome', err);
+			});
+
+		GetArsipSum()
+			.then((res) => {
+				console.log('res arsip sum', res);
+				if (res.status === 200) {
+					setSumArsip(res.data);
+				}
+			})
+			.catch((err) => {
+				console.log('err arsip sum', err);
+				setSumArsip(null);
+			});
+
 		return () => {};
 	}, []);
 
@@ -133,19 +157,27 @@ function Home(props) {
 							<p className='titleRekap'>Rekap E-Arsip</p>
 							<div className='infoRekap'>
 								<p className='subtitleRekap'>Total Arsip</p>
-								<p className='valueRekap'>10.500</p>
+								<p className='valueRekap'>
+									{sumArsip === null ? '-' : sumArsip.total_arsip}
+								</p>
 							</div>
 							<div className='infoRekap'>
 								<p className='subtitleRekap'>Total Input Hari Ini</p>
-								<p className='valueRekap'>50</p>
+								<p className='valueRekap'>
+									{sumArsip === null ? '-' : sumArsip.total_input_today}
+								</p>
 							</div>
 							<div className='infoRekap'>
 								<p className='subtitleRekap'>Presentasi Pertambahan</p>
-								<p className='valueRekap'>30%</p>
+								<p className='valueRekap'>
+									{sumArsip === null ? '-' : sumArsip.persentase_penambahan}
+								</p>
 							</div>
 							<div className='infoRekap'>
 								<p className='subtitleRekap'>Total User Aktif</p>
-								<p className='valueRekap'>32</p>
+								<p className='valueRekap'>
+									{sumArsip === null ? '-' : sumArsip.total_user_aktif}
+								</p>
 							</div>
 						</div>
 					</div>

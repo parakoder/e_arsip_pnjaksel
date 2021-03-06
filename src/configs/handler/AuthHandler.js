@@ -38,7 +38,9 @@ export const LogoutHandler = async (token) => {
 			{ token: token }
 		);
 		console.log('res awal logout', response);
+		return Promise.resolve(response);
 	} catch (error) {
 		console.log('error awal logout', error);
+		return Promise.reject(error);
 	}
 };

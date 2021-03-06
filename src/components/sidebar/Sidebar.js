@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import {
 	HiHome,
 	HiOutlineHome,
@@ -17,6 +17,7 @@ import { IoPersonOutline } from 'react-icons/io5';
 import { LogoutHandler } from '../../configs/handler/AuthHandler';
 
 function Sidebar(props) {
+	const history = useHistory();
 	const [disableFirstLogin, setDisableFirstLogin] = useState(false);
 
 	useEffect(() => {
@@ -47,6 +48,9 @@ function Sidebar(props) {
 			if (datUser !== null) {
 				const response = await LogoutHandler(datUser.access_token);
 				console.log('resps logout', response);
+				if (response.status === 200) {
+					history.replace('/');
+				}
 			}
 		} catch (error) {
 			console.log('error', error);

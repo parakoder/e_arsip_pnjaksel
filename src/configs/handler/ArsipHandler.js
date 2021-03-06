@@ -1,15 +1,15 @@
 import { HandlerAPI } from '../services/HandlerAPI';
 
-export const AboutHandler = async () => {
+export const GetArsipSum = async () => {
 	try {
 		const response = await HandlerAPI(
-			`${process.env.REACT_APP_ROOT_API}/about`,
+			`${process.env.REACT_APP_ROOT_API}/do/data-sum`,
 			'get'
 		);
-		console.log('res awal about', response.data);
+		console.log('res awal sum graph', response.data);
 		return Promise.resolve(response.data);
 	} catch (error) {
-		console.log('error awal about', error);
+		console.log('error awal sum graph', error);
 		return Promise.reject(error);
 	}
 };
