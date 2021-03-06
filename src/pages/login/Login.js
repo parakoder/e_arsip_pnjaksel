@@ -10,7 +10,6 @@ import { OnError } from '../../components/toast/CustomToast'
 import { MdError } from "react-icons/md";
 
 const Login = (props) => {
-	
 
 	const [fragment, setFragment] = useState('loginA');
 
@@ -18,12 +17,15 @@ const Login = (props) => {
 
 	const [error, setError] = useState(false);
 
+	const [onSubmit, setOnSubmit] = useState(false)
+
 	const [authForm, setAuthForm] = useState({
 		username: '',
 		password: '',
 	});
 
 	const login = async () => {
+		setOnSubmit(true)
 		try {
 			const response = await LoginHandler(authForm.username, authForm.password);
 			if (response.status === 200) {
@@ -42,9 +44,10 @@ const Login = (props) => {
 				OnError({ title: 'Terjadi Kesalahan'})
 				setError(true);
 			}
+			setOnSubmit(false)
 			console.log('res login', response);
 		} catch (error) {
-			
+			setOnSubmit(false)
 			console.log('err login', error);
 		}
 	};
@@ -124,6 +127,8 @@ const Login = (props) => {
 						<button
 							className='btn-login'
 							// onClick={() => props.history.push('/sys/home')}
+							style={onSubmit ? {cursor: 'not-allowed'} : null}
+							disabled={onSubmit ? true : false}
 							onClick={login}
 						>
 							Login
@@ -161,5 +166,6 @@ const Login = (props) => {
 		</div>
 	);
 };
+
 
 export default Login;
