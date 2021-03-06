@@ -1,7 +1,7 @@
 import React, {  } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss'
-import { OnSuccess } from '../../components/toast/CustomToast'
+import { OnSuccess, OnError } from '../../components/toast/CustomToast'
 // import { RiDeleteBinLine } from "react-icons/ri";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 
@@ -23,7 +23,7 @@ function ModalDeleteArchive(props) {
                 <div className="modal-del-body-action">
                     <button className="apply"
                         onClick={() => {
-                            OnSuccess({
+                            OnError({
                                 icon: <IoCheckmarkCircleSharp
                                     size={22}
                                     color={'#27AE60'}

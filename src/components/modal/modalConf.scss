@@ -98,3 +98,100 @@
         }
     }
 }
+
+.c-modal-export {
+    max-width: 515px;
+    padding: 0 !important;
+
+    .modal-export-body{
+        text-align: left;
+        padding: 50px !important;
+        color: $black;
+
+        .modal-export-body-header{
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .modal-export-body-content{
+            width: 100%;
+            margin-bottom: 90px;
+
+            .form-group{
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-bottom: 20px;
+
+                .text{
+                    font-size: 14px;
+                    flex: 1;
+                }
+
+                .input{
+                    flex: 1;
+                    font-weight: bold;
+                    border: 1px solid #8BA577;
+                    border-radius: 3px;
+                    text-align: center;
+                    padding: 10px;
+                    max-width: 160px;
+                    outline: none;
+                    font-size: 12;
+                }
+
+                .wrapper-select-date{
+                    flex: 1;
+                    max-width: 160px;
+                    display: flex;
+                    
+                    .select-date{
+                        border: 1px solid #8BA577;
+                        border-radius: 3px;
+                        max-width: 160px;
+                        outline: none;
+                        padding: 10px;
+                        font-size: 12;
+                        text-indent: 30px;
+                    }
+
+                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker{
+                        margin-left: -290px;
+                    }
+
+                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__triangle {
+                        left: 370px !important;
+                    }
+                }
+            }
+        }
+
+        .modal-export-body-action{
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .apply{
+                @include btn-modal();
+                background-color: $primaryDark;
+                color: white;
+                border-radius: 213px;
+                font-weight: 600 !important;
+                font-size: 12px !important;
+            }
+
+            .cancel{
+                @include btn-modal();
+                background-color: white;
+                color: $errorColor;
+                cursor: auto;
+                font-weight: 600 !important;
+                font-size: 12px !important;
+            }
+            
+        }
+    }
+}

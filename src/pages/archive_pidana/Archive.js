@@ -3,17 +3,19 @@ import Gap from '../../components/Gap';
 import { FiSearch } from 'react-icons/fi';
 import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import { BiPrinter } from 'react-icons/bi';
+import { FiLogOut } from 'react-icons/fi';
 import './archive.scss';
 import { MdModeEdit } from 'react-icons/md';
 import { CgFileDocument } from 'react-icons/cg';
 import ModalDeleteArchive from '../../components/modal/ModalDeleteArchive';
+import ModalExportArchive from '../../components/modal/ModalExportArchive';
 import DatePicker from 'react-datepicker';
 
 function Archive(props) {
 	const [dtTableArchive, setDtTableArchive] = useState(null);
 
-	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(true);
+	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
+	const [modalExportisOpen, setModalExportisOpen] = useState(true)
 
 	useEffect(() => {
 		fetch('https://jsonplaceholder.typicode.com/users')
@@ -23,6 +25,10 @@ function Archive(props) {
 
 	const toggleModalDel = () => {
 		setModalDeleteIsOpen(!modalDeleteIsOpen);
+	};
+
+	const toggleModalExport = () => {
+		setModalExportisOpen(!modalExportisOpen);
 	};
 
 	const [startDate, setStartDate] = useState(new Date());
@@ -38,6 +44,12 @@ function Archive(props) {
 			{modalDeleteIsOpen ? (
 				<ModalDeleteArchive modal={modalDeleteIsOpen} toggle={toggleModalDel} />
 			) : null}
+
+			{modalExportisOpen ? (
+				<ModalExportArchive modal={modalExportisOpen} toggle={toggleModalExport} />
+			) : null}
+
+
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
 				<div className='wrapperArchive mb-20px'>
 					<div className='headerArchive'>
@@ -75,12 +87,14 @@ function Archive(props) {
 								/>
 							</div>
 
-							<button className='print-btn  mb-10px ml-20px'>
-								<BiPrinter
+							<button className='print-btn  mb-10px ml-20px'
+								onClick={()=> toggleModalExport()}
+							>
+								<FiLogOut
 									size={20}
 									style={{ marginRight: '10px', marginTop: '-3px' }}
 								/>
-								Print
+								Export
 							</button>
 						</div>
 					</div>

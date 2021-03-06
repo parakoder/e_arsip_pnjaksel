@@ -3,7 +3,7 @@ import Gap from '../../components/Gap';
 import { FiSearch } from 'react-icons/fi';
 import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import { BiPrinter } from 'react-icons/bi';
+import { FiLogOut } from 'react-icons/fi';
 import './archive.scss';
 import { MdModeEdit } from 'react-icons/md';
 import { CgFileDocument } from 'react-icons/cg';
@@ -76,11 +76,11 @@ function Archive(props) {
 							</div>
 
 							<button className='print-btn  mb-10px ml-20px'>
-								<BiPrinter
+								<FiLogOut
 									size={20}
 									style={{ marginRight: '10px', marginTop: '-3px' }}
 								/>
-								Print
+								Export
 							</button>
 						</div>
 					</div>

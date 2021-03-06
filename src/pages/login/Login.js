@@ -6,6 +6,8 @@ import './login.scss';
 import { BsChevronLeft } from 'react-icons/bs';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { LoginHandler } from '../../configs/handler/AuthHandler';
+import { OnError } from '../../components/toast/CustomToast'
+import { MdError } from "react-icons/md";
 
 const Login = (props) => {
 	const [fragment, setFragment] = useState('loginA');
@@ -24,11 +26,19 @@ const Login = (props) => {
 			const response = await LoginHandler(authForm.username, authForm.password);
 			if (response.status === 200) {
 				props.history.push('/sys/home');
+			} else if (response.status === 403) {
+				OnError({
+					title: 'Terjadi Kesalahan',
+					text: response.message,
+				})
+				setError(true);
 			} else {
+				OnError({ title: 'Terjadi Kesalahan'})
 				setError(true);
 			}
 			console.log('res login', response);
 		} catch (error) {
+			
 			console.log('err login', error);
 		}
 	};

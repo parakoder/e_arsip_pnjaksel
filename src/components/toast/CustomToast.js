@@ -1,24 +1,34 @@
 import React from "react";
 import { toast } from 'react-toastify'
 import '../../styles/customStyle.scss'
-
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import { MdError } from "react-icons/md";
 
 const cssToast = {
     position: "top-right",
-    autoClose: 10000,
+    autoClose: 5000,
     hideProgressBar: true,
-    // closeOnClick: true,
-    // pauseOnHover: true,
+    closeOnClick: true,
+    pauseOnHover: true,
     draggable: true,
     progress: undefined,
 }
-const cToastBody = {
+const cToastBodySuccess = {
     display: 'flex',
     height: '100%',
     padding: '2px 20px 2px 12px',
     color: '#25282B',
     alignItems: 'center',
     borderLeft : '2px solid #27AE60'
+}
+
+const cToastBodyError = {
+    display: 'flex',
+    height: '100%',
+    padding: '2px 20px 2px 12px',
+    color: '#25282B',
+    alignItems: 'center',
+    borderLeft : '2px solid #CF212A'
 }
 
 const toastImgFrame = {
@@ -53,14 +63,17 @@ export const OnSuccess = (props) => {
     return (
         toast.success(
             (
-                <div style={cToastBody}>
-                    {props.icon ?
+                <div style={cToastBodySuccess}>
                         <div style={toastImgFrame}>
-                            {props.icon}
+                            {props.icon ? props.icon :
+                                <IoCheckmarkCircleSharp
+                                    size={22}
+                                    color={'#27AE60'}
+                                />
+                            }
+                            
                         </div>
-                        : null
-                    }
-                    <div style={{toastContent}}>
+                    <div style={{ toastContent }}>
                         <div style={toastHeader}>
                             {title}
                         </div>
@@ -73,4 +86,34 @@ export const OnSuccess = (props) => {
             ), cssToast
         )
     )
-}
+};
+
+export const OnError = (props) => {
+    var title = props.title ? props.title : ''
+    var text = props.text ? props.text : ''
+    return (
+        toast.error(
+            (
+                <div style={cToastBodyError}>
+                        <div style={toastImgFrame}>
+                            {props.icon ? props.icon :
+                                <MdError
+                                    size={22}
+                                    color={'#CF212A'}
+                                />
+                            }
+                        </div>
+                    <div style={{ toastContent }}>
+                        <div style={toastHeader}>
+                            {title}
+                        </div>
+                        <div style={toastText}>
+                            {text}
+                        </div>
+                         
+                    </div>
+                </div>
+            ), cssToast
+        )
+    )
+};
