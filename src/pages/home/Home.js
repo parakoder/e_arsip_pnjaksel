@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Gap from '../../components/Gap';
 import './home.scss';
+import { YearPicker } from 'react-dropdown-date';
+import { Bar } from 'react-chartjs-2';
 
 function Home(props) {
 	const [dtTableHome, setDtTableHome] = useState(null);
@@ -26,6 +28,66 @@ function Home(props) {
 			.then((json) => setDtTableHome(json));
 	}, []);
 
+	const [year, setYear] = useState(2021);
+
+	const a = require('../../components/graph.json');
+
+	const [stateGraph, setStateGraph] = useState({
+		labels: [
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December',
+		],
+		datasets: [
+			{
+				label: 'Pidana',
+				backgroundColor: 'rgba(248,224,134,1)',
+				borderColor: 'rgba(248,224,134,1)',
+				borderWidth: 1,
+				data: [65, 59, 80, 81, 56, 20, 25, 70, 90, 120, 10, 20],
+			},
+			{
+				label: 'Perdata',
+				backgroundColor: 'rgba(118,142,124,1)',
+				borderColor: 'rgba(118,142,124,1)',
+				borderWidth: 1,
+				data: [65, 59, 80, 81, 56, 20, 25, 70, 90, 120, 10, 20],
+			},
+		],
+	});
+
+	useEffect(() => {
+		setStateGraph({
+			...stateGraph,
+			datasets: [
+				{
+					label: a.data.pdn,
+					backgroundColor: 'rgba(248,224,134,1)',
+					borderColor: 'rgba(248,224,134,1)',
+					borderWidth: 1,
+					data: a.data.pidana,
+				},
+				{
+					label: a.data.pdt,
+					backgroundColor: 'rgba(118,142,124,1)',
+					borderColor: 'rgba(118,142,124,1)',
+					borderWidth: 1,
+					data: a.data.perdata,
+				},
+			],
+		});
+		return () => {};
+	}, []);
+
 	return (
 		<div className='c-main'>
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
@@ -35,9 +97,35 @@ function Home(props) {
 						<div className='graph'>
 							<div className='graph-header'>
 								<div className='title'>Grafik Jumlah Arsip</div>
-								<div className='select-year'>Tahun 2020</div>
+
+								<YearPicker
+									defaultValue={'Tahun'}
+									start={1980} // default is 1900
+									end={2030} // default is current year
+									reverse // default is ASCENDING
+									required={true} // default is false
+									value={year} // mandatory
+									onChange={(year) => {
+										// mandatory
+										setYear(year);
+									}}
+									id={'year'}
+									name={'year'}
+									classes={'classes'}
+									optionClasses={'option classes'}
+								/>
 							</div>
-							<div className='graph-content'>ini graph</div>
+							<div className='graph-content'>
+								<Bar
+									data={stateGraph}
+									options={{
+										legend: {
+											display: true,
+											position: 'right',
+										},
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className='col-xl-4 col-lg-5 col-md-12 col-sm-12 mb-20px'>
