@@ -10,7 +10,6 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory } from 'react-router';
-import DatePicker from 'react-datepicker';
 import { YearPicker } from 'react-dropdown-date';
 
 function AddArchive(props) {
@@ -25,7 +24,7 @@ function AddArchive(props) {
 		no_box: '',
 		nama_terdakwa: '',
 		tgl_pengiriman: date,
-		file: '',
+		file: [],
 	});
 
 	const onChangeCalendar = (date) => {
@@ -35,11 +34,29 @@ function AddArchive(props) {
 	};
 
 	const browseHandler = (e) => {
-		console.log('errweradawd', e.name);
-		setDataArchive({ ...dataArchive, file: e.name });
+		console.log('errweradawd', e);
+		let newArr = [...dataArchive.file];
+
+		for (let index = 0; index < e.length; index++) {
+			const element = e[index];
+			newArr.push(element.name);
+		}
+		// e.map((file) => {
+		// 	newArr.push(file.name);
+		// 	return newArr;
+		// });
+		setDataArchive({ ...dataArchive, file: newArr });
+	};
+
+	const onDeleteFile = (i) => {
+		const arrFile = [...dataArchive.file];
+		const filteredFile = arrFile.filter((val, idx) => idx !== i);
+		setDataArchive({ ...dataArchive, file: filteredFile });
 	};
 
 	const [year, setYear] = useState(2021);
+
+	console.log('filess', dataArchive.file);
 
 	return (
 		<div className='c-main'>
@@ -163,7 +180,7 @@ function AddArchive(props) {
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Upload PDF Arsip Pidana</p>
 							<div className='wrapperUpload'>
-								{dataArchive.file === '' ? (
+								{dataArchive.file.length === 0 ? (
 									<>
 										<label htmlFor='upload-pdf' className='txtBrowse'>
 											<IoMdCloudUpload size={30} color='#5F764F' /> <br />
@@ -173,25 +190,45 @@ function AddArchive(props) {
 											type='file'
 											accept='application/pdf'
 											id='upload-pdf'
-											onChange={(e) => browseHandler(e.target.files[0])}
+											multiple
+											onChange={(e) => browseHandler(e.target.files)}
 										/>
 									</>
 								) : (
 									<div className='wrapperUploaded'>
-										<div className='doc-uploaded'>
-											<div>{dataArchive.file}</div>
-											<IoMdClose
-												onClick={() =>
-													setDataArchive({ ...dataArchive, file: '' })
-												}
-												color='red'
-											/>
+										<div className='list-file'>
+											{dataArchive &&
+												dataArchive.file.map((val, i) => {
+													return (
+														<div key={i} className='doc-uploaded'>
+															<div className='txt-filename'>{val}</div>
+															<IoMdClose
+																onClick={() => onDeleteFile(i)}
+																color='red'
+																style={{ display: 'flex', flex: 0.5 }}
+															/>
+														</div>
+													);
+												})}
 										</div>
-										<div className='btn-reupload'>
+										<label htmlFor='upload-pdf' className='btn-reupload'>
 											<IoMdCloudUpload size={20} color='white' />
 											<Gap width={10} />
 											<div style={{ color: 'white' }}>Upload Dokumen Lain</div>
-										</div>
+										</label>
+										<input
+											type='file'
+											accept='application/pdf'
+											id='upload-pdf'
+											multiple
+											onChange={(e) => browseHandler(e.target.files)}
+										/>
+										{/* <div
+											className='btn-reupload'
+											onChange={(e) => browseHandler(e.target.files[0])}
+										>
+
+										</div> */}
 									</div>
 								)}
 							</div>

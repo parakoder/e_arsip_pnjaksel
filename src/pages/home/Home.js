@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 
 import Gap from '../../components/Gap';
 import './home.scss';
-import { YearPicker } from 'react-dropdown-date';
 import { Bar } from 'react-chartjs-2';
-import { GraphPerYearHandler } from '../../configs/handler/GraphHandler';
+import {
+	GraphPerYearHandler,
+	GraphYearsHandler,
+} from '../../configs/handler/GraphHandler';
 import { GetLogActivity } from '../../configs/handler/HomeHandler';
 import { GetArsipSum } from '../../configs/handler/ArsipHandler';
-import moment from 'moment'
+import moment from 'moment';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 function Home(props) {
 	const [dtTableHome, setDtTableHome] = useState(null);
@@ -27,31 +31,26 @@ function Home(props) {
 		};
 
 		getName();
-
-		// fetch('https://jsonplaceholder.typicode.com/users')
-		// 	.then((response) => response.json())
-		// 	.then((json) => setDtTableHome(json));
 	}, []);
 
-
 	const getLogDt = () => {
-		var row = 10
+		var row = 10;
 
 		GetLogActivity(row)
-			.then(res => {
-				if (res && res.data ) {
-					console.log('res log', res.data)
-					setDtTableHome(res.data)
+			.then((res) => {
+				if (res && res.data) {
+					console.log('res log', res.data);
+					setDtTableHome(res.data);
 				}
 			})
 			.catch((err) => {
 				console.log('err graph gome', err);
 			});
-	}
+	};
 
 	useEffect(() => {
-		getLogDt()
-	}, [])
+		getLogDt();
+	}, []);
 
 	const [year, setYear] = useState(2021);
 
@@ -119,7 +118,10 @@ function Home(props) {
 			.catch((err) => {
 				console.log('err graph gome', err);
 			});
+		return () => {};
+	}, [year]);
 
+	useEffect(() => {
 		GetArsipSum()
 			.then((res) => {
 				console.log('res arsip sum', res);
@@ -135,6 +137,24 @@ function Home(props) {
 		return () => {};
 	}, []);
 
+	const [yearsArray, setYearsArray] = useState([]);
+
+	useEffect(() => {
+		GraphYearsHandler()
+			.then((res) => {
+				console.log('resss years', res);
+				if (res.status === 200) {
+					var a = res.data;
+					console.log('sorting a', a.sort().reverse());
+					setYearsArray(a.sort().reverse());
+				}
+			})
+			.catch((err) => {
+				console.log('err years', err);
+			});
+		return () => {};
+	}, []);
+
 	return (
 		<div className='c-main'>
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
@@ -144,22 +164,15 @@ function Home(props) {
 						<div className='graph'>
 							<div className='graph-header'>
 								<div className='title'>Grafik Jumlah Arsip</div>
-
-								<YearPicker
-									defaultValue={'Tahun'}
-									start={1980} // default is 1900
-									end={2030} // default is current year
-									reverse // default is ASCENDING
-									required={true} // default is false
-									value={year} // mandatory
-									onChange={(year) => {
-										// mandatory
-										setYear(year);
-									}}
-									id={'year'}
-									name={'year'}
-									classes={'classes'}
-									optionClasses={'option classes'}
+								<Dropdown
+									options={yearsArray}
+									onChange={setYear}
+									value={yearsArray.find(
+										(o) => o === new Date().getFullYear().toString()
+									)}
+									placeholder='Tahun'
+									controlClassName='classes'
+									menuClassName='classes'
 								/>
 							</div>
 							<div className='graph-content'>
@@ -210,11 +223,11 @@ function Home(props) {
 				{/* <Gap height={22} /> */}
 				<div className='wrapperSection'>
 					<p className='titleSection'>Log Aktifitas Terakhir</p>
-					<div className='dateSection'>
+					{/* <div className='dateSection'>
 						<p className='txtLastUpdate'>Last Update:</p>
 						<Gap width={10} />
 						<p className='txtValueLastUpdate'>22 Februari 2021</p>
-					</div>
+					</div> */}
 				</div>
 
 				<div className='c-table-main'>
@@ -251,8 +264,12 @@ function Home(props) {
 											>
 												{dt.user}
 											</td>
-											<td className='table-main-td'>{moment(dt.tanggal).utc().format('yyyy-MM-DD')}</td>
-											<td className='table-main-td'>{moment(dt.waktu,'h:mm ').format('h:mm ')}</td>
+											<td className='table-main-td'>
+												{moment(dt.tanggal).utc().format('yyyy-MM-DD')}
+											</td>
+											<td className='table-main-td'>
+												{moment(dt.waktu, 'h:mm ').format('h:mm ')}
+											</td>
 											<td className='table-main-td'>{dt.aktifitas}</td>
 										</tr>
 								  ))}

@@ -6,18 +6,17 @@ import './login.scss';
 import { BsChevronLeft } from 'react-icons/bs';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { LoginHandler } from '../../configs/handler/AuthHandler';
-import { OnError } from '../../components/toast/CustomToast'
-import { MdError } from "react-icons/md";
+import { OnError } from '../../components/toast/CustomToast';
+import { MdError } from 'react-icons/md';
 
 const Login = (props) => {
-
 	const [fragment, setFragment] = useState('loginA');
 
 	const [showPass, setShowPass] = useState(false);
 
 	const [error, setError] = useState(false);
 
-	const [onSubmit, setOnSubmit] = useState(false)
+	const [onSubmit, setOnSubmit] = useState(false);
 
 	const [authForm, setAuthForm] = useState({
 		username: '',
@@ -25,29 +24,30 @@ const Login = (props) => {
 	});
 
 	const login = async () => {
-		setOnSubmit(true)
+		setOnSubmit(true);
 		try {
 			const response = await LoginHandler(authForm.username, authForm.password);
 			if (response.status === 200) {
-				const lclstrg = localStorage.getItem('@user') ? JSON.parse(localStorage.getItem('@user')) : null
+				const lclstrg = localStorage.getItem('@user')
+					? JSON.parse(localStorage.getItem('@user'))
+					: null;
 				if (lclstrg !== null) {
 					props.history.push('/sys/home');
 				}
-				
 			} else if (response.status === 403) {
 				OnError({
 					title: 'Terjadi Kesalahan',
 					text: response.message,
-				})
+				});
 				setError(true);
 			} else {
-				OnError({ title: 'Terjadi Kesalahan'})
+				OnError({ title: 'Terjadi Kesalahan' });
 				setError(true);
 			}
-			setOnSubmit(false)
+			setOnSubmit(false);
 			console.log('res login', response);
 		} catch (error) {
-			setOnSubmit(false)
+			setOnSubmit(false);
 			console.log('err login', error);
 		}
 	};
@@ -127,7 +127,7 @@ const Login = (props) => {
 						<button
 							className='btn-login'
 							// onClick={() => props.history.push('/sys/home')}
-							style={onSubmit ? {cursor: 'not-allowed'} : null}
+							style={onSubmit ? { cursor: 'not-allowed' } : null}
 							disabled={onSubmit ? true : false}
 							onClick={login}
 						>
@@ -166,6 +166,5 @@ const Login = (props) => {
 		</div>
 	);
 };
-
 
 export default Login;

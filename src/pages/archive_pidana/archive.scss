@@ -85,7 +85,7 @@
                     }
                 }
 
-               
+
             }
 
             .print-btn{
@@ -170,7 +170,18 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center,
+                align-items: center;
+
+                .list-file {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .txt-filename {
+                    display: flex;
+                    flex: 4;
+                    word-break: break-all,
+                }
             }
 
             .btn-reupload {
@@ -181,6 +192,7 @@
                 padding: 10px;
                 background-color: $primarySoft;
                 border-radius: 2px;
+                cursor: pointer;
             }
         }
 

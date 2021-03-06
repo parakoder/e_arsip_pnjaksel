@@ -14,3 +14,17 @@ export const GraphPerYearHandler = async (year) => {
 		return Promise.reject(error);
 	}
 };
+
+export const GraphYearsHandler = async () => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/do/graph-arsip/years`,
+			'get'
+		);
+		console.log('res awal years', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal years', error);
+		return Promise.reject(error);
+	}
+};
