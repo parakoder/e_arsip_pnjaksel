@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './account.scss';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
-import { UpdateUserHandler } from '../../configs/handler/UsersHandler';
+import {
+	GetUserDetail,
+	UpdateUserHandler,
+} from '../../configs/handler/UsersHandler';
 
 const Account = () => {
 	const [dataUser, setDataUser] = useState({
@@ -25,10 +28,16 @@ const Account = () => {
 		const getDataUser = () => {
 			const datUser = JSON.parse(localStorage.getItem('@user'));
 
-			if (datUser !== null) {
-				setDataUser({ name: datUser.name, username: datUser.username });
-				setNewDataUser({ ...newDataUser, name: datUser.name });
-			}
+			GetUserDetail(datUser.username)
+				.then((res) => {
+					if (res.status === 200) {
+						setDataUser({ name: res.data.name, username: res.data.username });
+						setNewDataUser({ ...newDataUser, name: datUser.name });
+					}
+				})
+				.catch((err) => {
+					console.log('err get us', err);
+				});
 		};
 
 		getDataUser();
@@ -269,19 +278,19 @@ const Account = () => {
 						>
 							<div>Perbarui Kata Sandi</div>
 						</div>
-						<ModalConfirmation
-							id='submitModal'
-							title='Submit Data'
-							description='Apa kamu yakin untuk merubah data Anda?'
-							classBtnYes='btn-modal-yes-green'
-							txtBtnYes='Submit'
-							txtBtnNo='Cancel'
-							// onSubmit={() => alert('Berhasil Submit')}
-							onSubmit={changeDataUser}
-						/>
 					</div>
 				</div>
 			</div>
+			<ModalConfirmation
+				id='submitModal'
+				title='Submit Data'
+				description='Apa kamu yakin untuk merubah data Anda?'
+				classBtnYes='btn-modal-yes-green'
+				txtBtnYes='Submit'
+				txtBtnNo='Cancel'
+				// onSubmit={() => alert('Berhasil Submit')}
+				onSubmit={changeDataUser}
+			/>
 		</div>
 	);
 };

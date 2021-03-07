@@ -45,13 +45,13 @@ export const LogoutHandler = async (token) => {
 	}
 };
 
-export const FirstLoginHandler = async (username, password) => {
+export const FirstLoginHandler = async (username, password, isFirst) => {
 	try {
 		const response = await HandlerAPI(
 			`${process.env.REACT_APP_ROOT_API}/auth/new`,
 			'put',
 			null,
-			{ username: username, password: password }
+			{ username: username, password: password, is_first_login: isFirst }
 		);
 		console.log('res awal first login', response.data);
 		return Promise.resolve(response.data);

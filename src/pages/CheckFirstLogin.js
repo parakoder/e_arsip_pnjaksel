@@ -28,7 +28,8 @@ function CheckFirstLogin(props) {
 			} else {
 				FirstLoginHandler(
 					datUser !== null ? datUser.username : null,
-					authPass.renewPass
+					authPass.renewPass,
+					false
 				)
 					.then((res) => {
 						console.log('res newAuth', res);

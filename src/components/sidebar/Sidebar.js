@@ -26,7 +26,7 @@ function Sidebar(props) {
 			setDisableFirstLogin(false);
 		} else {
 			// setDisableFirstLogin(false)
-			setDisableFirstLogin(true);
+			setDisableFirstLogin(false);
 		}
 		// setDisableFirstLogin(false);
 	}, [props.isFirstLogin]);
