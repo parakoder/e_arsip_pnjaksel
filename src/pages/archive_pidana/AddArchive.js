@@ -39,7 +39,7 @@ function AddArchive(props) {
 
 		for (let index = 0; index < e.length; index++) {
 			const element = e[index];
-			newArr.push(element.name);
+			newArr.push(element);
 		}
 		// e.map((file) => {
 		// 	newArr.push(file.name);
@@ -55,6 +55,17 @@ function AddArchive(props) {
 	};
 
 	const [year, setYear] = useState(2021);
+
+
+	const onSubmitData = () => {
+		
+		var fd = new FormData()
+
+		dataArchive.file.map(item => fd.append('files', item.file));
+
+		console.log('body nya', fd)
+		
+	}
 
 	console.log('filess', dataArchive.file);
 
@@ -201,7 +212,7 @@ function AddArchive(props) {
 												dataArchive.file.map((val, i) => {
 													return (
 														<div key={i} className='doc-uploaded'>
-															<div className='txt-filename'>{val}</div>
+															<div className='txt-filename'>{val.name}</div>
 															<IoMdClose
 																onClick={() => onDeleteFile(i)}
 																color='red'
@@ -238,7 +249,10 @@ function AddArchive(props) {
 					<div className='addFooter row'>
 						<div
 							className='btn-submit mb-20px col-sm-12'
-							onClick={() => console.log('dataarchive', dataArchive)}
+							onClick={() => {
+								onSubmitData()
+								console.log('dataarchive', dataArchive)
+							}}
 							data-bs-toggle='modal'
 							data-bs-target='#submitModal'
 						>

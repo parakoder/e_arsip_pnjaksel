@@ -127,7 +127,7 @@ const Login = (props) => {
 						<button
 							className='btn-login'
 							// onClick={() => props.history.push('/sys/home')}
-							style={onSubmit ? { cursor: 'not-allowed' } : null}
+							style={onSubmit ? { cursor: 'not-allowed', opacity: '0.6' } : null}
 							disabled={onSubmit ? true : false}
 							onClick={login}
 						>
