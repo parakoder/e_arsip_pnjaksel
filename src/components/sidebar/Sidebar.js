@@ -23,10 +23,10 @@ function Sidebar(props) {
 	useEffect(() => {
 		if (props.isFirstLogin) {
 			// setDisableFirstLogin(true)
-			setDisableFirstLogin(false)
+			setDisableFirstLogin(false);
 		} else {
 			// setDisableFirstLogin(false)
-			setDisableFirstLogin(true)
+			setDisableFirstLogin(true);
 		}
 		// setDisableFirstLogin(false);
 	}, [props.isFirstLogin]);

@@ -9,21 +9,20 @@ function DashboardLayout(props) {
 	const lclstrg = localStorage.getItem('@user')
 		? JSON.parse(localStorage.getItem('@user'))
 		: null;
-	
-	const check_first_login =  lclstrg !== null
-		? lclstrg && lclstrg.is_first_login
-		: null;
+
+	const check_first_login =
+		lclstrg !== null ? lclstrg && lclstrg.is_first_login : null;
 
 	const [isFirstLogin, setIsFirstLogin] = useState(false);
 
 	useEffect(() => {
-			if (check_first_login === false) {
-				// console.log('tesss')
-				props.history.push('/sys/check-first-login');
-				setIsFirstLogin(check_first_login);
-			} else {
-				setIsFirstLogin(check_first_login);
-			}
+		if (check_first_login === false) {
+			// console.log('tesss')
+			props.history.push('/sys/check-first-login');
+			setIsFirstLogin(check_first_login);
+		} else {
+			setIsFirstLogin(check_first_login);
+		}
 	}, [isFirstLogin]);
 
 	const getRoutes = (routeList) => {

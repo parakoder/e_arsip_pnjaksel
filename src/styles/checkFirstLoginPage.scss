@@ -1,4 +1,5 @@
 @import './colors.scss';
+@import '../pages/login/login.scss';
 
 
 .wrapper-page-check-first-login{
@@ -19,7 +20,7 @@
     .txt-2{
         font-size: 14px;
     }
-    
+
     .form-input{
         margin: 0 auto;
         text-align: left;
@@ -37,4 +38,17 @@
             font-size: 14px;
         }
     }
+
+    .form-input-eye {
+        @include input-1();
+    }
+
+    .input2 {
+        border: none;
+        outline: none;
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+    }
+
 }

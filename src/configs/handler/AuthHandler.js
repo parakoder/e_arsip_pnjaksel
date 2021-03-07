@@ -44,3 +44,19 @@ export const LogoutHandler = async (token) => {
 		return Promise.reject(error);
 	}
 };
+
+export const FirstLoginHandler = async (username, password) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/auth/new`,
+			'put',
+			null,
+			{ username: username, password: password }
+		);
+		console.log('res awal first login', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal first login', error);
+		return Promise.reject(error);
+	}
+};
