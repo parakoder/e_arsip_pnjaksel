@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import './account.scss';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
@@ -6,6 +7,7 @@ import {
 	GetUserDetail,
 	UpdateUserHandler,
 } from '../../configs/handler/UsersHandler';
+import {  OnError, OnSuccess } from '../../components/toast/CustomToast'
 
 const Account = () => {
 	const [dataUser, setDataUser] = useState({
@@ -42,20 +44,29 @@ const Account = () => {
 
 		getDataUser();
 	}, []);
+	console.log('1111111', newDataUser)
 
 	const changeDataUser = () => {
 		const datUser = JSON.parse(localStorage.getItem('@user'));
 		console.log('datUser', datUser);
+		console.log('newDataUser', newDataUser)
+
+		var new_pass = newDataUser.newPass === '' || newDataUser.newPass === null ? null : newDataUser.newPass
+		var renew_pass = newDataUser.renewPass === '' ||  newDataUser.renewPass === null ? null :  newDataUser.renewPass
 
 		if (
 			newDataUser.name !== '' &&
 			newDataUser.oldPass !== '' &&
-			newDataUser.newPass === '' &&
-			newDataUser.renewPass === ''
+			new_pass === null &&
+			renew_pass  === null
+			// newDataUser.newPass === '' &&
+			// newDataUser.renewPass === ''
 		) {
 			if (newDataUser.oldPass === '' || newDataUser.name === '') {
-				alert('Nama dan/atau Kata Sandi tidak boleh kosong');
+				// alert('Nama dan/atau Kata Sandi tidak boleh kosong');
+				OnError({title: 'Peringatan', text: 'Nama dan/atau Kata Sandi tidak boleh kosong'})
 			} else {
+				console.log('newDataUser321', newDataUser)
 				UpdateUserHandler(
 					dataUser.username,
 					newDataUser.name,
@@ -65,10 +76,13 @@ const Account = () => {
 					.then((res) => {
 						console.log('ress update user', res);
 						if (res.status === 400) {
-							alert('Kata Sandi lama anda tidak sesuai');
+							// alert('Kata Sandi lama anda tidak sesuai');
+							OnError({title: 'Peringatan', text: 'Kata Sandi lama anda tidak sesuai'})
 						}
 						if (res.status === 200) {
-							alert('berhasil cuk');
+							// alert('berhasil cuk');
+							OnSuccess({title: 'Sukses', text: ''})
+							
 							var newDataLocal = { ...datUser, name: res.data.name };
 							localStorage.setItem('@user', newDataLocal);
 						}
@@ -79,10 +93,12 @@ const Account = () => {
 			}
 		} else {
 			if (newDataUser.newPass !== newDataUser.renewPass) {
-				alert('Kata Sandi baru dan Ulangi Kata Sandi baru tidak cocok');
+				// alert('Kata Sandi baru dan Ulangi Kata Sandi baru tidak cocok');
+				OnError({title: 'Peringatan', text: 'Kata Sandi baru dan Ulangi Kata Sandi baru tidak cocok'})
 			} else {
 				if (newDataUser.oldPass === '' || newDataUser.name === '') {
-					alert('Nama dan atau Kata sandi lama tidak boleh kosong');
+					// alert('Nama dan atau Kata sandi lama tidak boleh kosong');
+					OnError({title: 'Peringatan', text: 'Nama dan atau Kata sandi lama tidak boleh kosong'})
 				} else {
 					UpdateUserHandler(
 						dataUser.username,
@@ -93,10 +109,12 @@ const Account = () => {
 						.then((res) => {
 							console.log('ress update user', res);
 							if (res.status === 400) {
-								alert('Kata Sandi lama anda tidak sesuai');
+								// alert('Kata Sandi lama anda tidak sesuai');
+								OnError({title: 'Peringatan', text: 'Kata Sandi lama anda tidak sesuai'})
 							}
 							if (res.status === 200) {
-								alert('new password success');
+								// alert('new password success');
+								OnSuccess({title: 'Sukses', text: 'new password success'})
 							}
 						})
 						.catch((err) => {

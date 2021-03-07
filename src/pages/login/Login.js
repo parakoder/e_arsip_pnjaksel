@@ -19,8 +19,10 @@ const Login = (props) => {
 	const [onSubmit, setOnSubmit] = useState(false);
 
 	const [authForm, setAuthForm] = useState({
-		username: '',
-		password: '',
+		username: 'alexa',
+		password: 'null',
+		// username: '',
+		// password: '',
 	});
 
 	const login = async () => {
@@ -44,10 +46,12 @@ const Login = (props) => {
 				OnError({ title: 'Terjadi Kesalahan' });
 				setError(true);
 			}
+			
 			setOnSubmit(false);
 			console.log('res login', response);
 		} catch (error) {
 			setOnSubmit(false);
+			OnError({ title: 'Terjadi Kesalahan' });
 			console.log('err login', error);
 		}
 	};
@@ -89,6 +93,7 @@ const Login = (props) => {
 								setAuthForm({ ...authForm, username: e.target.value });
 								setError(false);
 							}}
+							value={authForm.username}
 						/>
 						<Gap height={20} />
 						<div className='titleInputWrapper'>
@@ -108,6 +113,7 @@ const Login = (props) => {
 									setAuthForm({ ...authForm, password: e.target.value });
 									setError(false);
 								}}
+								value={authForm.password}
 							/>
 							{showPass ? (
 								<AiOutlineEyeInvisible
