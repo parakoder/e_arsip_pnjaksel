@@ -32,7 +32,7 @@ const Account = () => {
 				.then((res) => {
 					if (res.status === 200) {
 						setDataUser({ name: res.data.name, username: res.data.username });
-						setNewDataUser({ ...newDataUser, name: datUser.name });
+						setNewDataUser({ ...newDataUser, name: res.data.name });
 					}
 				})
 				.catch((err) => {
@@ -272,16 +272,16 @@ const Account = () => {
 						/> */}
 						<div
 							className='btn-submit mb-20px col-sm-12'
-							// onClick={() => console.log('dataarchive', dataArchive)}
-							data-bs-toggle='modal'
-							data-bs-target='#submitModal'
+							onClick={changeDataUser}
+							// data-bs-toggle='modal'
+							// data-bs-target='#submitModal'
 						>
 							<div>Perbarui Kata Sandi</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<ModalConfirmation
+			{/* <ModalConfirmation
 				id='submitModal'
 				title='Submit Data'
 				description='Apa kamu yakin untuk merubah data Anda?'
@@ -290,7 +290,7 @@ const Account = () => {
 				txtBtnNo='Cancel'
 				// onSubmit={() => alert('Berhasil Submit')}
 				onSubmit={changeDataUser}
-			/>
+			/> */}
 		</div>
 	);
 };
