@@ -21,12 +21,14 @@ function Sidebar(props) {
 	const [disableFirstLogin, setDisableFirstLogin] = useState(false);
 
 	useEffect(() => {
-		// if (props.isFirstLogin) {
-		// 	setDisableFirstLogin(true)
-		// } else {
-		// 	setDisableFirstLogin(false)
-		// }
-		setDisableFirstLogin(false);
+		if (props.isFirstLogin) {
+			// setDisableFirstLogin(true)
+			setDisableFirstLogin(false)
+		} else {
+			// setDisableFirstLogin(false)
+			setDisableFirstLogin(true)
+		}
+		// setDisableFirstLogin(false);
 	}, [props.isFirstLogin]);
 
 	const onActiveCss = {
