@@ -39,7 +39,7 @@ function EditArchive(props) {
 
 		for (let index = 0; index < e.length; index++) {
 			const element = e[index];
-			newArr.push(element.name);
+			newArr.push(element);
 		}
 		setDataArchive({ ...dataArchive, file: newArr });
 	};
@@ -51,6 +51,16 @@ function EditArchive(props) {
 	};
 
 	const [year, setYear] = useState(2021);
+
+	const onSubmitData = () => {
+		
+		var fd = new FormData()
+
+		dataArchive.file.map(item => fd.append('files', item.File));
+
+		console.log('body nya', fd)
+		
+	}
 
 	return (
 		<div className='c-main'>
@@ -195,7 +205,7 @@ function EditArchive(props) {
 												dataArchive.file.map((val, i) => {
 													return (
 														<div key={i} className='doc-uploaded'>
-															<div className='txt-filename'>{val}</div>
+															<div className='txt-filename'>{val.name}</div>
 															<IoMdClose
 																onClick={() => onDeleteFile(i)}
 																color='red'

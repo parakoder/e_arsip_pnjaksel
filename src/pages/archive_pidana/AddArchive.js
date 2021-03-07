@@ -61,8 +61,8 @@ function AddArchive(props) {
 		
 		var fd = new FormData()
 
-		dataArchive.file.map(item => fd.append('files', item.file));
-
+		dataArchive.file.map(item => fd.append('files', item.File));
+		fd.append('aaa', 'bbb')
 		console.log('body nya', fd)
 		
 	}
