@@ -166,7 +166,7 @@ function Home(props) {
 								<div className='title'>Grafik Jumlah Arsip</div>
 								<Dropdown
 									options={yearsArray}
-									onChange={setYear}
+									onChange={(e) => setYear(e.value)}
 									value={yearsArray.find(
 										(o) => o === new Date().getFullYear().toString()
 									)}
