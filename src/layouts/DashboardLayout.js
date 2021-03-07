@@ -16,7 +16,7 @@ function DashboardLayout(props) {
 	const [isFirstLogin, setIsFirstLogin] = useState(false);
 
 	useEffect(() => {
-		if (check_first_login === false) {
+		if (check_first_login === true) {
 			// console.log('tesss')
 			props.history.push('/sys/check-first-login');
 			setIsFirstLogin(check_first_login);

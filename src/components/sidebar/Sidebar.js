@@ -22,11 +22,11 @@ function Sidebar(props) {
 
 	useEffect(() => {
 		if (props.isFirstLogin) {
-			// setDisableFirstLogin(true)
-			setDisableFirstLogin(false);
+			setDisableFirstLogin(true);
+			// setDisableFirstLogin(false);
 		} else {
-			// setDisableFirstLogin(false)
 			setDisableFirstLogin(false);
+			// setDisableFirstLogin(false);
 		}
 		// setDisableFirstLogin(false);
 	}, [props.isFirstLogin]);
