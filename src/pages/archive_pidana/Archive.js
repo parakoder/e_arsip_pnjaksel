@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Gap from '../../components/Gap';
 import { FiSearch } from 'react-icons/fi';
@@ -12,28 +13,15 @@ import ModalExportArchive from '../../components/modal/ModalExportArchive';
 import CalendarContainer from 'react-datepicker';
 import DatePicker from 'react-datepicker';
 import { GetArsipPidana } from '../../configs/handler/ArsipHandler';
+import PaginationComponent from '../../components/Pagination/PaginationComponent'
+import AwesomeDebouncePromise from 'awesome-debounce-promise';
+
 
 function Archive(props) {
 	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
 	const [modalExportisOpen, setModalExportisOpen] = useState(false);
 
 	const [dataPidana, setDataPidana] = useState(null);
-
-	useEffect(() => {
-		GetArsipPidana()
-			.then((res) => {
-				if (res.status === 200) {
-					setDataPidana(res.data);
-				}
-				// console.log(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		return () => {
-			// cleanup
-		};
-	}, []);
 
 	const toggleModalDel = () => {
 		setModalDeleteIsOpen(!modalDeleteIsOpen);
@@ -43,7 +31,11 @@ function Archive(props) {
 		setModalExportisOpen(!modalExportisOpen);
 	};
 
-	const [startDate, setStartDate] = useState(new Date());
+	const [findDataFilter, setFindDataFilter] = useState(null)
+
+    const [dateCodePick, setDateCodePick] = useState(null)
+
+	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const onChange = (dates) => {
 		console.log('dates', dates);
@@ -51,6 +43,54 @@ function Archive(props) {
 		setStartDate(start);
 		setEndDate(end);
 	};
+
+	const [pagination, setPagination] = useState({
+		page: 1,
+		limit: 20,
+	})
+
+
+	const changePagePaginate = page => {
+		setPagination({
+			...pagination,
+			page: page
+		})
+	}
+
+	const getDtArsipPidana = () => {
+
+        var findData = findDataFilter === null ? null : findDataFilter
+        var dateStart = startDate === null ? null : startDate
+        var dateEnd = endDate === null ? null : endDate
+        var dateCode = dateCodePick === null ? null : dateCodePick
+
+        var ofset  = pagination.page === 1 ? 0 : ((pagination.page - 1) * pagination.limit)
+
+        GetArsipPidana({
+            query: findData,
+            befor: dateStart,
+            after: dateEnd,
+            date_code: dateCode,
+            offset: ofset,
+            limit: pagination.limit
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                setDataPidana(res.data);
+            }
+            // console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+	useEffect(() => {
+        debounceOnFilter()
+    }, [pagination.page, findDataFilter, startDate, endDate, dateCodePick ]);
+
+
+    const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPidana, 700);
 
 	return (
 		<div className='c-main'>
@@ -80,7 +120,9 @@ function Archive(props) {
 							<div className='wrapperInput mb-10px'>
 								<FiSearch size={20} />
 								<Gap width={10} />
-								<input className='input' placeholder='Cari Data' />
+								<input className='input' placeholder='Cari Data'
+									onChange={(e) => setFindDataFilter(e.target.value)}
+								/>
 							</div>
 							<div className='wrapperFilter-date  mb-10px ml-20px'>
 								<RiCalendar2Line
@@ -131,7 +173,7 @@ function Archive(props) {
 									endDate={endDate}
 									selectsRange
 									dateFormat='dd MMM'
-									// disabled
+								// disabled
 								/>
 							</div>
 
@@ -153,7 +195,7 @@ function Archive(props) {
 					<div></div>
 				</div>
 
-				<div className='c-table-main'>
+				<div className='c-table-main mb-30px'>
 					<table className='table-main'>
 						<thead className='table-main-thead'>
 							<tr>
@@ -185,45 +227,55 @@ function Archive(props) {
 							{dataPidana === null
 								? null
 								: dataPidana.map((dt, i) => (
-										<tr key={i} className='table-main-nth-child'>
-											<td className='table-main-td'>{i + 1}</td>
-											<td
-												className='table-main-td'
-												style={{ textAlign: 'left' }}
-											>
-												{dt.no_perkara}
-											</td>
-											<td className='table-main-td'>{dt.box}</td>
-											<td className='table-main-td'>
-												{dt.nama_tergugat.toString()},{' '}
-												{dt.nama_penggugat.toString()},{' '}
-												{dt.nama_turut_tergugat.toString()}
-											</td>
-											<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
-											<td className='table-main-td'>
-												<CgFileDocument
-													size={22}
-													style={{
-														cursor: 'pointer',
-													}}
-												/>
-											</td>
-											<td className='table-main-td'>
-												<MdModeEdit
-													size={22}
-													style={{
-														cursor: 'pointer',
-													}}
-													onClick={() =>
-														props.history.push('/sys/archive-pidana/edit')
-													}
-												/>
-											</td>
-										</tr>
-								  ))}
+									<tr key={i} className='table-main-nth-child'>
+										<td className='table-main-td'>{i + 1}</td>
+										<td
+											className='table-main-td'
+											style={{ textAlign: 'left' }}
+										>
+											{dt.no_perkara}
+										</td>
+										<td className='table-main-td'>{dt.box}</td>
+										<td className='table-main-td'>
+											{dt.nama_tergugat.toString()},{' '}
+											{dt.nama_penggugat.toString()},{' '}
+											{dt.nama_turut_tergugat.toString()}
+										</td>
+										<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
+										<td className='table-main-td'>
+											<CgFileDocument
+												size={22}
+												style={{
+													cursor: 'pointer',
+												}}
+											/>
+										</td>
+										<td className='table-main-td'>
+											<MdModeEdit
+												size={22}
+												style={{
+													cursor: 'pointer',
+												}}
+												onClick={() =>
+													props.history.push('/sys/archive-pidana/edit')
+												}
+											/>
+										</td>
+									</tr>
+								))}
 						</tbody>
 					</table>
 				</div>
+				<PaginationComponent
+					totalItems={
+						86
+					}
+					pageSize={pagination.limit}
+					onSelect={changePagePaginate}
+					activePage={pagination.page}
+					className="pagination justify-content-center mb-0"
+					listClassName="justify-content-center mb-0"
+				/>
 			</div>
 		</div>
 	);

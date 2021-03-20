@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Gap from "../../components/Gap";
 import { FiSearch } from "react-icons/fi";
@@ -11,6 +12,8 @@ import ModalDeleteArchive from "../../components/modal/ModalDeleteArchive";
 import DatePicker from "react-datepicker";
 import { GetArsipPerdata } from "../../configs/handler/ArsipHandler";
 import { useHistory } from "react-router-dom";
+import PaginationComponent from '../../components/Pagination/PaginationComponent'
+import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 function Archive(props) {
     // const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
@@ -19,33 +22,71 @@ function Archive(props) {
 
     const history = useHistory();
 
-    useEffect(() => {
-        GetArsipPerdata()
-            .then((res) => {
-                if (res.status === 200) {
-                    setDataPerdata(res.data);
-                }
-                // console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        return () => {
-            // cleanup
-        };
-    }, []);
-
     // const toggleModalDel = () => {
     //     setModalDeleteIsOpen(!modalDeleteIsOpen);
     // };
 
-    const [startDate, setStartDate] = useState(new Date());
+    const [findDataFilter, setFindDataFilter] = useState(null)
+
+    const [dateCodePick, setDateCodePick] = useState(null)
+
+    const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
     };
+
+    const [pagination, setPagination] = useState({
+		page: 1,
+		limit: 20,
+	})
+
+	const changePagePaginate = page => {
+		setPagination({
+			...pagination,
+			page: page
+		})
+	}
+
+
+    const getDtArsipPerdata = () => {
+
+        var findData = findDataFilter === null ? null : findDataFilter
+        var dateStart = startDate === null ? null : startDate
+        var dateEnd = endDate === null ? null : endDate
+        var dateCode = dateCodePick === null ? null : dateCodePick
+
+        var ofset  = pagination.page === 1 ? 0 : ((pagination.page - 1) * pagination.limit)
+
+        GetArsipPerdata({
+            query: findData,
+            befor: dateStart,
+            after: dateEnd,
+            date_code: dateCode,
+            offset: ofset,
+            limit: pagination.limit
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                setDataPerdata(res.data);
+            }
+            // console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    useEffect(() => {
+        debounceOnFilter()
+    }, [pagination.page, findDataFilter, startDate, endDate, dateCodePick ]);
+
+
+    const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPerdata, 700);
+
 
     return (
         <div className="c-main">
@@ -75,6 +116,7 @@ function Archive(props) {
                                 <input
                                     className="input"
                                     placeholder="Cari Data"
+                                    onChange={(e) => setFindDataFilter(e.target.value)}
                                 />
                             </div>
                             <div className="wrapperFilter-date  mb-10px ml-20px">
@@ -112,7 +154,7 @@ function Archive(props) {
                     <div></div>
                 </div>
 
-                <div className="c-table-main">
+                <div className="c-table-main mb-30px">
                     <table className="table-main">
                         <thead className="table-main-thead">
                             <tr>
@@ -219,6 +261,16 @@ function Archive(props) {
                         </tbody>
                     </table>
                 </div>
+                <PaginationComponent
+					totalItems={
+						86
+					}
+					pageSize={pagination.limit}
+					onSelect={changePagePaginate}
+					activePage={pagination.page}
+					className="pagination justify-content-center mb-0"
+					listClassName="justify-content-center mb-0"
+				/>
             </div>
         </div>
     );

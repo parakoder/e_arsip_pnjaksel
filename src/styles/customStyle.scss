@@ -1,4 +1,5 @@
 
+
 @mixin txt-input {
     border-radius: 3px;
     width: 100%;
@@ -236,3 +237,50 @@
 .mr-20px {
     margin-right: 20px;
 }
+
+/*----------------------- 
+2.14 Pagination
+-------------------------*/
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: 0px;
+    margin-right: 5px;
+    line-height: 1.25;
+    color: #25282B;
+    background-color: #ffffff;
+    /* border: 1px solid #e6e6f2; */
+    border-radius: 3px;
+    line-height: 1;
+  }
+  
+  .page-link:hover {
+    z-index: 2;
+    color: #fff;
+    text-decoration: none;
+    background-color: #768E7C;
+    border-color: #768E7C;
+  }
+  
+  .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #768E7C;
+    outline: none;
+    box-shadow: #768E7C;
+    /* border-color: #5969ff; */
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+//   .page-item.active .page-link:focus {
+
+//     box-shadow: #768E7C;
+//     /* border-color: #5969ff; */
+//   }
+  
+  .page-item .page-link{
+      border: none !important;
+  }

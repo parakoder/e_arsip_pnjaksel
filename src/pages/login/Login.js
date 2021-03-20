@@ -19,8 +19,8 @@ const Login = (props) => {
 	const [onSubmit, setOnSubmit] = useState(false);
 
 	const [authForm, setAuthForm] = useState({
-		username: 'alexa',
-		password: 'null',
+		username: 'alvinski',
+		password: 'alvin123',
 		// username: '',
 		// password: '',
 	});
