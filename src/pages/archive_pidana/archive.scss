@@ -55,7 +55,7 @@
                 align-items: center;
                 padding: 5px;
                 border-radius: 5px;
-                border: 1px solid $primaryDark;
+                border: 1px solid $primarySoft;
             }
 
             .input {
@@ -68,7 +68,7 @@
             .wrapperFilter-date {
                 // max-width: 160px;
                 height: 35px;
-                    // padding: 0px 20px 0px 20px;
+                    padding: 0px 10px;
                     border: 1px solid #8BA577;
                     border-radius: 3px;
                     display: flex;
@@ -98,7 +98,11 @@
                     }
                 }
 
-
+                .date-code {
+                    cursor: 'pointer';
+                    padding: 4px;
+					border-radius: 3px;
+                }
             }
 
             .print-btn{

@@ -5,18 +5,18 @@ import { FiSearch } from 'react-icons/fi';
 import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
+import { IoMdClose } from 'react-icons/io';
 import './archive.scss';
 import { MdModeEdit } from 'react-icons/md';
 import { CgFileDocument } from 'react-icons/cg';
 import ModalDeleteArchive from '../../components/modal/ModalDeleteArchive';
 import ModalExportArchive from '../../components/modal/ModalExportArchive';
-import CalendarContainer from 'react-datepicker';
 import DatePicker from 'react-datepicker';
 import { GetArsipPidana } from '../../configs/handler/ArsipHandler';
-import PaginationComponent from '../../components/Pagination/PaginationComponent'
+import PaginationComponent from '../../components/Pagination/PaginationComponent';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
-
+import moment from 'moment';
 function Archive(props) {
 	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
 	const [modalExportisOpen, setModalExportisOpen] = useState(false);
@@ -31,11 +31,11 @@ function Archive(props) {
 		setModalExportisOpen(!modalExportisOpen);
 	};
 
-	const [findDataFilter, setFindDataFilter] = useState(null)
+	const [findDataFilter, setFindDataFilter] = useState(null);
 
-    const [dateCodePick, setDateCodePick] = useState(null)
+	const [dateCodePick, setDateCodePick] = useState(null);
 
-	const [startDate, setStartDate] = useState(null);
+	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(null);
 	const onChange = (dates) => {
 		console.log('dates', dates);
@@ -47,50 +47,55 @@ function Archive(props) {
 	const [pagination, setPagination] = useState({
 		page: 1,
 		limit: 20,
-	})
+	});
 
-
-	const changePagePaginate = page => {
+	const changePagePaginate = (page) => {
 		setPagination({
 			...pagination,
-			page: page
-		})
-	}
+			page: page,
+		});
+	};
 
 	const getDtArsipPidana = () => {
+		var findData = findDataFilter === null ? null : findDataFilter;
+		var dateStart = startDate === null ? null : startDate;
+		var dateEnd = endDate === null ? null : endDate;
+		var dateCode = dateCodePick === null ? null : dateCodePick;
 
-        var findData = findDataFilter === null ? null : findDataFilter
-        var dateStart = startDate === null ? null : startDate
-        var dateEnd = endDate === null ? null : endDate
-        var dateCode = dateCodePick === null ? null : dateCodePick
+		var ofset =
+			pagination.page === 1 ? 0 : (pagination.page - 1) * pagination.limit;
 
-        var ofset  = pagination.page === 1 ? 0 : ((pagination.page - 1) * pagination.limit)
-
-        GetArsipPidana({
-            query: findData,
-            befor: dateStart,
-            after: dateEnd,
-            date_code: dateCode,
-            offset: ofset,
-            limit: pagination.limit
-        })
-        .then((res) => {
-            if (res.status === 200) {
-                setDataPidana(res.data);
-            }
-            // console.log(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }
+		GetArsipPidana({
+			query: findData,
+			befor: dateStart,
+			after: dateEnd,
+			date_code: dateCode,
+			offset: ofset,
+			limit: pagination.limit,
+		})
+			.then((res) => {
+				if (res.status === 200) {
+					setDataPidana(res.data);
+				}
+				// console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	useEffect(() => {
-        debounceOnFilter()
-    }, [pagination.page, findDataFilter, startDate, endDate, dateCodePick ]);
+		debounceOnFilter();
+	}, [pagination.page, findDataFilter, startDate, endDate, dateCodePick]);
 
+	const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPidana, 700);
 
-    const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPidana, 700);
+	const onClearFilter = () => {
+		setFindDataFilter(null);
+		setDateCodePick(null);
+		setStartDate(null);
+		setEndDate(null);
+	};
 
 	return (
 		<div className='c-main'>
@@ -120,16 +125,14 @@ function Archive(props) {
 							<div className='wrapperInput mb-10px'>
 								<FiSearch size={20} />
 								<Gap width={10} />
-								<input className='input' placeholder='Cari Data'
+								<input
+									className='input'
+									placeholder='Cari Data'
 									onChange={(e) => setFindDataFilter(e.target.value)}
 								/>
 							</div>
 							<div className='wrapperFilter-date  mb-10px ml-20px'>
-								<RiCalendar2Line
-									style={{
-										marginLeft: 10,
-									}}
-								/>
+								<RiCalendar2Line />
 								<DatePicker
 									className='filter-date'
 									monthsShown={2}
@@ -139,6 +142,7 @@ function Archive(props) {
 									endDate={endDate}
 									selectsRange
 									dateFormat='dd MMM'
+									placeholderText={'1 Jan'}
 								>
 									<div
 										style={{
@@ -147,20 +151,84 @@ function Archive(props) {
 											justifyContent: 'space-around',
 											backgroundColor: '#F0F0F0',
 											position: 'absolute',
-											left: -115,
+											left: -105,
 											height: 235,
 											maxHeight: 235,
-											padding: '25px 25px',
+											padding: '15px 15px',
 											border: '1px solid #768E7C',
-											borderRadius: 5,
+											borderRadius: 3,
 										}}
 									>
-										<div>Hari Ini</div>
-										<div>Kemarin</div>
-										<div>Minggu Ini</div>
-										<div>Bulan Ini</div>
-										<div>Bulan Lalu</div>
-										<div>Tahun Ini</div>
+										<div
+											onClick={() => setDateCodePick('hi')}
+											className='date-code'
+											style={{
+												backgroundColor:
+													dateCodePick === 'hi' ? '#8BA577' : '#F0F0F0',
+												color: dateCodePick === 'hi' ? 'white' : 'black',
+											}}
+										>
+											Hari Ini
+										</div>
+										<div
+											onClick={() => setDateCodePick('km')}
+											className='date-code'
+											style={{
+												backgroundColor:
+													dateCodePick === 'km' ? '#8BA577' : '#F0F0F0',
+
+												color: dateCodePick === 'km' ? 'white' : 'black',
+											}}
+										>
+											Kemarin
+										</div>
+										<div
+											onClick={() => setDateCodePick('mi')}
+											className='date-code'
+											style={{
+												backgroundColor:
+													dateCodePick === 'mi' ? '#8BA577' : '#F0F0F0',
+
+												color: dateCodePick === 'mi' ? 'white' : 'black',
+											}}
+										>
+											Minggu Ini
+										</div>
+										<div
+											onClick={() => setDateCodePick('bi')}
+											style={{
+												cursor: 'pointer',
+												backgroundColor:
+													dateCodePick === 'bi' ? '#8BA577' : '#F0F0F0',
+												padding: 4,
+												borderRadius: 3,
+												color: dateCodePick === 'bi' ? 'white' : 'black',
+											}}
+										>
+											Bulan Ini
+										</div>
+										<div
+											onClick={() => setDateCodePick('bl')}
+											className='date-code'
+											style={{
+												backgroundColor:
+													dateCodePick === 'bl' ? '#8BA577' : '#F0F0F0',
+												color: dateCodePick === 'bl' ? 'white' : 'black',
+											}}
+										>
+											Bulan Lalu
+										</div>
+										<div
+											onClick={() => setDateCodePick('ti')}
+											className='date-code'
+											style={{
+												backgroundColor:
+													dateCodePick === 'ti' ? '#8BA577' : '#F0F0F0',
+												color: dateCodePick === 'ti' ? 'white' : 'black',
+											}}
+										>
+											Tahun Ini
+										</div>
 									</div>
 								</DatePicker>
 								<div>-</div>
@@ -173,8 +241,9 @@ function Archive(props) {
 									endDate={endDate}
 									selectsRange
 									dateFormat='dd MMM'
-								// disabled
+									// disabled
 								/>
+								<IoMdClose color='red' size={20} onClick={onClearFilter} />
 							</div>
 
 							<button
@@ -227,54 +296,52 @@ function Archive(props) {
 							{dataPidana === null
 								? null
 								: dataPidana.map((dt, i) => (
-									<tr key={i} className='table-main-nth-child'>
-										<td className='table-main-td'>{i + 1}</td>
-										<td
-											className='table-main-td'
-											style={{ textAlign: 'left' }}
-										>
-											{dt.no_perkara}
-										</td>
-										<td className='table-main-td'>{dt.box}</td>
-										<td className='table-main-td'>
-											{dt.nama_tergugat.toString()},{' '}
-											{dt.nama_penggugat.toString()},{' '}
-											{dt.nama_turut_tergugat.toString()}
-										</td>
-										<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
-										<td className='table-main-td'>
-											<CgFileDocument
-												size={22}
-												style={{
-													cursor: 'pointer',
-												}}
-											/>
-										</td>
-										<td className='table-main-td'>
-											<MdModeEdit
-												size={22}
-												style={{
-													cursor: 'pointer',
-												}}
-												onClick={() =>
-													props.history.push('/sys/archive-pidana/edit')
-												}
-											/>
-										</td>
-									</tr>
-								))}
+										<tr key={i} className='table-main-nth-child'>
+											<td className='table-main-td'>{i + 1}</td>
+											<td
+												className='table-main-td'
+												style={{ textAlign: 'left' }}
+											>
+												{dt.no_perkara}
+											</td>
+											<td className='table-main-td'>{dt.box}</td>
+											<td className='table-main-td'>
+												{dt.nama_tergugat.toString()},{' '}
+												{dt.nama_penggugat.toString()},{' '}
+												{dt.nama_turut_tergugat.toString()}
+											</td>
+											<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
+											<td className='table-main-td'>
+												<CgFileDocument
+													size={22}
+													style={{
+														cursor: 'pointer',
+													}}
+												/>
+											</td>
+											<td className='table-main-td'>
+												<MdModeEdit
+													size={22}
+													style={{
+														cursor: 'pointer',
+													}}
+													onClick={() =>
+														props.history.push('/sys/archive-pidana/edit')
+													}
+												/>
+											</td>
+										</tr>
+								  ))}
 						</tbody>
 					</table>
 				</div>
 				<PaginationComponent
-					totalItems={
-						86
-					}
+					totalItems={86}
 					pageSize={pagination.limit}
 					onSelect={changePagePaginate}
 					activePage={pagination.page}
-					className="pagination justify-content-center mb-0"
-					listClassName="justify-content-center mb-0"
+					className='pagination justify-content-center mb-0'
+					listClassName='justify-content-center mb-0'
 				/>
 			</div>
 		</div>
