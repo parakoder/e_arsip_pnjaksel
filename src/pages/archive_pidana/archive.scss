@@ -66,15 +66,28 @@
             }
 
             .wrapperFilter-date {
-                max-width: 160px;
+                // max-width: 160px;
+                height: 35px;
+                    // padding: 0px 20px 0px 20px;
+                    border: 1px solid #8BA577;
+                    border-radius: 3px;
+                    display: flex;
+                    flex-direction: row;
+                    background-color: white;
+                    align-items: center;
+                    justify-content: center;
 
 
                 .filter-date{
-                    width: 100% !important;
-                    height: 35px;
-                    padding: 10px 20px 10px 32px;
-                    border: 1px solid #8BA577;
+                    // width: 100% !important;
+                    max-width: 100px;
+                    height: 30px;
+                    padding: 10px 20px 10px 20px;
+                    // border: 1px solid #8BA577;
+                    outline: none;
+                    border: none;
                     border-radius: 3px;
+                    align-self: center;
                 }
 
                 .react-datepicker__tab-loop  .react-datepicker-popper{
