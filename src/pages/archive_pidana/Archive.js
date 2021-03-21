@@ -31,15 +31,23 @@ function Archive(props) {
 		setModalExportisOpen(!modalExportisOpen);
 	};
 
-	const [findDataFilter, setFindDataFilter] = useState(null);
+	const [findDataFilter, setFindDataFilter] = useState('');
 
 	const [dateCodePick, setDateCodePick] = useState(null);
 
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(null);
+	const [startDate, setStartDate] = useState('');
+	const [formattedStartDate, setFormattedStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
+	const [formattedEndDate, setFormattedEndDate] = useState('');
 	const onChange = (dates) => {
 		console.log('dates', dates);
 		const [start, end] = dates;
+		var formatStart = moment(start).format('yyyy-MM-DD').toString();
+		var formatEnd = moment(end).format('yyyy-MM-DD').toString();
+
+		setFormattedStartDate(formatStart);
+		setFormattedEndDate(formatEnd);
+
 		setStartDate(start);
 		setEndDate(end);
 	};
@@ -57,9 +65,9 @@ function Archive(props) {
 	};
 
 	const getDtArsipPidana = () => {
-		var findData = findDataFilter === null ? null : findDataFilter;
-		var dateStart = startDate === null ? null : startDate;
-		var dateEnd = endDate === null ? null : endDate;
+		var findData = findDataFilter === '' ? null : findDataFilter;
+		var dateStart = formattedStartDate === '' ? null : formattedStartDate;
+		var dateEnd = formattedEndDate === '' ? null : formattedEndDate;
 		var dateCode = dateCodePick === null ? null : dateCodePick;
 
 		var ofset =
@@ -91,10 +99,14 @@ function Archive(props) {
 	const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPidana, 700);
 
 	const onClearFilter = () => {
-		setFindDataFilter(null);
+		// setFindDataFilter(null);
 		setDateCodePick(null);
 		setStartDate(null);
 		setEndDate(null);
+	};
+
+	const onClearSearch = () => {
+		setFindDataFilter('');
 	};
 
 	return (
@@ -129,7 +141,12 @@ function Archive(props) {
 									className='input'
 									placeholder='Cari Data'
 									onChange={(e) => setFindDataFilter(e.target.value)}
+									value={findDataFilter}
 								/>
+								<Gap width={10} />
+								{findDataFilter !== '' ? (
+									<IoMdClose color='red' size={20} onClick={onClearSearch} />
+								) : null}
 							</div>
 							<div className='wrapperFilter-date  mb-10px ml-20px'>
 								<RiCalendar2Line />
@@ -144,21 +161,7 @@ function Archive(props) {
 									dateFormat='dd MMM'
 									placeholderText={'1 Jan'}
 								>
-									<div
-										style={{
-											display: 'flex',
-											flexDirection: 'column',
-											justifyContent: 'space-around',
-											backgroundColor: '#F0F0F0',
-											position: 'absolute',
-											left: -105,
-											height: 235,
-											maxHeight: 235,
-											padding: '15px 15px',
-											border: '1px solid #768E7C',
-											borderRadius: 3,
-										}}
-									>
+									<div className='date-code-container'>
 										<div
 											onClick={() => setDateCodePick('hi')}
 											className='date-code'
@@ -195,13 +198,12 @@ function Archive(props) {
 											Minggu Ini
 										</div>
 										<div
+											className='date-code'
 											onClick={() => setDateCodePick('bi')}
 											style={{
-												cursor: 'pointer',
 												backgroundColor:
 													dateCodePick === 'bi' ? '#8BA577' : '#F0F0F0',
-												padding: 4,
-												borderRadius: 3,
+
 												color: dateCodePick === 'bi' ? 'white' : 'black',
 											}}
 										>
@@ -241,6 +243,7 @@ function Archive(props) {
 									endDate={endDate}
 									selectsRange
 									dateFormat='dd MMM'
+									placeholderText='31 Des'
 									// disabled
 								/>
 								<IoMdClose color='red' size={20} onClick={onClearFilter} />
