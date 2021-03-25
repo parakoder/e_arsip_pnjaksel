@@ -31,7 +31,7 @@ function EditArchive(props) {
         nama_terdakwa: locState.nama_terdakwa,
         // tgl_pengiriman: date,
         tgl_pengiriman: locState.tanggal_pengiriman,
-        file: [],
+        file: locState.file,
     });
 
     const onChangeCalendar = (date) => {
@@ -248,7 +248,7 @@ function EditArchive(props) {
                                                                 className="doc-uploaded"
                                                             >
                                                                 <div className="txt-filename">
-                                                                    {val.name}
+                                                                    {val}
                                                                 </div>
                                                                 <IoMdClose
                                                                     onClick={() =>
