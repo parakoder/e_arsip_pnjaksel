@@ -257,7 +257,7 @@ function Home(props) {
 								? null
 								: dtTableHome.map((dt, i) => (
 										<tr key={i} className='table-main-nth-child'>
-											<td className='table-main-td'>{dt.id}</td>
+											<td className='table-main-td'>{i + 1}</td>
 											<td
 												className='table-main-td'
 												style={{ textAlign: 'left' }}

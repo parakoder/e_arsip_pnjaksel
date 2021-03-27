@@ -11,11 +11,19 @@ import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory } from 'react-router';
 import { YearPicker } from 'react-dropdown-date';
+import { AddNewArsipPerdata } from '../../configs/handler/ArsipHandler';
+import Select from 'react-select';
 
 function AddArchive(props) {
 	const [date, setDate] = useState(new Date());
 
 	let history = useHistory();
+
+	const options = [
+		{ value: 'Pdt. G', label: 'Pdt. G' },
+		{ value: 'Pdt. P', label: 'Pdt. P' },
+		{ value: 'Pdt. G.S', label: 'Pdt. G.S' },
+	];
 
 	const [showCalendar, setShowCalendar] = useState(false);
 
@@ -25,6 +33,7 @@ function AddArchive(props) {
 		nama_terdakwa: '',
 		tgl_pengiriman: date,
 		file: [],
+		klasifikasi_perkara: '',
 	});
 
 	const onChangeCalendar = (date) => {
@@ -33,8 +42,10 @@ function AddArchive(props) {
 		setShowCalendar(false);
 	};
 
+	const [noper1, setNoper1] = useState('');
+	const [noper2, setNoper2] = useState('');
+
 	const browseHandler = (e) => {
-		console.log('errweradawd', e.name);
 		console.log('errweradawd', e);
 		let newArr = [...dataArchive.file];
 
@@ -48,21 +59,40 @@ function AddArchive(props) {
 	const onDeleteFile = (i) => {
 		const arrFile = [...dataArchive.file];
 		const filteredFile = arrFile.filter((val, idx) => idx !== i);
+		console.log('dataFIle', filteredFile);
 		setDataArchive({ ...dataArchive, file: filteredFile });
+
+		// const filteredPureFile =
 	};
 
 	const [year, setYear] = useState(2021);
 
 	const onSubmitData = () => {
-		
-		var fd = new FormData()
+		let noper = noper1 + '/pdt/' + noper2 + '/' + year + '/pnjs';
+		let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
+			'yyyy-MM-DD'
+		);
 
-		dataArchive.file.map(item => fd.append('files', item.File));
+		console.log('dataArfile', dataArchive.file);
 
-
-		console.log('body nya', fd)
-		
-	}
+		var fd = new FormData();
+		fd.append('no_perkara', noper.toUpperCase());
+		fd.append('box', dataArchive.no_box);
+		fd.append('nama_terdakwa', dataArchive.nama_terdakwa);
+		fd.append('tanggal_pengiriman', formatTglPengiriman);
+		fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
+		for (let i = 0; i < dataArchive.file.length; i++) {
+			fd.append('file', dataArchive.file[i]);
+		}
+		// dataArchive.file.map((item) => fd.append('file', item.File));
+		AddNewArsipPerdata(fd)
+			.then((res) => {
+				console.log('res add data', res);
+				// window.location.reload();
+			})
+			.catch((err) => console.log('err', err));
+		console.log('body nya', fd);
+	};
 
 	return (
 		<div className='c-main'>
@@ -89,12 +119,14 @@ function AddArchive(props) {
 									maxLength='4'
 									type='text'
 									pattern='\d*'
+									onChange={(e) => setNoper1(e.target.value)}
 								/>
-								<span className='input-txt-perkara'>/ PDN /</span>
+								<span className='input-txt-perkara'>/ PDT /</span>
 								<input
 									placeholder='SUS'
 									className='input-sub-perkara'
 									maxLength='3'
+									onChange={(e) => setNoper2(e.target.value)}
 								/>
 								<span className='input-txt-perkara'>/</span>
 								<YearPicker
@@ -145,6 +177,20 @@ function AddArchive(props) {
 									setDataArchive({
 										...dataArchive,
 										nama_terdakwa: e.target.value,
+									})
+								}
+							/>
+						</div>
+						<div className='form-input-group mb-30px'>
+							<p className='text-input-title-1'>Klasifikasi Perkara</p>
+							<Select
+								options={options}
+								placeholder='Klasifikasi Perkara'
+								className='form-select-1'
+								onChange={(e) =>
+									setDataArchive({
+										...dataArchive,
+										klasifikasi_perkara: e.value,
 									})
 								}
 							/>
@@ -238,9 +284,9 @@ function AddArchive(props) {
 					<div className='addFooter row'>
 						<div
 							className='btn-submit mb-20px col-sm-12'
-							onClick={() => console.log('dataarchive', dataArchive)}
 							data-bs-toggle='modal'
 							data-bs-target='#submitModal'
+							// onClick={onSubmitData}
 						>
 							<IoDocumentOutline
 								size={20}
@@ -274,7 +320,7 @@ function AddArchive(props) {
 						classBtnYes='btn-modal-yes-green'
 						txtBtnYes='Submit'
 						txtBtnNo='Cancel'
-						onSubmit={() => alert('Berhasil Submit')}
+						onSubmit={onSubmitData}
 					/>
 				</div>
 			</div>

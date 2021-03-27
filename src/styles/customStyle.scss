@@ -238,7 +238,7 @@
     margin-right: 20px;
 }
 
-/*----------------------- 
+/*-----------------------
 2.14 Pagination
 -------------------------*/
 
@@ -255,7 +255,7 @@
     border-radius: 3px;
     line-height: 1;
   }
-  
+
   .page-link:hover {
     z-index: 2;
     color: #fff;
@@ -263,7 +263,7 @@
     background-color: #768E7C;
     border-color: #768E7C;
   }
-  
+
   .page-item.active .page-link {
     z-index: 1;
     color: #fff;
@@ -280,7 +280,54 @@
 //     box-shadow: #768E7C;
 //     /* border-color: #5969ff; */
 //   }
-  
+
   .page-item .page-link{
       border: none !important;
   }
+
+
+// select
+.form-select-1 {
+    @include txt-input();
+    background: #FAFAFA;
+    border: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+    outline: none;
+
+    .css-2b097c-container {
+        display: flex;
+        flex: 2;
+        // background-color: yellow;
+        background: #FAFAFA;
+        width: 100%;
+        border: none;
+        margin: 0;
+        outline: none;
+        align-items: center;
+    }
+
+    .css-yk16xz-control {
+        display: flex;
+        flex: 2;
+        // background-color: yellow;
+        background: #FAFAFA;
+        border-radius: 8px;
+        // height: 34px;
+        border: none;
+        outline: none;
+        align-items: center;
+    }
+
+    .css-1pahdxg-control {
+        width: 100%;
+        background: #FAFAFA;
+        outline: none;
+        border: none;
+    }
+
+    .css-g1d714-ValueContainer {
+        outline: none;
+    }
+
+}
