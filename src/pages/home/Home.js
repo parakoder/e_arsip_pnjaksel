@@ -305,20 +305,40 @@ function Home(props) {
 										<div className='wrapperSection'>
 											<p className='titleSection'>Ket</p>
 										</div>
-										<div
-											style={{
-												display: 'flex',
-												flexDirection: 'row',
-												flexWrap: 'wrap',
-											}}
-										>
-											<div style={{ display: 'flex', flex: 1 }}>Pidana</div>
-											<div style={{ display: 'flex', flex: 1 }}>Perdata</div>
-											<div style={{ display: 'flex', flex: 1 }}>Hukum</div>
-											<div style={{ display: 'flex', flex: 1 }}>
+										<div className='keterangan-wrapper'>
+											<div className='keterangan-graph-all'>
+												<div
+													className='keterangan-indicator'
+													style={{ backgroundColor: '#CF212A' }}
+												/>
+												Pidana
+											</div>
+											<div className='keterangan-graph-all'>
+												<div
+													className='keterangan-indicator'
+													style={{ backgroundColor: '#768E7C' }}
+												/>
+												Perdata
+											</div>
+											<div className='keterangan-graph-all'>
+												<div
+													className='keterangan-indicator'
+													style={{ backgroundColor: '#392F08' }}
+												/>
+												Hukum
+											</div>
+											<div className='keterangan-graph-all'>
+												<div
+													className='keterangan-indicator'
+													style={{ backgroundColor: '#0D461B' }}
+												/>
 												Kepegawaian
 											</div>
-											<div style={{ display: 'flex', flex: 1 }}>
+											<div className='keterangan-graph-all'>
+												<div
+													className='keterangan-indicator'
+													style={{ backgroundColor: '#F8E086' }}
+												/>
 												Umum dan Keuangan
 											</div>
 										</div>

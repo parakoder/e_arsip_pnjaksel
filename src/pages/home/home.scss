@@ -117,3 +117,22 @@
         }
     }
 }
+
+.keterangan-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .keterangan-graph-all {
+        display: flex;
+        flex: 1;
+        align-items: center
+    }
+
+    .keterangan-indicator {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+    }
+}
+
