@@ -4,7 +4,7 @@ import { IoIosArrowBack, IoMdCloudUpload, IoMdClose } from 'react-icons/io';
 import { IoDocumentOutline } from 'react-icons/io5';
 import { RiCalendar2Line, RiDeleteBinLine } from 'react-icons/ri';
 import Gap from '../../components/Gap';
-import '../archive_pidana/archive.scss';
+import '../../styles/archive.scss';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
@@ -16,6 +16,7 @@ import {
 	EditArsipPerdata,
 } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
+import { OnError, OnSuccess } from '../../components/toast/CustomToast';
 function EditArchive(props) {
 	let history = useHistory();
 
@@ -133,9 +134,13 @@ function EditArchive(props) {
 		EditArsipPerdata(fd)
 			.then((res) => {
 				console.log('res edit data', res);
+				OnSuccess({
+					title: 'Berhasil',
+					text: 'Berhasil Mengubah Arsip Perdata',
+				});
 				history.goBack();
 			})
-			.catch((err) => console.log('err edit data', err));
+			.catch((err) => OnError({ title: 'Gagal', text: err.message }));
 	};
 
 	return (

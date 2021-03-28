@@ -46,7 +46,7 @@ const Login = (props) => {
 				OnError({ title: 'Terjadi Kesalahan' });
 				setError(true);
 			}
-			
+
 			setOnSubmit(false);
 			console.log('res login', response);
 		} catch (error) {
@@ -62,7 +62,7 @@ const Login = (props) => {
 				<div className='col-lg-6 col-xl-6 col-md-6 col-sm-12 left'>
 					<img
 						className='imgLogo'
-						src={require('../../assets/images/pajs.png').default}
+						src={require('../../assets/images/img_pajs.png').default}
 						alt='logo.png'
 					/>
 					<Gap height={30} />
@@ -133,7 +133,9 @@ const Login = (props) => {
 						<button
 							className='btn-login'
 							// onClick={() => props.history.push('/sys/home')}
-							style={onSubmit ? { cursor: 'not-allowed', opacity: '0.6' } : null}
+							style={
+								onSubmit ? { cursor: 'not-allowed', opacity: '0.6' } : null
+							}
 							disabled={onSubmit ? true : false}
 							onClick={login}
 						>

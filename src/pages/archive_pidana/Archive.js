@@ -6,7 +6,7 @@ import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
-import './archive.scss';
+import '../../styles/archive.scss';
 import { MdModeEdit } from 'react-icons/md';
 import { CgFileDocument } from 'react-icons/cg';
 import ModalDeleteArchive from '../../components/modal/ModalDeleteArchive';

@@ -66,7 +66,7 @@ function Sidebar(props) {
 			<div className='c-sidebar-brand'>
 				<img
 					className='sidebar-brand-logo'
-					src={require('../../assets/images/pajs.png').default}
+					src={require('../../assets/images/img_pajs.png').default}
 					alt='icon'
 				/>
 
@@ -87,24 +87,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/home') ? (
-							<HiHome
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/home') ? onActiveImg : null
-								}
-							/>
-						) : (
-							<HiOutlineHome
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/home') ? onActiveImg : null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_beranda.png'
+							src={
+								require(currentLocation.includes('/sys/home')
+									? '../../assets/icons/ic_beranda_active.png'
+									: '../../assets/icons/ic_beranda_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Beranda
 					</NavLink>
 				</li>
@@ -119,28 +111,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/archive-pidana') ? (
-							<RiArchiveDrawerFill
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/archive-pidana')
-										? onActiveImg
-										: null
-								}
-							/>
-						) : (
-							<RiArchiveDrawerLine
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/archive-pidana')
-										? onActiveImg
-										: null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_pidana.png'
+							src={
+								require(currentLocation.includes('/sys/archive-pidana')
+									? '../../assets/icons/ic_pidana_active.png'
+									: '../../assets/icons/ic_pidana_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Arsip Pidana
 					</NavLink>
 				</li>
@@ -155,28 +135,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/archive-perdata') ? (
-							<RiArchiveDrawerFill
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/archive-perdata')
-										? onActiveImg
-										: null
-								}
-							/>
-						) : (
-							<RiArchiveDrawerLine
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/archive-perdata')
-										? onActiveImg
-										: null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_perdata.png'
+							src={
+								require(currentLocation.includes('/sys/archive-perdata')
+									? '../../assets/icons/ic_perdata_active.png'
+									: '../../assets/icons/ic_perdata_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Arsip Perdata
 					</NavLink>
 				</li>
@@ -191,24 +159,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/log') ? (
-							<RiStackFill
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/log') ? onActiveImg : null
-								}
-							/>
-						) : (
-							<RiStackLine
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/log') ? onActiveImg : null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_log.png'
+							src={
+								require(currentLocation.includes('/sys/log')
+									? '../../assets/icons/ic_log_active.png'
+									: '../../assets/icons/ic_log_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Log Aktifitas
 					</NavLink>
 				</li>
@@ -223,24 +183,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/account') ? (
-							<IoPersonOutline
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/account') ? onActiveImg : null
-								}
-							/>
-						) : (
-							<IoPersonOutline
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/account') ? onActiveImg : null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_account.png'
+							src={
+								require(currentLocation.includes('/sys/account')
+									? '../../assets/icons/ic_account_active.png'
+									: '../../assets/icons/ic_account_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Akun
 					</NavLink>
 				</li>
@@ -255,24 +207,16 @@ function Sidebar(props) {
 						activeStyle={onActiveCss}
 						aria-current='true'
 					>
-						{currentLocation.includes('/sys/about') ? (
-							<HiInformationCircle
-								className='sidebar-nav-link-img'
-								size={18}
-								style={
-									currentLocation.includes('/sys/about') ? onActiveImg : null
-								}
-							/>
-						) : (
-							<HiOutlineInformationCircle
-								className='sidebar-nav-link-img'
-								size={18}
-								color='#5F764F'
-								style={
-									currentLocation.includes('/sys/about') ? onActiveImg : null
-								}
-							/>
-						)}
+						<img
+							className='sidebar-nav-link-img'
+							alt='ic_about.png'
+							src={
+								require(currentLocation.includes('/sys/about')
+									? '../../assets/icons/ic_about_active.png'
+									: '../../assets/icons/ic_about_non.png').default
+							}
+							style={{ width: 18 }}
+						/>
 						Tentang
 					</NavLink>
 				</li>

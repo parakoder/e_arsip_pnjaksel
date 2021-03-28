@@ -4,7 +4,7 @@ import { IoIosArrowBack, IoMdCloudUpload, IoMdClose } from 'react-icons/io';
 import { IoDocumentOutline } from 'react-icons/io5';
 import { RiCalendar2Line } from 'react-icons/ri';
 import Gap from '../../components/Gap';
-import '../archive_pidana/archive.scss';
+import '../../styles/archive.scss';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router';
 import { YearPicker } from 'react-dropdown-date';
 import { AddNewArsipPerdata } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
+import { OnError, OnSuccess } from '../../components/toast/CustomToast';
 
 function AddArchive(props) {
 	const [date, setDate] = useState(new Date());
@@ -95,9 +96,15 @@ function AddArchive(props) {
 		AddNewArsipPerdata(fd)
 			.then((res) => {
 				console.log('res add data', res);
-				// window.location.reload();
+				if (res.status === 200) {
+					OnSuccess({
+						title: 'Berhasil',
+						text: 'Berhasil Menambahkan Arsip Perdata',
+					});
+					window.location.reload();
+				}
 			})
-			.catch((err) => console.log('err', err));
+			.catch((err) => OnError({ title: 'Gagal', text: err.message }));
 		console.log('body nya', fd);
 	};
 
