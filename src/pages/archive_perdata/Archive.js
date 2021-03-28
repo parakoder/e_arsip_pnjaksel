@@ -98,6 +98,7 @@ function Archive(props) {
 
 	useEffect(() => {
 		debounceOnFilter();
+		return () => console.log('unmount perdata');
 	}, [pagination.page, findDataFilter, startDate, endDate, dateCodePick]);
 
 	const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPerdata, 700);

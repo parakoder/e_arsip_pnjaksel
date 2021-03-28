@@ -1,4 +1,5 @@
 
+@import './colors.scss';
 
 @mixin txt-input {
     border-radius: 3px;
@@ -138,7 +139,6 @@
     border: 1px solid #CCCCCC;
     display: flex;
     flex-direction: row;
-    // justify-content: space-evenly;
     align-items: center;
     padding: 0px 1rem;
 
@@ -154,6 +154,50 @@
         margin: 0;
         padding: 0;
         font-size: 13px;
+    }
+}
+
+.form-input-perkara-error {
+    @include txt-input();
+    background: #FAFAFA;
+    border: 1px solid $errorColor;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 1rem;
+
+    .input-sub-perkara {
+        max-width: 50px;
+        border: none;
+        background: #FAFAFA;
+        outline: none;
+        font-size: 13px;
+    }
+
+    .input-txt-perkara {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+    }
+}
+
+.form-input-error {
+    @include txt-input();
+    background: #FAFAFA;
+    border: 1px solid $errorColor;
+
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $errorColor !important;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $errorColor !important;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: $errorColor !important;
     }
 }
 
@@ -330,4 +374,48 @@
         outline: none;
     }
 
+}
+
+.form-select-error {
+    @include txt-input();
+    background: #FAFAFA;
+    border: 1px solid $errorColor;
+    display: flex;
+    align-items: center;
+    outline: none;
+
+    .css-2b097c-container {
+        display: flex;
+        flex: 2;
+        // background-color: yellow;
+        background: #FAFAFA;
+        width: 100%;
+        border: none;
+        margin: 0;
+        outline: none;
+        align-items: center;
+    }
+
+    .css-yk16xz-control {
+        display: flex;
+        flex: 2;
+        // background-color: yellow;
+        background: #FAFAFA;
+        border-radius: 8px;
+        // height: 34px;
+        border: none;
+        outline: none;
+        align-items: center;
+    }
+
+    .css-1pahdxg-control {
+        width: 100%;
+        background: #FAFAFA;
+        outline: none;
+        border: none;
+    }
+
+    .css-g1d714-ValueContainer {
+        outline: none;
+    }
 }

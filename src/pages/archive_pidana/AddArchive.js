@@ -44,6 +44,13 @@ function AddArchive(props) {
 	const [noper1, setNoper1] = useState('');
 	const [noper2, setNoper2] = useState('');
 
+	const [isNoperError, setIsNoperError] = useState(false);
+	const [isBoxError, setIsBoxError] = useState(false);
+	const [isKlasiError, setIsKlasiError] = useState(false);
+	const [isTergugatError, setIsTergugatError] = useState(false);
+	const [isPenggugatError, setIsPenggugatError] = useState(false);
+	const [isTurutError, setIsTurutError] = useState(false);
+
 	const onChangeCalendar = (date) => {
 		setDate(date);
 		setDataArchive({ ...dataArchive, tgl_pengiriman: date.toString() });
@@ -74,47 +81,88 @@ function AddArchive(props) {
 	}
 
 	const onSubmitData = () => {
-		let noper = noper1 + '/PID/' + noper2 + '/' + year + '/PNJS';
-		let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
-			'yyyy-MM-DD'
-		);
-
-		console.log('dataArfile', dataArchive.file);
-
-		var fd = new FormData();
-		fd.append('no_perkara', noper.toUpperCase());
-		fd.append('box', dataArchive.no_box);
-		fd.append('tanggal_pengiriman', formatTglPengiriman);
-		fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
-		fd.append(
-			'nama_tergugat',
-			capitalizeFirstLetter(dataArchive.nama_tergugat)
-		);
-		fd.append(
-			'nama_penggugat',
-			capitalizeFirstLetter(dataArchive.nama_penggugat)
-		);
-		fd.append(
-			'nama_turut_tergugat',
-			capitalizeFirstLetter(dataArchive.nama_turut_tergugat)
-		);
-
-		for (let i = 0; i < dataArchive.file.length; i++) {
-			fd.append('file', dataArchive.file[i]);
+		if (noper1 === '' || noper2 === '') {
+			setIsNoperError(true);
 		}
 
-		AddNewArsipPidana(fd)
-			.then((res) => {
-				console.log('res add data', res);
-				if (res.status === 200) {
-					OnSuccess({
-						title: 'Berhasil',
-						text: 'Berhasil Menambahkan Arsip Pidana',
-					});
-					window.location.reload();
-				}
-			})
-			.catch((err) => OnError({ title: 'Gagal', text: err.message }));
+		if (dataArchive.no_box === '') {
+			setIsBoxError(true);
+		}
+
+		if (dataArchive.klasifikasi_perkara === '') {
+			setIsKlasiError(true);
+		}
+
+		if (dataArchive.nama_tergugat === '') {
+			setIsTergugatError(true);
+		}
+
+		if (dataArchive.nama_penggugat === '') {
+			setIsPenggugatError(true);
+		}
+
+		if (dataArchive.nama_turut_tergugat === '') {
+			setIsTurutError(true);
+		}
+
+		if (dataArchive.file.length === 0) {
+			OnError({ title: 'Kesalahan', text: 'Mohon Upload File Arsip' });
+		}
+
+		if (
+			noper1 !== '' &&
+			noper2 !== '' &&
+			dataArchive.no_box !== '' &&
+			dataArchive.klasifikasi_perkara !== '' &&
+			dataArchive.nama_tergugat !== '' &&
+			dataArchive.nama_penggugat !== '' &&
+			dataArchive.nama_turut_tergugat !== '' &&
+			dataArchive.file.length > 0
+		) {
+			let noper = noper1 + '/PID/' + noper2 + '/' + year + '/PNJS';
+			let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
+				'yyyy-MM-DD'
+			);
+
+			console.log('dataArfile', dataArchive.file);
+
+			var fd = new FormData();
+			fd.append('no_perkara', noper.toUpperCase());
+			fd.append('box', dataArchive.no_box);
+			fd.append('tanggal_pengiriman', formatTglPengiriman);
+			fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
+			fd.append(
+				'nama_tergugat',
+				capitalizeFirstLetter(dataArchive.nama_tergugat)
+			);
+			fd.append(
+				'nama_penggugat',
+				capitalizeFirstLetter(dataArchive.nama_penggugat)
+			);
+			fd.append(
+				'nama_turut_tergugat',
+				capitalizeFirstLetter(dataArchive.nama_turut_tergugat)
+			);
+
+			for (let i = 0; i < dataArchive.file.length; i++) {
+				fd.append('file', dataArchive.file[i]);
+			}
+
+			AddNewArsipPidana(fd)
+				.then((res) => {
+					console.log('res add data', res);
+					if (res.status === 200) {
+						OnSuccess({
+							title: 'Berhasil',
+							text: 'Berhasil Menambahkan Arsip Pidana',
+						});
+						window.location.reload();
+					}
+				})
+				.catch((err) => OnError({ title: 'Gagal', text: err.message }));
+		} else {
+			OnError({ title: 'Kesalahan', text: 'Mohon Input Semua Field' });
+		}
 	};
 
 	console.log('filess', dataArchive.file);
@@ -137,21 +185,41 @@ function AddArchive(props) {
 					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Nomor Perkara</p>
-							<div className='form-input-perkara'>
+							<div
+								className={
+									isNoperError
+										? 'form-input-perkara-error'
+										: 'form-input-perkara'
+								}
+							>
 								<input
 									placeholder='1234'
 									className='input-sub-perkara'
 									maxLength='4'
 									type='text'
 									pattern='\d*'
-									onChange={(e) => setNoper1(e.target.value)}
+									onChange={(e) => {
+										setNoper1(e.target.value);
+										if (e.target.value.length === 0) {
+											setIsNoperError(true);
+										} else {
+											setIsNoperError(false);
+										}
+									}}
 								/>
 								<span className='input-txt-perkara'>/ PID /</span>
 								<input
 									placeholder='SUS'
 									className='input-sub-perkara'
 									maxLength='3'
-									onChange={(e) => setNoper2(e.target.value)}
+									onChange={(e) => {
+										setNoper2(e.target.value);
+										if (e.target.value.length === 0) {
+											setIsNoperError(true);
+										} else {
+											setIsNoperError(false);
+										}
+									}}
 								/>
 								<span className='input-txt-perkara'>/</span>
 								<YearPicker
@@ -176,12 +244,17 @@ function AddArchive(props) {
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>BOX</p>
 							<input
-								className='form-input-1'
+								className={isBoxError ? 'form-input-error' : 'form-input-1'}
 								placeholder='Masukkan Nomor BOX'
 								value={dataArchive.no_box}
-								onChange={(e) =>
-									setDataArchive({ ...dataArchive, no_box: e.target.value })
-								}
+								onChange={(e) => {
+									setDataArchive({ ...dataArchive, no_box: e.target.value });
+									if (e.target.value.length === 0) {
+										setIsBoxError(true);
+									} else {
+										setIsBoxError(false);
+									}
+								}}
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
@@ -189,55 +262,78 @@ function AddArchive(props) {
 							<Select
 								options={options}
 								placeholder='Klasifikasi Perkara'
-								className='form-select-1'
-								onChange={(e) =>
+								className={isKlasiError ? 'form-select-error' : 'form-select-1'}
+								onChange={(e) => {
 									setDataArchive({
 										...dataArchive,
 										klasifikasi_perkara: e.value,
-									})
-								}
+									});
+									setIsKlasiError(false);
+								}}
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Nama Tergugat</p>
 							<input
-								className='form-input-1'
+								className={
+									isTergugatError ? 'form-input-error' : 'form-input-1'
+								}
 								placeholder='Masukkan Nama Tergugat'
 								value={dataArchive.nama_tergugat}
-								onChange={(e) =>
+								onChange={(e) => {
 									setDataArchive({
 										...dataArchive,
 										nama_tergugat: e.target.value,
-									})
-								}
+									});
+
+									if (e.target.value.length === 0) {
+										setIsTergugatError(true);
+									} else {
+										setIsTergugatError(false);
+									}
+								}}
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Nama Penggugat</p>
 							<input
-								className='form-input-1'
+								className={
+									isPenggugatError ? 'form-input-error' : 'form-input-1'
+								}
 								placeholder='Masukkan Nama Penggugat'
 								value={dataArchive.nama_penggugat}
-								onChange={(e) =>
+								onChange={(e) => {
 									setDataArchive({
 										...dataArchive,
 										nama_penggugat: e.target.value,
-									})
-								}
+									});
+
+									if (e.target.value.length === 0) {
+										setIsPenggugatError(true);
+									} else {
+										setIsPenggugatError(false);
+									}
+								}}
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Nama Turut Tergugat</p>
 							<input
-								className='form-input-1'
+								className={isTurutError ? 'form-input-error' : 'form-input-1'}
 								placeholder='Masukkan Nama Turut Tergugat'
 								value={dataArchive.nama_turut_tergugat}
-								onChange={(e) =>
+								onChange={(e) => {
 									setDataArchive({
 										...dataArchive,
 										nama_turut_tergugat: e.target.value,
-									})
-								}
+									});
+
+									if (e.target.value.length === 0) {
+										setIsTurutError(true);
+									} else {
+										setIsTurutError(false);
+									}
+								}}
 							/>
 						</div>
 					</div>
@@ -320,12 +416,6 @@ function AddArchive(props) {
 											multiple
 											onChange={(e) => browseHandler(e.target.files)}
 										/>
-										{/* <div
-											className='btn-reupload'
-											onChange={(e) => browseHandler(e.target.files[0])}
-										>
-
-										</div> */}
 									</div>
 								)}
 							</div>

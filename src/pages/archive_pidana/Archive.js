@@ -100,6 +100,7 @@ function Archive(props) {
 
 	useEffect(() => {
 		debounceOnFilter();
+		return () => console.log('unmount pidana');
 	}, [pagination.page, findDataFilter, startDate, endDate, dateCodePick]);
 
 	const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPidana, 700);

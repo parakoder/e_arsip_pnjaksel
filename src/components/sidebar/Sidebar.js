@@ -38,10 +38,6 @@ function Sidebar(props) {
 		color: '#FFF',
 	};
 
-	const onActiveImg = {
-		color: '#FFF',
-	};
-
 	const currentLocation = window.location.pathname;
 
 	const logout = async () => {
@@ -222,11 +218,7 @@ function Sidebar(props) {
 				</li>
 			</ul>
 
-			<div
-				className='c-sidebar-logout'
-				// onClick={() => props.history.push('/login')}
-				onClick={logout}
-			>
+			<div className='c-sidebar-logout' onClick={logout}>
 				<span className='txt-logout' style={{ cursor: 'pointer' }}>
 					Logout
 				</span>
