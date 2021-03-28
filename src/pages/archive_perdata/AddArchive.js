@@ -65,7 +65,11 @@ function AddArchive(props) {
 		// const filteredPureFile =
 	};
 
-	const [year, setYear] = useState(2021);
+	const [year, setYear] = useState(new Date().getFullYear());
+
+	function capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 
 	const onSubmitData = () => {
 		let noper = noper1 + '/pdt/' + noper2 + '/' + year + '/pnjs';
@@ -78,7 +82,10 @@ function AddArchive(props) {
 		var fd = new FormData();
 		fd.append('no_perkara', noper.toUpperCase());
 		fd.append('box', dataArchive.no_box);
-		fd.append('nama_terdakwa', dataArchive.nama_terdakwa);
+		fd.append(
+			'nama_terdakwa',
+			capitalizeFirstLetter(dataArchive.nama_terdakwa)
+		);
 		fd.append('tanggal_pengiriman', formatTglPengiriman);
 		fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
 		for (let i = 0; i < dataArchive.file.length; i++) {
@@ -147,14 +154,6 @@ function AddArchive(props) {
 								/>
 								<span className='input-txt-perkara'>/ PNJS</span>
 							</div>
-							{/* <input
-								className='form-input-1'
-								placeholder='Masukkan Nomor Perkara'
-								value={dataArchive.no_perkara}
-								onChange={(e) =>
-									setDataArchive({ ...dataArchive, no_perkara: e.target.value })
-								}
-							/> */}
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>BOX</p>

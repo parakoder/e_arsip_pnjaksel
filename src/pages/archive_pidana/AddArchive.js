@@ -11,21 +11,37 @@ import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory } from 'react-router';
 import { YearPicker } from 'react-dropdown-date';
+import Select from 'react-select';
+import { AddNewArsipPidana } from '../../configs/handler/ArsipHandler';
 
 function AddArchive(props) {
 	const [date, setDate] = useState(new Date());
 
 	let history = useHistory();
 
+	const options = [
+		{ value: 'Pid. B', label: 'Pid. B' },
+		{ value: 'Pid. S', label: 'Pid. S' },
+		{ value: 'Pid. C', label: 'Pid. C' },
+		{ value: 'Pid. Sus', label: 'Pid. Sus' },
+		{ value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
+	];
+
 	const [showCalendar, setShowCalendar] = useState(false);
 
 	const [dataArchive, setDataArchive] = useState({
 		no_perkara: '',
 		no_box: '',
-		nama_terdakwa: '',
+		klasifikasi_perkara: '',
+		nama_tergugat: '',
+		nama_penggugat: '',
+		nama_turut_tergugat: '',
 		tgl_pengiriman: date,
 		file: [],
 	});
+
+	const [noper1, setNoper1] = useState('');
+	const [noper2, setNoper2] = useState('');
 
 	const onChangeCalendar = (date) => {
 		setDate(date);
@@ -41,10 +57,6 @@ function AddArchive(props) {
 			const element = e[index];
 			newArr.push(element);
 		}
-		// e.map((file) => {
-		// 	newArr.push(file.name);
-		// 	return newArr;
-		// });
 		setDataArchive({ ...dataArchive, file: newArr });
 	};
 
@@ -54,18 +66,49 @@ function AddArchive(props) {
 		setDataArchive({ ...dataArchive, file: filteredFile });
 	};
 
-	const [year, setYear] = useState(2021);
+	const [year, setYear] = useState(new Date().getFullYear());
 
+	function capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 
 	const onSubmitData = () => {
-		
-		var fd = new FormData()
+		let noper = noper1 + '/PID/' + noper2 + '/' + year + '/PNJS';
+		let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
+			'yyyy-MM-DD'
+		);
 
-		dataArchive.file.map(item => fd.append('files', item.File));
-		fd.append('aaa', 'bbb')
-		console.log('body nya', fd)
-		
-	}
+		console.log('dataArfile', dataArchive.file);
+
+		var fd = new FormData();
+		fd.append('no_perkara', noper.toUpperCase());
+		fd.append('box', dataArchive.no_box);
+		fd.append('tanggal_pengiriman', formatTglPengiriman);
+		fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
+		fd.append(
+			'nama_tergugat',
+			capitalizeFirstLetter(dataArchive.nama_tergugat)
+		);
+		fd.append(
+			'nama_penggugat',
+			capitalizeFirstLetter(dataArchive.nama_penggugat)
+		);
+		fd.append(
+			'nama_turut_tergugat',
+			capitalizeFirstLetter(dataArchive.nama_turut_tergugat)
+		);
+
+		for (let i = 0; i < dataArchive.file.length; i++) {
+			fd.append('file', dataArchive.file[i]);
+		}
+
+		AddNewArsipPidana(fd)
+			.then((res) => {
+				console.log('res add data', res);
+				window.location.reload();
+			})
+			.catch((err) => console.log('err', err));
+	};
 
 	console.log('filess', dataArchive.file);
 
@@ -94,12 +137,14 @@ function AddArchive(props) {
 									maxLength='4'
 									type='text'
 									pattern='\d*'
+									onChange={(e) => setNoper1(e.target.value)}
 								/>
-								<span className='input-txt-perkara'>/ PDN /</span>
+								<span className='input-txt-perkara'>/ PID /</span>
 								<input
 									placeholder='SUS'
 									className='input-sub-perkara'
 									maxLength='3'
+									onChange={(e) => setNoper2(e.target.value)}
 								/>
 								<span className='input-txt-perkara'>/</span>
 								<YearPicker
@@ -120,14 +165,6 @@ function AddArchive(props) {
 								/>
 								<span className='input-txt-perkara'>/ PNJS</span>
 							</div>
-							{/* <input
-								className='form-input-1'
-								placeholder='Masukkan Nomor Perkara'
-								value={dataArchive.no_perkara}
-								onChange={(e) =>
-									setDataArchive({ ...dataArchive, no_perkara: e.target.value })
-								}
-							/> */}
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>BOX</p>
@@ -141,19 +178,63 @@ function AddArchive(props) {
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
-							<p className='text-input-title-1'>Nama Terdakwa</p>
-							<input
-								className='form-input-1'
-								placeholder='Masukkan Nama Terdakwa'
-								value={dataArchive.nama_terdakwa}
+							<p className='text-input-title-1'>Klasifikasi Perkara</p>
+							<Select
+								options={options}
+								placeholder='Klasifikasi Perkara'
+								className='form-select-1'
 								onChange={(e) =>
 									setDataArchive({
 										...dataArchive,
-										nama_terdakwa: e.target.value,
+										klasifikasi_perkara: e.value,
 									})
 								}
 							/>
 						</div>
+						<div className='form-input-group mb-30px'>
+							<p className='text-input-title-1'>Nama Tergugat</p>
+							<input
+								className='form-input-1'
+								placeholder='Masukkan Nama Tergugat'
+								value={dataArchive.nama_tergugat}
+								onChange={(e) =>
+									setDataArchive({
+										...dataArchive,
+										nama_tergugat: e.target.value,
+									})
+								}
+							/>
+						</div>
+						<div className='form-input-group mb-30px'>
+							<p className='text-input-title-1'>Nama Penggugat</p>
+							<input
+								className='form-input-1'
+								placeholder='Masukkan Nama Penggugat'
+								value={dataArchive.nama_penggugat}
+								onChange={(e) =>
+									setDataArchive({
+										...dataArchive,
+										nama_penggugat: e.target.value,
+									})
+								}
+							/>
+						</div>
+						<div className='form-input-group mb-30px'>
+							<p className='text-input-title-1'>Nama Turut Tergugat</p>
+							<input
+								className='form-input-1'
+								placeholder='Masukkan Nama Turut Tergugat'
+								value={dataArchive.nama_turut_tergugat}
+								onChange={(e) =>
+									setDataArchive({
+										...dataArchive,
+										nama_turut_tergugat: e.target.value,
+									})
+								}
+							/>
+						</div>
+					</div>
+					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Tanggal Pengiriman</p>
 							<div className='wrapperDate'>
@@ -186,8 +267,6 @@ function AddArchive(props) {
 								</div>
 							) : null}
 						</div>
-					</div>
-					<div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Upload PDF Arsip Pidana</p>
 							<div className='wrapperUpload'>
@@ -249,10 +328,6 @@ function AddArchive(props) {
 					<div className='addFooter row'>
 						<div
 							className='btn-submit mb-20px col-sm-12'
-							onClick={() => {
-								onSubmitData()
-								console.log('dataarchive', dataArchive)
-							}}
 							data-bs-toggle='modal'
 							data-bs-target='#submitModal'
 						>
@@ -288,7 +363,7 @@ function AddArchive(props) {
 						classBtnYes='btn-modal-yes-green'
 						txtBtnYes='Submit'
 						txtBtnNo='Cancel'
-						onSubmit={() => alert('Berhasil Submit')}
+						onSubmit={onSubmitData}
 					/>
 				</div>
 			</div>

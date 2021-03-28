@@ -25,8 +25,6 @@ function EditArchive(props) {
 
 	let locState = location.state;
 
-	const [date, setDate] = useState(new Date());
-
 	const [showCalendar, setShowCalendar] = useState(false);
 
 	const [dataArchive, setDataArchive] = useState({
@@ -49,7 +47,8 @@ function EditArchive(props) {
 	const [noper1, setNoper1] = useState('');
 	const [noper2, setNoper2] = useState('');
 
-	const [year, setYear] = useState(new Date());
+	const [date, setDate] = useState(locState.tanggal_pengiriman);
+	const [year, setYear] = useState(new Date().getFullYear());
 
 	useEffect(() => {
 		const splitNoper = locState.no_perkara.split('/');
@@ -100,6 +99,10 @@ function EditArchive(props) {
 			.catch((err) => console.log('err del', err));
 	};
 
+	function capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
 	const onUpdateData = () => {
 		let noper = noper1 + '/pdt/' + noper2 + '/' + year + '/pnjs';
 		let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
@@ -112,7 +115,10 @@ function EditArchive(props) {
 		fd.append('id_arsip', locState.id);
 		fd.append('no_perkara', noper.toUpperCase());
 		fd.append('box', dataArchive.no_box);
-		fd.append('nama_terdakwa', dataArchive.nama_terdakwa);
+		fd.append(
+			'nama_terdakwa',
+			capitalizeFirstLetter(dataArchive.nama_terdakwa)
+		);
 		fd.append('tanggal_pengiriman', formatTglPengiriman);
 		fd.append('left_over', dataArchive.file.toString());
 		fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
@@ -127,16 +133,9 @@ function EditArchive(props) {
 		EditArsipPerdata(fd)
 			.then((res) => {
 				console.log('res edit data', res);
-				// window.location.reload();
+				history.goBack();
 			})
 			.catch((err) => console.log('err edit data', err));
-		// dataArchive.file.map((item) => fd.append('file', item.File));
-		// AddNewArsipPerdata(fd)
-		// 	.then((res) => {
-		// 		console.log('res add data', res);
-		// 		// window.location.reload();
-		// 	})
-		// 	.catch((err) => console.log('err', err));
 	};
 
 	return (
@@ -194,14 +193,6 @@ function EditArchive(props) {
 								/>
 								<span className='input-txt-perkara'>/ PNJS</span>
 							</div>
-							{/* <input
-								className='form-input-1'
-								placeholder='Masukkan Nomor Perkara'
-								value={dataArchive.no_perkara}
-								onChange={(e) =>
-									setDataArchive({ ...dataArchive, no_perkara: e.target.value })
-								}
-							/> */}
 						</div>
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>BOX</p>
@@ -293,7 +284,8 @@ function EditArchive(props) {
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Upload PDF Arsip Perdata</p>
 							<div className='wrapperUpload'>
-								{dataArchive.file.length === 0 ? (
+								{dataArchive.file.length === 0 &&
+								additionalFile.length === 0 ? (
 									<>
 										<label htmlFor='upload-pdf' className='txtBrowse'>
 											<IoMdCloudUpload size={30} color='#5F764F' /> <br />

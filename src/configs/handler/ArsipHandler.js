@@ -92,3 +92,52 @@ export const DeleteArsipPerdata = async (params) => {
 		return Promise.reject(error);
 	}
 };
+
+export const AddNewArsipPidana = async (data) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/do/arsip/pid`,
+			'post',
+			null,
+			data,
+			{ headers: { 'Content-Type': 'multipart/form-data' } }
+		);
+		console.log('res awal add arsip pidana', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal add arsip pidana', error);
+		return Promise.reject(error);
+	}
+};
+
+export const EditArsipPidana = async (data) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/do/arsip/pid`,
+			'put',
+			null,
+			data,
+			{ headers: { 'Content-Type': 'multipart/form-data' } }
+		);
+		console.log('res awal edit arsip pidana', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal edit arsip pidana', error);
+		return Promise.reject(error);
+	}
+};
+
+export const DeleteArsipPidana = async (params) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/do/arsip/pid`,
+			'delete',
+			params
+		);
+		console.log('res awal del arsip pidana', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal del arsip pidana', error);
+		return Promise.reject(error);
+	}
+};
