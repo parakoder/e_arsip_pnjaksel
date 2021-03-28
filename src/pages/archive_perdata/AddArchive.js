@@ -167,20 +167,6 @@ function AddArchive(props) {
 							/>
 						</div>
 						<div className='form-input-group mb-30px'>
-							<p className='text-input-title-1'>Nama Terdakwa</p>
-							<input
-								className='form-input-1'
-								placeholder='Masukkan Nama Terdakwa'
-								value={dataArchive.nama_terdakwa}
-								onChange={(e) =>
-									setDataArchive({
-										...dataArchive,
-										nama_terdakwa: e.target.value,
-									})
-								}
-							/>
-						</div>
-						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Klasifikasi Perkara</p>
 							<Select
 								options={options}
@@ -194,6 +180,21 @@ function AddArchive(props) {
 								}
 							/>
 						</div>
+						<div className='form-input-group mb-30px'>
+							<p className='text-input-title-1'>Nama Terdakwa</p>
+							<input
+								className='form-input-1'
+								placeholder='Masukkan Nama Terdakwa'
+								value={dataArchive.nama_terdakwa}
+								onChange={(e) =>
+									setDataArchive({
+										...dataArchive,
+										nama_terdakwa: e.target.value,
+									})
+								}
+							/>
+						</div>
+
 						<div className='form-input-group mb-30px'>
 							<p className='text-input-title-1'>Tanggal Pengiriman</p>
 							<div className='wrapperDate'>
