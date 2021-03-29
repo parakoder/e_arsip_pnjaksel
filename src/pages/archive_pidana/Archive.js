@@ -287,6 +287,9 @@ function Archive(props) {
 								<th className='table-main-th' style={{ width: '8%' }}>
 									BOX
 								</th>
+								<th className='table-main-th' style={{ width: '17%' }}>
+									Klasifikasi Perkara
+								</th>
 								<th className='table-main-th' style={{ width: '22%' }}>
 									Nama Terdakwa
 								</th>
@@ -315,6 +318,9 @@ function Archive(props) {
 												{dt.no_perkara}
 											</td>
 											<td className='table-main-td'>{dt.box}</td>
+											<td className='table-main-td'>
+												{dt.klasifikasi_perkara}
+											</td>
 											<td className='table-main-td'>
 												{dt.nama_tergugat.toString()},{' '}
 												{dt.nama_penggugat.toString()},{' '}
