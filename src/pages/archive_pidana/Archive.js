@@ -278,7 +278,10 @@ function Archive(props) {
 					<table className='table-main'>
 						<thead className='table-main-thead'>
 							<tr>
-								<th className='table-main-th' style={{ width: '5%' }}>
+								<th
+									className='table-main-th'
+									style={{ width: '5%', position: 'sticky', top: 0 }}
+								>
 									No.
 								</th>
 								<th className='table-main-th' style={{ width: '22%' }}>
@@ -291,15 +294,27 @@ function Archive(props) {
 									Klasifikasi Perkara
 								</th>
 								<th className='table-main-th' style={{ width: '22%' }}>
-									Nama Terdakwa
+									Nama Tergugat
+								</th>
+								<th className='table-main-th' style={{ width: '22%' }}>
+									Nama Penggugat
+								</th>
+								<th className='table-main-th' style={{ width: '22%' }}>
+									Nama Turut Tergugat
 								</th>
 								<th className='table-main-th' style={{ width: '17%' }}>
 									Tanggal Pengiriman
 								</th>
-								<th className='table-main-th' style={{ width: '13%' }}>
+								<th
+									className='table-main-th'
+									style={{ width: '13%', position: 'sticky', top: 0 }}
+								>
 									PDF
 								</th>
-								<th className='table-main-th' style={{ width: '13%' }}>
+								<th
+									className='table-main-th'
+									style={{ width: '13%', position: 'sticky', top: 0 }}
+								>
 									Edit
 								</th>
 							</tr>
@@ -310,7 +325,12 @@ function Archive(props) {
 								? null
 								: dataPidana.map((dt, i) => (
 										<tr key={i} className='table-main-nth-child'>
-											<td className='table-main-td'>{i + 1}</td>
+											<td
+												className='table-main-td'
+												style={{ position: 'sticky', top: 0 }}
+											>
+												{i + 1}
+											</td>
 											<td
 												className='table-main-td'
 												style={{ textAlign: 'left' }}
@@ -322,12 +342,19 @@ function Archive(props) {
 												{dt.klasifikasi_perkara}
 											</td>
 											<td className='table-main-td'>
-												{dt.nama_tergugat.toString()},{' '}
-												{dt.nama_penggugat.toString()},{' '}
+												{dt.nama_tergugat.toString()}
+											</td>
+											<td className='table-main-td'>
+												{dt.nama_penggugat.toString()}
+											</td>
+											<td className='table-main-td'>
 												{dt.nama_turut_tergugat.toString()}
 											</td>
 											<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
-											<td className='table-main-td'>
+											<td
+												className='table-main-td'
+												style={{ position: 'sticky', top: 0 }}
+											>
 												<CgFileDocument
 													size={22}
 													style={{
@@ -335,7 +362,10 @@ function Archive(props) {
 													}}
 												/>
 											</td>
-											<td className='table-main-td'>
+											<td
+												className='table-main-td'
+												style={{ position: 'sticky', top: 0 }}
+											>
 												<MdModeEdit
 													size={22}
 													style={{

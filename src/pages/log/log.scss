@@ -44,7 +44,7 @@
             justify-content: center;
             padding: 5px;
             border-radius: 5px;
-            border: 1px solid grey;
+            border: 1px solid #8BA577;
             cursor: pointer;
         }
 
@@ -63,7 +63,7 @@
                 justify-content: center;
                 padding: 5px;
                 border-radius: 5px;
-                border: 1px solid grey; 
+                border: 1px solid #8BA577;
                 cursor: pointer;
             }
 
@@ -93,7 +93,7 @@
                 }
 
                 .c-checker-admin{
-                    background-color: #D2BC67;
+                    background-color: #FFFFFF   ;
                     padding: 10px 30px 20px 30px;
                     height: 100%;
                     font-size: 14px;
@@ -115,13 +115,13 @@
                     .c-checker-select-list{
                         max-height: 160px;
                         overflow-y: auto;
-                        
+
                         .checker-select-list{
                             display: flex;
                             align-items: center;
                             padding: 10px 10px 10px 0px;
 
-    
+
                             input{
                                 width: 16px;
                                 height: 16px;
@@ -136,13 +136,13 @@
                     }
                       /* Handle */
                     .c-checker-select-list::-webkit-scrollbar-thumb {
-                        background: #A0A4A8; 
+                        background: #A0A4A8;
                     }
-                    
+
                 }
             }
         }
 
-       
+
     }
 }
