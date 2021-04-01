@@ -48,6 +48,62 @@
             cursor: pointer;
         }
 
+        .wrapperFilter-date {
+            // max-width: 160px;
+            z-index: 100;
+            height: 35px;
+                padding: 0px 10px;
+                border: 1px solid #8BA577;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: row;
+                background-color: white;
+                align-items: center;
+                justify-content: center;
+
+
+            .filter-date{
+                // width: 100% !important;
+                max-width: 100px;
+                height: 30px;
+                padding: 10px 20px 10px 20px;
+                // border: 1px solid #8BA577;
+                outline: none;
+                border: none;
+                border-radius: 3px;
+                align-self: center;
+            }
+
+            .react-datepicker__tab-loop  .react-datepicker-popper{
+                margin-left: -300px !important;
+
+                .react-datepicker__triangle{
+                    left: 370px !important;
+                }
+            }
+
+            .date-code-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                background-color: #F0F0F0;
+                position: absolute;
+                left: -105px;
+                height: 235px;
+                max-height: 235px;
+                padding: 15px 15px;
+                border: 1px solid #768E7C;
+                border-radius: 3px;
+
+                .date-code {
+                    cursor: pointer;
+                    padding: 4px;
+                    border-radius: 3px;
+                }
+            }
+
+        }
+
         .group-wrapperFilterAdmin {
             position: relative;
             // display: inline-flex;

@@ -9,6 +9,9 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import { GetLogData } from '../../configs/handler/LogHandler';
 import moment from 'moment';
 import PaginationComponent from '../../components/Pagination/PaginationComponent';
+import { GetUserList } from '../../configs/handler/UsersHandler';
+import DatePicker from 'react-datepicker';
+import { IoMdClose } from 'react-icons/io';
 function Log(props) {
 	const [dtTableLog, setDtTableLog] = useState(null);
 
@@ -17,6 +20,8 @@ function Log(props) {
 	const [totalItem, setTotalItem] = useState(0);
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
+	const [formattedStartDate, setFormattedStartDate] = useState('');
+	const [formattedEndDate, setFormattedEndDate] = useState('');
 	const [findDataFilter, setFindDataFilter] = useState('');
 
 	const [pagination, setPagination] = useState({
@@ -33,8 +38,8 @@ function Log(props) {
 
 	const getLogData = () => {
 		var findData = findDataFilter === '' ? null : findDataFilter;
-		var dateStart = startDate === '' ? null : startDate;
-		var dateEnd = endDate === '' ? null : endDate;
+		var dateStart = startDate === '' ? null : formattedStartDate;
+		var dateEnd = endDate === '' ? null : formattedEndDate;
 
 		var ofset =
 			pagination.page === 1 ? 0 : (pagination.page - 1) * pagination.limit;
@@ -64,10 +69,43 @@ function Log(props) {
 	// 		.then((json) => setDtTableLog(json));
 	// }, []);
 
+	const [listUser, setListUser] = useState([]);
+
+	useEffect(() => {
+		GetUserList()
+			.then((res) => {
+				console.log('reslistuser', res);
+				if (res.status === 200) {
+					setListUser(res.data);
+				}
+			})
+			.catch((err) => console.log('errlistuser', err));
+		return () => {
+			console.log('unmount user list');
+		};
+	}, []);
+
+	const onClearFilter = () => {
+		setStartDate('');
+		setEndDate('');
+	};
+
+	const onChangeDate = (dates) => {
+		const [start, end] = dates;
+
+		var formatStart = moment(start).format('yyyy-MM-DD').toString();
+		var formatEnd = moment(end).format('yyyy-MM-DD').toString();
+
+		setFormattedStartDate(formatStart);
+		setFormattedEndDate(formatEnd);
+		setStartDate(start);
+		setEndDate(end);
+	};
+
 	useEffect(() => {
 		debounceOnFilter();
 		return () => console.log('unmount perdata');
-	}, [pagination.page, findDataFilter, startDate, endDate]);
+	}, [pagination.page, findDataFilter, startDate, endDate, listUser]);
 
 	const debounceOnFilter = AwesomeDebouncePromise(getLogData, 700);
 
@@ -79,10 +117,14 @@ function Log(props) {
 						<div className='wrapperInput mb-15px '>
 							<FiSearch size={20} />
 							<Gap width={10} />
-							<input className='input' placeholder='Cari Data' />
+							<input
+								className='input'
+								placeholder='Cari Data'
+								onChange={(e) => setFindDataFilter(e.target.value)}
+							/>
 						</div>
 						{/* <Gap width={20} /> */}
-						<div className='wrapperFilter mb-15px ml-20px'>
+						<div className='wrapperFilter-date mb-15px ml-20px'>
 							{/* <HiFilter size={20} /> */}
 							<img
 								src={require('../../assets/icons/ic_calendar.png').default}
@@ -90,7 +132,32 @@ function Log(props) {
 								style={{ width: 16 }}
 							/>
 							<Gap width={10} />
-							<div>Filter Data</div>
+							<DatePicker
+								className='filter-date'
+								monthsShown={2}
+								selected={startDate}
+								onChange={onChangeDate}
+								startDate={startDate}
+								endDate={endDate}
+								selectsRange
+								dateFormat='dd MMM'
+								placeholderText={'1 Jan'}
+								// inline
+							/>
+							<div>-</div>
+							<DatePicker
+								className='filter-date'
+								monthsShown={2}
+								selected={endDate}
+								onChange={onChangeDate}
+								startDate={startDate}
+								endDate={endDate}
+								selectsRange
+								dateFormat='dd MMM'
+								placeholderText='31 Des'
+								// disabled
+							/>
+							<IoMdClose color='red' size={20} onClick={onClearFilter} />
 						</div>
 						{/* <Gap width={20} /> */}
 
@@ -104,9 +171,7 @@ function Log(props) {
 								<div>Semua Admin</div>
 							</div>
 
-							{filterAdminIsOpen ? (
-								<FilterAdmin listAdmin={dtTableLog} />
-							) : null}
+							{filterAdminIsOpen ? <FilterAdmin listAdmin={listUser} /> : null}
 						</div>
 					</div>
 					<div></div>
