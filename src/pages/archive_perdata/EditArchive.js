@@ -151,8 +151,6 @@ function EditArchive(props) {
 				for (let i = 0; i < additionalFile.length; i++) {
 					fd.append('file', additionalFile[i]);
 				}
-			} else {
-				fd.append('file', uploadInput.files);
 			}
 
 			EditArsipPerdata(fd)
@@ -447,7 +445,7 @@ function EditArchive(props) {
 						<div
 							className='btn-cancel ml-20px col-sm-12'
 							data-bs-toggle='modal'
-							data-bs-target='#deleteModal'
+							data-bs-target='#cancelModal'
 						>
 							Cancel
 						</div>

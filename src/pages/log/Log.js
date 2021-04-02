@@ -70,12 +70,6 @@ function Log(props) {
 			});
 	};
 
-	// useEffect(() => {
-	// 	fetch('https://jsonplaceholder.typicode.com/users')
-	// 		.then((response) => response.json())
-	// 		.then((json) => setDtTableLog(json));
-	// }, []);
-
 	const [listUser, setListUser] = useState([]);
 
 	useEffect(() => {
@@ -190,6 +184,7 @@ function Log(props) {
 									listAdmin={listUser}
 									// onCheckName={(e) => setFindDataFilter(e.toString())}
 									dtAdmin={selectedFilterAdmin}
+									// setDtAdmin={(e) => setSelectedFilterAdmin(e.toString())}
 									setDtAdmin={(e) => setSelectedFilterAdmin(e.toString())}
 								/>
 							) : null}
