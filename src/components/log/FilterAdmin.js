@@ -5,7 +5,7 @@ import '../../pages/log/log.scss';
 function FilterAdmin(props) {
 	const [filteredListAdmin, setFilteredListAdmin] = useState(props.listAdmin);
 
-	const [isChecked, setIsChecked] = useState(false);
+	// const [isChecked, setIsChecked] = useState(false);
 
 	const filterName = (name) => {
 		const arrName = [...props.listAdmin];
@@ -18,7 +18,7 @@ function FilterAdmin(props) {
 		}
 	};
 
-	const [isSelected, setIsSelected] = useState([])
+	const [isSelected, setIsSelected] = useState(props.dtAdmin)
 
 	console.log('isSelected', isSelected)
 
@@ -27,8 +27,11 @@ function FilterAdmin(props) {
 	// }, [filteredListAdmin]);
 
 	useEffect(() => {
-		props.onCheckName(isSelected)
+		// props.onCheckName(isSelected)
+		props.setDtAdmin(isSelected)
 	}, [isSelected])
+
+	console.log('props.dt.admin', props.dtAdmin)
 
 	return (
 		<div className='wrapper-log-find-admin'>
@@ -62,15 +65,32 @@ function FilterAdmin(props) {
 									value={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
 									onChange={() => {
 										if (isSelected.find(item => item === dt.name)) {
-											isSelected.splice(isSelected.indexOf(dt.name), 1)
+
+											// isSelected.splice(isSelected.indexOf(dt.name), 1)
+											var item = [...isSelected]
+
+											var result = item.splice(item.indexOf(dt.name), 1)
+
+											setIsSelected(result)
+											// isSelected.splice(isSelected.indexOf(dt.name), 1)
+											console.log('item', result)
 											console.log('clear 1', isSelected)
 										} else {
 											setIsSelected([...isSelected, dt.name])
 										}
-										
-										
-										// props.onCheckName(dt.name);
 									}}
+
+									// value={props.dtAdmin.length === 0 ? false : props.dtAdmin.find(item => item === dt.name) ? true : false}
+									// onChange={() => {
+									// 	console.log('dt.name', dt.name)
+									// 	if (props.dtAdmin.find(item => item === dt.name)) {
+									// 		props.dtAdmin.splice(props.dtAdmin.indexOf(dt.name), 1)
+									// 		console.log('clear 1', props.dtAdmin)
+									// 	} else {
+									// 		var item  = props.dtAdmin.push(dt.name)
+									// 		props.setDtAdmin(item)
+									// 	}
+									// }}
 								/>
 								<span>{dt.name}</span>
 							</div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Gap from '../../components/Gap';
 import './log.scss';
@@ -24,6 +25,10 @@ function Log(props) {
 	const [formattedEndDate, setFormattedEndDate] = useState('');
 	const [findDataFilter, setFindDataFilter] = useState('');
 
+	const [selectedFilterAdmin, setSelectedFilterAdmin] = useState([])
+
+	console.log('selectedFilterAdmin', selectedFilterAdmin)
+
 	const [pagination, setPagination] = useState({
 		page: 1,
 		limit: 20,
@@ -37,9 +42,11 @@ function Log(props) {
 	};
 
 	const getLogData = () => {
-		var findData = findDataFilter === '' ? null : findDataFilter;
+		// var findData = findDataFilter === '' ? null : findDataFilter;
+		var findData = selectedFilterAdmin.length === 0 ? null : selectedFilterAdmin;
 		var dateStart = startDate === '' ? null : formattedStartDate;
 		var dateEnd = endDate === '' ? null : formattedEndDate;
+		
 
 		var ofset =
 			pagination.page === 1 ? 0 : (pagination.page - 1) * pagination.limit;
@@ -105,7 +112,7 @@ function Log(props) {
 	useEffect(() => {
 		debounceOnFilter();
 		return () => console.log('unmount perdata');
-	}, [pagination.page, findDataFilter, startDate, endDate, listUser]);
+	}, [pagination.page, findDataFilter, startDate, endDate, listUser, selectedFilterAdmin]);
 
 	const debounceOnFilter = AwesomeDebouncePromise(getLogData, 700);
 
@@ -174,7 +181,9 @@ function Log(props) {
 							{filterAdminIsOpen ? (
 								<FilterAdmin
 									listAdmin={listUser}
-									onCheckName={(e) => console.log('checjed name', e)}
+									// onCheckName={(e) => setFindDataFilter(e.toString())}
+									dtAdmin={selectedFilterAdmin}
+									setDtAdmin={(e) => setSelectedFilterAdmin(e.toString())}
 								/>
 							) : null}
 						</div>
