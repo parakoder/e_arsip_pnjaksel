@@ -40,13 +40,49 @@ function ModalDeleteArchive(props) {
 
 		if (props.title === 'Perdata') {
 			ExportPerdata(fd)
-				.then((res) => res.blob())
-				.then((resBlob) => console.log('resBlob', resBlob))
+				.then((res) => {
+					console.log('res sssssssssss', res)
+				
+					const byteArray = new Uint8Array(res);
+					const a = window.document.createElement('a');
+					a.href = window.URL.createObjectURL(
+					  new Blob([byteArray], {
+						type:
+						  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					  }),
+					);
+					a.download = `Export Report Perdata ${new Date().toDateString()}.xlsx`;
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+				}
+			)
+				// .then((resBlob) => console.log('resBlob', resBlob))
 				.catch((err) => console.log('export err perdata', err));
 		} else if (props.title === 'Pidana') {
 			ExportPidana(fd)
 				.then((res) => {
 					console.log('export res pidana', res);
+					// const type = res.headers['content-type']
+                    const url = new Blob([res], {  encoding: 'UTF-8' })
+                    const link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(url)
+                    link.download = `Export Report Pidana ${new Date().toDateString()}.xlsx`;
+                    // link.download = 'file.xlsx'
+        
+                    link.dispatchEvent(
+                        new MouseEvent("click", {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window
+                        })
+                    );
+        
+                    setTimeout(function () {
+                        // For Firefox it is necessary to delay revoking the ObjectURL
+                        window.URL.revokeObjectURL(url);
+                        link.remove();
+                    }, 100);
 				})
 				.catch((err) => console.log('export err pidana', err));
 		} else {
