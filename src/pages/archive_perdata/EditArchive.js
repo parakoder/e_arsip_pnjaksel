@@ -148,6 +148,8 @@ function EditArchive(props) {
 				for (let i = 0; i < additionalFile.length; i++) {
 					fd.append('file', additionalFile[i]);
 				}
+			} else {
+				fd.append('file', '');
 			}
 
 			EditArsipPerdata(fd)

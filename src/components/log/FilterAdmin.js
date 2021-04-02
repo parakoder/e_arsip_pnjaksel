@@ -4,6 +4,8 @@ import '../../pages/log/log.scss';
 function FilterAdmin(props) {
 	const [filteredListAdmin, setFilteredListAdmin] = useState(props.listAdmin);
 
+	const [isChecked, setIsChecked] = useState(false);
+
 	const filterName = (name) => {
 		const arrName = [...props.listAdmin];
 
@@ -37,7 +39,17 @@ function FilterAdmin(props) {
 					{filteredListAdmin
 						? filteredListAdmin.map((dt, i) => (
 								<div className='checker-select-list' key={i}>
-									<input type='checkbox' onClick={(e) => console.log('e', e)} />
+									<input
+										type='checkbox'
+										checked={isChecked}
+										onChange={(e) => {
+											console.log('what', e);
+											setIsChecked(!isChecked);
+											if (isChecked) {
+												props.onCheckName(dt.name);
+											}
+										}}
+									/>
 									<span>{dt.name}</span>
 								</div>
 						  ))

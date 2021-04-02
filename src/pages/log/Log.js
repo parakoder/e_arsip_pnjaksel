@@ -171,7 +171,12 @@ function Log(props) {
 								<div>Semua Admin</div>
 							</div>
 
-							{filterAdminIsOpen ? <FilterAdmin listAdmin={listUser} /> : null}
+							{filterAdminIsOpen ? (
+								<FilterAdmin
+									listAdmin={listUser}
+									onCheckName={(e) => console.log('checjed name', e)}
+								/>
+							) : null}
 						</div>
 					</div>
 					<div></div>
