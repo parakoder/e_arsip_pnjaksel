@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../../pages/log/log.scss';
 
@@ -17,9 +18,17 @@ function FilterAdmin(props) {
 		}
 	};
 
+	const [isSelected, setIsSelected] = useState([])
+
+	console.log('isSelected', isSelected)
+
+	// useEffect(() => {
+	// 	return () => {};
+	// }, [filteredListAdmin]);
+
 	useEffect(() => {
-		return () => {};
-	}, [filteredListAdmin]);
+		props.onCheckName(isSelected)
+	}, [isSelected])
 
 	return (
 		<div className='wrapper-log-find-admin'>
@@ -38,22 +47,36 @@ function FilterAdmin(props) {
 				<div className='c-checker-select-list'>
 					{filteredListAdmin
 						? filteredListAdmin.map((dt, i) => (
-								<div className='checker-select-list' key={i}>
-									<input
-										type='checkbox'
-										checked={isChecked}
-										onChange={(e) => {
-											console.log('what', e);
-											setIsChecked(!isChecked);
-											if (isChecked) {
-												props.onCheckName(dt.name);
-											}
-										}}
-									/>
-									<span>{dt.name}</span>
-								</div>
-						  ))
-						: null}
+							<div className='checker-select-list' key={i}>
+								<input
+									type='checkbox'
+									// checked={isChecked}
+									// onChange={(e) => {
+									// 	console.log('what', e);
+									// 	setIsChecked(!isChecked);
+									// 	if (isChecked) {
+									// 		props.onCheckName(dt.name);
+									// 	}
+									// }}
+									// checked={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
+									value={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
+									onChange={() => {
+										if (isSelected.find(item => item === dt.name)) {
+											isSelected.splice(isSelected.indexOf(dt.name), 1)
+											console.log('clear 1', isSelected)
+										} else {
+											setIsSelected([...isSelected, dt.name])
+										}
+										
+										
+										// props.onCheckName(dt.name);
+									}}
+								/>
+								<span>{dt.name}</span>
+							</div>
+						))
+						: null
+					}
 				</div>
 			</div>
 		</div>

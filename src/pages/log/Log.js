@@ -182,7 +182,7 @@ function Log(props) {
 					<div></div>
 				</div>
 
-				<div className='c-table-main'>
+				<div className='c-table-main mb-5'>
 					<table className='table-main'>
 						<thead className='table-main-thead'>
 							<tr>
@@ -226,14 +226,14 @@ function Log(props) {
 						</tbody>
 					</table>
 				</div>
-				{/* <PaginationComponent
+				<PaginationComponent
 					totalItems={totalItem}
 					pageSize={pagination.limit}
 					onSelect={changePagePaginate}
 					activePage={pagination.page}
 					className='pagination justify-content-center mb-0'
 					listClassName='justify-content-center mb-0'
-				/> */}
+				/>
 			</div>
 		</div>
 	);
