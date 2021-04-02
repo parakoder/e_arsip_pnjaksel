@@ -133,6 +133,9 @@ function EditArchive(props) {
 
 			console.log('left_over', dataArchive.file.toString());
 
+			const uploadInput = document.getElementById('upload-pdf');
+			console.log('uploadInput', uploadInput);
+
 			var fd = new FormData();
 			fd.append('id_arsip', locState.id);
 			fd.append('no_perkara', noper.toUpperCase());
@@ -149,7 +152,7 @@ function EditArchive(props) {
 					fd.append('file', additionalFile[i]);
 				}
 			} else {
-				fd.append('file', '');
+				fd.append('file', uploadInput.files);
 			}
 
 			EditArsipPerdata(fd)

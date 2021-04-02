@@ -25,9 +25,9 @@ function Log(props) {
 	const [formattedEndDate, setFormattedEndDate] = useState('');
 	const [findDataFilter, setFindDataFilter] = useState('');
 
-	const [selectedFilterAdmin, setSelectedFilterAdmin] = useState([])
+	const [selectedFilterAdmin, setSelectedFilterAdmin] = useState([]);
 
-	console.log('selectedFilterAdmin', selectedFilterAdmin)
+	console.log('selectedFilterAdmin', selectedFilterAdmin);
 
 	const [pagination, setPagination] = useState({
 		page: 1,
@@ -43,10 +43,10 @@ function Log(props) {
 
 	const getLogData = () => {
 		// var findData = findDataFilter === '' ? null : findDataFilter;
-		var findData = selectedFilterAdmin.length === 0 ? null : selectedFilterAdmin;
+		var findData =
+			selectedFilterAdmin.length === 0 ? null : selectedFilterAdmin;
 		var dateStart = startDate === '' ? null : formattedStartDate;
 		var dateEnd = endDate === '' ? null : formattedEndDate;
-		
 
 		var ofset =
 			pagination.page === 1 ? 0 : (pagination.page - 1) * pagination.limit;
@@ -112,7 +112,14 @@ function Log(props) {
 	useEffect(() => {
 		debounceOnFilter();
 		return () => console.log('unmount perdata');
-	}, [pagination.page, findDataFilter, startDate, endDate, listUser, selectedFilterAdmin]);
+	}, [
+		pagination.page,
+		findDataFilter,
+		startDate,
+		endDate,
+		listUser,
+		selectedFilterAdmin,
+	]);
 
 	const debounceOnFilter = AwesomeDebouncePromise(getLogData, 700);
 

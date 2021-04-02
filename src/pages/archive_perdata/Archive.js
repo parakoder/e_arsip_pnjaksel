@@ -125,6 +125,7 @@ function Archive(props) {
 				<ModalExportArchive
 					modal={modalExportisOpen}
 					toggle={toggleModalExport}
+					title='Perdata'
 				/>
 			) : null}
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
@@ -255,7 +256,10 @@ function Archive(props) {
 								<IoMdClose color='red' size={20} onClick={onClearFilter} />
 							</div>
 
-							<button className='print-btn  mb-10px ml-20px'>
+							<button
+								className='print-btn  mb-10px ml-20px'
+								onClick={toggleModalExport}
+							>
 								<FiLogOut
 									size={20}
 									style={{

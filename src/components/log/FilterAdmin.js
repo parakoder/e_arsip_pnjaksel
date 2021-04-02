@@ -18,9 +18,9 @@ function FilterAdmin(props) {
 		}
 	};
 
-	const [isSelected, setIsSelected] = useState(props.dtAdmin)
+	const [isSelected, setIsSelected] = useState(props.dtAdmin);
 
-	console.log('isSelected', isSelected)
+	console.log('isSelected', isSelected);
 
 	// useEffect(() => {
 	// 	return () => {};
@@ -28,10 +28,10 @@ function FilterAdmin(props) {
 
 	useEffect(() => {
 		// props.onCheckName(isSelected)
-		props.setDtAdmin(isSelected)
-	}, [isSelected])
+		props.setDtAdmin(isSelected);
+	}, [isSelected]);
 
-	console.log('props.dt.admin', props.dtAdmin)
+	console.log('props.dt.admin', props.dtAdmin);
 
 	return (
 		<div className='wrapper-log-find-admin'>
@@ -45,58 +45,49 @@ function FilterAdmin(props) {
 
 			<div className='c-checker-admin'>
 				<div className='checker-select-all'>
-					<input type='checkbox' /> Semua Admin
+					<input
+						type='checkbox'
+						value={isSelected.length === 0 ? true : false}
+					/>{' '}
+					Semua Admin
 				</div>
 				<div className='c-checker-select-list'>
 					{filteredListAdmin
 						? filteredListAdmin.map((dt, i) => (
-							<div className='checker-select-list' key={i}>
-								<input
-									type='checkbox'
-									// checked={isChecked}
-									// onChange={(e) => {
-									// 	console.log('what', e);
-									// 	setIsChecked(!isChecked);
-									// 	if (isChecked) {
-									// 		props.onCheckName(dt.name);
-									// 	}
-									// }}
-									// checked={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
-									value={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
-									onChange={() => {
-										if (isSelected.find(item => item === dt.name)) {
-
-											// isSelected.splice(isSelected.indexOf(dt.name), 1)
-											var item = [...isSelected]
-
-											var result = item.splice(item.indexOf(dt.name), 1)
-
-											setIsSelected(result)
-											// isSelected.splice(isSelected.indexOf(dt.name), 1)
-											console.log('item', result)
-											console.log('clear 1', isSelected)
-										} else {
-											setIsSelected([...isSelected, dt.name])
+								<div className='checker-select-list' key={i}>
+									<input
+										type='checkbox'
+										// checked={isChecked}
+										// onChange={(e) => {
+										// 	console.log('what', e);
+										// 	setIsChecked(!isChecked);
+										// 	if (isChecked) {
+										// 		props.onCheckName(dt.name);
+										// 	}
+										// }}
+										// checked={isSelected.length === 0 ? false : isSelected.find(item => item === dt.name) ? true : false}
+										value={
+											isSelected.length === 0
+												? false
+												: isSelected.find((item) => item === dt.name)
+												? true
+												: false
 										}
-									}}
+										onChange={() => {
+											if (isSelected.find((item) => item === dt.name)) {
+												isSelected.splice(isSelected.indexOf(dt.name), 1);
+												console.log('clear 1', isSelected);
+											} else {
+												setIsSelected([...isSelected, dt.name]);
+											}
 
-									// value={props.dtAdmin.length === 0 ? false : props.dtAdmin.find(item => item === dt.name) ? true : false}
-									// onChange={() => {
-									// 	console.log('dt.name', dt.name)
-									// 	if (props.dtAdmin.find(item => item === dt.name)) {
-									// 		props.dtAdmin.splice(props.dtAdmin.indexOf(dt.name), 1)
-									// 		console.log('clear 1', props.dtAdmin)
-									// 	} else {
-									// 		var item  = props.dtAdmin.push(dt.name)
-									// 		props.setDtAdmin(item)
-									// 	}
-									// }}
-								/>
-								<span>{dt.name}</span>
-							</div>
-						))
-						: null
-					}
+											// props.onCheckName(dt.name);
+										}}
+									/>
+									<span>{dt.name}</span>
+								</div>
+						  ))
+						: null}
 				</div>
 			</div>
 		</div>

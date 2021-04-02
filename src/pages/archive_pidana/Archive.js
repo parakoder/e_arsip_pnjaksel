@@ -126,6 +126,7 @@ function Archive(props) {
 				<ModalExportArchive
 					modal={modalExportisOpen}
 					toggle={toggleModalExport}
+					title='Pidana'
 				/>
 			) : null}
 
@@ -258,7 +259,7 @@ function Archive(props) {
 
 							<button
 								className='print-btn  mb-10px ml-20px'
-								onClick={() => toggleModalExport()}
+								onClick={toggleModalExport}
 							>
 								<FiLogOut
 									size={20}
