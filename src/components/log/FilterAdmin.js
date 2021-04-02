@@ -75,8 +75,10 @@ function FilterAdmin(props) {
 										}
 										onChange={() => {
 											if (isSelected.find((item) => item === dt.name)) {
-												isSelected.splice(isSelected.indexOf(dt.name), 1);
-												console.log('clear 1', isSelected);
+												var ittem = isSelected.filter(prod => prod !== dt.name)
+												setIsSelected(ittem)
+												props.setDtAdmin(ittem);
+												console.log('clear 1', ittem);
 											} else {
 												setIsSelected([...isSelected, dt.name]);
 											}

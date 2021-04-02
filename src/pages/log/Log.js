@@ -117,7 +117,7 @@ function Log(props) {
 		findDataFilter,
 		startDate,
 		endDate,
-		listUser,
+		// listUser,
 		selectedFilterAdmin,
 	]);
 
