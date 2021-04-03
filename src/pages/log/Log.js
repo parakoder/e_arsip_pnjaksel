@@ -5,7 +5,7 @@ import './log.scss';
 import { FiSearch } from 'react-icons/fi';
 import { HiFilter } from 'react-icons/hi';
 import { RiUserLine } from 'react-icons/ri';
-import FilterAdmin from '../../components/log/FilterAdmin';
+import FilterAdmin from '../../components/log/FilterAdmin2';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import { GetLogData } from '../../configs/handler/LogHandler';
 import moment from 'moment';
@@ -19,15 +19,15 @@ function Log(props) {
 	const [filterAdminIsOpen, setFilterAdminIsOpen] = useState(false);
 
 	const [totalItem, setTotalItem] = useState(0);
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
+	const [startDate, setStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
 	const [formattedStartDate, setFormattedStartDate] = useState('');
 	const [formattedEndDate, setFormattedEndDate] = useState('');
 	const [findDataFilter, setFindDataFilter] = useState('');
 
 	const [selectedFilterAdmin, setSelectedFilterAdmin] = useState([]);
 
-	console.log('selectedFilterAdmin', selectedFilterAdmin);
+	// console.log('selectedFilterAdmin', selectedFilterAdmin);
 
 	const [pagination, setPagination] = useState({
 		page: 1,
@@ -42,9 +42,24 @@ function Log(props) {
 	};
 
 	const getLogData = () => {
-		// var findData = findDataFilter === '' ? null : findDataFilter;
+		// if (findDataFilter !== '') {
+		// 	var findData = findDataFilter;
+		// }
+
+		// if (listUser.filter(e => e.isChecked === true).length > 0) {
+		// 	var findData = selectedFilterAdmin;
+		// }
+
 		var findData =
-			selectedFilterAdmin.length === 0 ? null : selectedFilterAdmin;
+			findDataFilter !== ''
+				? findDataFilter
+				: listUser.filter((e) => e.isChecked === true).length > 0
+				? selectedFilterAdmin
+				: '';
+		// var
+
+		// var findData =
+		// 	selectedFilterAdmin.length === 0 ? findDataFilter : selectedFilterAdmin;
 		var dateStart = startDate === '' ? null : formattedStartDate;
 		var dateEnd = endDate === '' ? null : formattedEndDate;
 
@@ -77,7 +92,17 @@ function Log(props) {
 			.then((res) => {
 				console.log('reslistuser', res);
 				if (res.status === 200) {
-					setListUser(res.data);
+					let arrUser = [];
+					res.data.map((val) => {
+						let item = {
+							...val,
+							isChecked: false,
+						};
+						return arrUser.push(item);
+					});
+
+					// setListUser(res.data);
+					setListUser(arrUser);
 				}
 			})
 			.catch((err) => console.log('errlistuser', err));
@@ -104,6 +129,36 @@ function Log(props) {
 	};
 
 	useEffect(() => {
+		var dat = [...listUser];
+
+		// if (findDataFilter !== '') {
+		// 	for (var i = 0; i < dat.length; i++) {
+		// 		dat[i].isChecked = false;
+		// 		setListUser(dat);
+		// 	}
+		// 	setSelectedFilterAdmin([].toString());
+		// }
+
+		if (
+			listUser.filter((e) => e.isChecked === false).length === listUser.length
+		) {
+			setSelectedFilterAdmin([].toString());
+		}
+		if (listUser.filter((e) => e.isChecked === true).length > 0) {
+			setFindDataFilter('');
+
+			var filterName = listUser.filter((e) => e.isChecked === true);
+			console.log('filterNamecuk', filterName);
+			let arrNewFilter = [];
+			filterName.map((o) => {
+				return arrNewFilter.push(o.name);
+			});
+			console.log('arrNewFilter', arrNewFilter);
+			setSelectedFilterAdmin(arrNewFilter.toString());
+		}
+	}, [listUser]);
+
+	useEffect(() => {
 		debounceOnFilter();
 		return () => console.log('unmount perdata');
 	}, [
@@ -128,8 +183,24 @@ function Log(props) {
 							<input
 								className='input'
 								placeholder='Cari Data'
-								onChange={(e) => setFindDataFilter(e.target.value)}
+								value={findDataFilter}
+								onChange={(e) => {
+									setFindDataFilter(e.target.value);
+									if (e.target.value.length > 0) {
+										for (var i = 0; i < listUser.length; i++) {
+											listUser[i].isChecked = false;
+											setListUser(listUser);
+										}
+									}
+								}}
 							/>
+							{findDataFilter !== '' ? (
+								<IoMdClose
+									color='red'
+									size={20}
+									onClick={() => setFindDataFilter('')}
+								/>
+							) : null}
 						</div>
 						{/* <Gap width={20} /> */}
 						<div className='wrapperFilter-date mb-15px ml-20px'>
@@ -165,7 +236,9 @@ function Log(props) {
 								placeholderText='31 Des'
 								// disabled
 							/>
-							<IoMdClose color='red' size={20} onClick={onClearFilter} />
+							{startDate !== '' || endDate !== '' ? (
+								<IoMdClose color='red' size={20} onClick={onClearFilter} />
+							) : null}
 						</div>
 						{/* <Gap width={20} /> */}
 
@@ -182,10 +255,14 @@ function Log(props) {
 							{filterAdminIsOpen ? (
 								<FilterAdmin
 									listAdmin={listUser}
-									// onCheckName={(e) => setFindDataFilter(e.toString())}
-									dtAdmin={selectedFilterAdmin}
-									// setDtAdmin={(e) => setSelectedFilterAdmin(e.toString())}
-									setDtAdmin={(e) => setSelectedFilterAdmin(e.toString())}
+									setList={setListUser}
+									isAll={
+										findDataFilter !== '' &&
+										listUser.filter((e) => e.isChecked === false).length ===
+											listUser.length
+											? true
+											: false
+									}
 								/>
 							) : null}
 						</div>

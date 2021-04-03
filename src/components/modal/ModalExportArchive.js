@@ -32,6 +32,30 @@ function ModalDeleteArchive(props) {
 
 	const [fileDownload, setFileDownload] = useState('');
 
+	// function base64ToArrayBuffer(base64) {
+	// 	var binaryString = window.atob(base64);
+	// 	var binaryLen = binaryString.length;
+	// 	var bytes = new Uint8Array(binaryLen);
+	// 	for (var i = 0; i < binaryLen; i++) {
+	// 		var ascii = binaryString.charCodeAt(i);
+	// 		bytes[i] = ascii;
+	// 	}
+	// 	return bytes;
+	// }
+
+	// function saveByteArray(reportName, byte) {
+	// 	var blob = new Blob([byte], {
+	// 		type:
+	// 			'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+	// 			'application/vnd.ms-excel',
+	// 	});
+	// 	var link = document.createElement('a');
+	// 	link.href = window.URL.createObjectURL(blob);
+	// 	var fileName = reportName;
+	// 	link.download = fileName;
+	// 	link.click();
+	// }
+
 	const onSaveExport = () => {
 		var fd = new FormData();
 		fd.append('before', formattedStartDate);
@@ -43,12 +67,16 @@ function ModalDeleteArchive(props) {
 				.then((res) => {
 					console.log('res sssssssssss', res);
 
+					// var sampleArr = base64ToArrayBuffer(res);
+					// saveByteArray("Sample Report", sampleArr);
+
 					const byteArray = new Uint8Array(res);
 					const a = window.document.createElement('a');
 					a.href = window.URL.createObjectURL(
 						new Blob([byteArray], {
 							type:
-								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+								'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+								'application/vnd.ms-excel',
 						})
 					);
 					a.download = `Export Report Perdata ${new Date().toDateString()}`;
