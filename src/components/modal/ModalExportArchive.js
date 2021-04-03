@@ -70,7 +70,10 @@ function ModalDeleteArchive(props) {
 						const url = window.URL.createObjectURL(new Blob([res.data]));
 						const link = document.createElement('a');
 						link.href = url;
-						link.setAttribute('download', `${fileNameExport}.xlsx`);
+						link.setAttribute(
+							'download',
+							`${fileNameExport} (${formattedStartDate}-${formattedEndDate}).xlsx`
+						);
 						document.body.appendChild(link);
 						link.click();
 					})
@@ -84,7 +87,10 @@ function ModalDeleteArchive(props) {
 						const url = window.URL.createObjectURL(new Blob([res.data]));
 						const link = document.createElement('a');
 						link.href = url;
-						link.setAttribute('download', `${fileNameExport}.xlsx`);
+						link.setAttribute(
+							'download',
+							`${fileNameExport} (${formattedStartDate}-${formattedEndDate}).xlsx`
+						);
 						document.body.appendChild(link);
 						link.click();
 					})
@@ -106,9 +112,9 @@ function ModalDeleteArchive(props) {
 	};
 
 	console.log('startDate', startDate);
-	console.log('formattedSTart', formattedStartDate);
+	console.log('formattedStart', formattedStartDate);
 	console.log('endDate', endDate);
-	console.log('formattedSTart', formattedEndDate);
+	console.log('formattedEnd', formattedEndDate);
 
 	return (
 		<Modal
@@ -165,8 +171,8 @@ function ModalDeleteArchive(props) {
 					<div className='form-group'>
 						<div className='text'>Nama File</div>
 						<input
-							className='filenameInput'
-							placeholder='Arsip (tanpa ekstensi)'
+							className='input'
+							placeholder='Arsip'
 							onChange={(e) => setFileNameExport(e.target.value)}
 						/>
 					</div>
