@@ -36,9 +36,9 @@ function Archive(props) {
 
 	const [dateCodePick, setDateCodePick] = useState(null);
 
-	const [startDate, setStartDate] = useState(null);
+	const [startDate, setStartDate] = useState('');
 	const [formattedStartDate, setFormattedStartDate] = useState('');
-	const [endDate, setEndDate] = useState(null);
+	const [endDate, setEndDate] = useState('');
 	const [formattedEndDate, setFormattedEndDate] = useState('');
 
 	const onChange = (dates) => {
@@ -253,7 +253,9 @@ function Archive(props) {
 									placeholderText='31 Des'
 									// disabled
 								/>
-								<IoMdClose color='red' size={20} onClick={onClearFilter} />
+								{startDate !== '' || endDate !== '' ? (
+									<IoMdClose color='red' size={20} onClick={onClearFilter} />
+								) : null}
 							</div>
 
 							<button

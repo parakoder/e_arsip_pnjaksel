@@ -254,7 +254,9 @@ function Archive(props) {
 									placeholderText='31 Des'
 									// disabled
 								/>
-								<IoMdClose color='red' size={20} onClick={onClearFilter} />
+								{startDate !== '' || endDate !== '' ? (
+									<IoMdClose color='red' size={20} onClick={onClearFilter} />
+								) : null}
 							</div>
 
 							<button
