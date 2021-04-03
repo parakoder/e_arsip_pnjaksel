@@ -8,7 +8,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
 import '../../styles/archive.scss';
 import { MdModeEdit } from 'react-icons/md';
-import { CgFileDocument } from 'react-icons/cg';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import ModalExportArchive from '../../components/modal/ModalExportArchive';
 import DatePicker from 'react-datepicker';
 import { GetArsipPerdata } from '../../configs/handler/ArsipHandler';
@@ -17,10 +17,12 @@ import PaginationComponent from '../../components/Pagination/PaginationComponent
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import moment from 'moment';
 import { OnError } from '../../components/toast/CustomToast';
+import ModalViewPDF from '../../components/modal/ModalViewPDF';
 
 function Archive(props) {
 	// const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
 	const [modalExportisOpen, setModalExportisOpen] = useState(false);
+	const [modalViewPDFisOpen, setModalViewPDFisOpen] = useState(false);
 	const [dataPerdata, setDataPerdata] = useState(null);
 
 	const history = useHistory();
@@ -31,6 +33,12 @@ function Archive(props) {
 
 	const toggleModalExport = () => {
 		setModalExportisOpen(!modalExportisOpen);
+	};
+
+	const [dataFilePDFPerItem, setDataFilePDFPerItem] = useState(null);
+	const toggleModalViewPDF = (data) => {
+		setModalViewPDFisOpen(!modalViewPDFisOpen);
+		setDataFilePDFPerItem(data);
 	};
 
 	const [findDataFilter, setFindDataFilter] = useState('');
@@ -135,6 +143,13 @@ function Archive(props) {
 					modal={modalExportisOpen}
 					toggle={toggleModalExport}
 					title='Perdata'
+				/>
+			) : null}
+			{modalViewPDFisOpen ? (
+				<ModalViewPDF
+					modal={modalViewPDFisOpen}
+					toggle={toggleModalViewPDF}
+					data={dataFilePDFPerItem}
 				/>
 			) : null}
 			<div className='container-fluid custom-container-fluid fade show mb-5'>
@@ -335,11 +350,12 @@ function Archive(props) {
 											<td className='table-main-td'>{dt.nama_terdakwa}</td>
 											<td className='table-main-td'>{dt.tanggal_pengiriman}</td>
 											<td className='table-main-td'>
-												<CgFileDocument
+												<IoDocumentTextOutline
 													size={22}
 													style={{
 														cursor: 'pointer',
 													}}
+													onClick={() => toggleModalViewPDF(dt.file)}
 												/>
 											</td>
 											<td className='table-main-td'>

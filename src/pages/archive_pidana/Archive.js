@@ -6,6 +6,7 @@ import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import '../../styles/archive.scss';
 import { MdModeEdit } from 'react-icons/md';
 import { CgFileDocument } from 'react-icons/cg';
@@ -18,17 +19,19 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import { OnError } from '../../components/toast/CustomToast';
+import ModalViewPDF from '../../components/modal/ModalViewPDF';
 
 function Archive(props) {
 	let history = useHistory();
-
-	const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
 	const [modalExportisOpen, setModalExportisOpen] = useState(false);
+	const [modalViewPDFisOpen, setModalViewPDFisOpen] = useState(false);
 
 	const [dataPidana, setDataPidana] = useState(null);
 
-	const toggleModalDel = () => {
-		setModalDeleteIsOpen(!modalDeleteIsOpen);
+	const [dataFilePDFPerItem, setDataFilePDFPerItem] = useState(null);
+	const toggleModalViewPDF = (data) => {
+		setModalViewPDFisOpen(!modalViewPDFisOpen);
+		setDataFilePDFPerItem(data);
 	};
 
 	const toggleModalExport = () => {
@@ -127,15 +130,19 @@ function Archive(props) {
 
 	return (
 		<div className='c-main'>
-			{modalDeleteIsOpen ? (
-				<ModalDeleteArchive modal={modalDeleteIsOpen} toggle={toggleModalDel} />
-			) : null}
-
 			{modalExportisOpen ? (
 				<ModalExportArchive
 					modal={modalExportisOpen}
 					toggle={toggleModalExport}
 					title='Pidana'
+				/>
+			) : null}
+
+			{modalViewPDFisOpen ? (
+				<ModalViewPDF
+					modal={modalViewPDFisOpen}
+					toggle={toggleModalViewPDF}
+					data={dataFilePDFPerItem}
 				/>
 			) : null}
 
@@ -367,11 +374,12 @@ function Archive(props) {
 												className='table-main-td'
 												style={{ position: 'sticky', top: 0 }}
 											>
-												<CgFileDocument
+												<IoDocumentTextOutline
 													size={22}
 													style={{
 														cursor: 'pointer',
 													}}
+													onClick={() => toggleModalViewPDF(dt.file)}
 												/>
 											</td>
 											<td
