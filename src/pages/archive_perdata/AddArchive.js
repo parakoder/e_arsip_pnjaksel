@@ -137,7 +137,17 @@ function AddArchive(props) {
 						window.location.reload();
 					}
 				})
-				.catch((err) => OnError({ title: 'Gagal', text: err.message }));
+				.catch((err) => {
+					OnError({ title: 'Gagal', text: err.message });
+					if (err.request.status === 403) {
+						OnError({
+							title: 'Error Code: 403',
+							text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+						});
+						history.replace('/login');
+						localStorage.clear();
+					}
+				});
 		} else {
 			OnError({ title: 'Kesalahan', text: 'Mohon Input Semua Field' });
 		}

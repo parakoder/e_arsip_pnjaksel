@@ -13,7 +13,10 @@ import PaginationComponent from '../../components/Pagination/PaginationComponent
 import { GetUserList } from '../../configs/handler/UsersHandler';
 import DatePicker from 'react-datepicker';
 import { IoMdClose } from 'react-icons/io';
+import { OnError } from '../../components/toast/CustomToast';
+import { useHistory } from 'react-router-dom';
 function Log(props) {
+	let history = useHistory();
 	const [dtTableLog, setDtTableLog] = useState(null);
 
 	const [filterAdminIsOpen, setFilterAdminIsOpen] = useState(false);
@@ -82,6 +85,14 @@ function Log(props) {
 			})
 			.catch((err) => {
 				console.log(err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 	};
 
@@ -105,7 +116,17 @@ function Log(props) {
 					setListUser(arrUser);
 				}
 			})
-			.catch((err) => console.log('errlistuser', err));
+			.catch((err) => {
+				console.log('errlistuser', err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
+			});
 		return () => {
 			console.log('unmount user list');
 		};
@@ -129,7 +150,7 @@ function Log(props) {
 	};
 
 	useEffect(() => {
-		var dat = [...listUser];
+		// var dat = [...listUser];
 
 		// if (findDataFilter !== '') {
 		// 	for (var i = 0; i < dat.length; i++) {

@@ -7,7 +7,6 @@ import { BsChevronLeft } from 'react-icons/bs';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { LoginHandler } from '../../configs/handler/AuthHandler';
 import { OnError } from '../../components/toast/CustomToast';
-import { MdError } from 'react-icons/md';
 
 const Login = (props) => {
 	const [fragment, setFragment] = useState('loginA');

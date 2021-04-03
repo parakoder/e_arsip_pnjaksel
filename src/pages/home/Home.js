@@ -14,8 +14,11 @@ import { GetArsipSum } from '../../configs/handler/ArsipHandler';
 import moment from 'moment';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { OnError } from '../../components/toast/CustomToast';
+import { useHistory } from 'react-router-dom';
 
 function Home(props) {
+	let history = useHistory();
 	const [dtTableHome, setDtTableHome] = useState(null);
 
 	const [name, setName] = useState(null);
@@ -46,6 +49,14 @@ function Home(props) {
 			})
 			.catch((err) => {
 				console.log('err graph gome', err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 	};
 
@@ -119,6 +130,14 @@ function Home(props) {
 			})
 			.catch((err) => {
 				console.log('err graph gome', err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 		return () => {};
 	}, [year]);
@@ -167,6 +186,14 @@ function Home(props) {
 			})
 			.catch((err) => {
 				console.log('err graph all', err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 		return () => {};
 	}, [yearAll]);
@@ -182,6 +209,14 @@ function Home(props) {
 			.catch((err) => {
 				console.log('err arsip sum', err);
 				setSumArsip(null);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 
 		return () => {};
@@ -201,6 +236,14 @@ function Home(props) {
 			})
 			.catch((err) => {
 				console.log('err years', err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 		return () => {};
 	}, []);

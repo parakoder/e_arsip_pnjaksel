@@ -15,6 +15,7 @@ import {
 } from 'react-icons/ri';
 import { IoPersonOutline } from 'react-icons/io5';
 import { LogoutHandler } from '../../configs/handler/AuthHandler';
+import { OnError } from '../toast/CustomToast';
 
 function Sidebar(props) {
 	const history = useHistory();
@@ -53,6 +54,14 @@ function Sidebar(props) {
 			}
 		} catch (error) {
 			console.log('error', error);
+			if (error.request.status === 403) {
+				OnError({
+					title: 'Error Code: 403',
+					text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+				});
+				history.replace('/login');
+				localStorage.clear();
+			}
 		}
 	};
 

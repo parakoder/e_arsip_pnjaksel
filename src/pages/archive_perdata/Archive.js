@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom';
 import PaginationComponent from '../../components/Pagination/PaginationComponent';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import moment from 'moment';
+import { OnError } from '../../components/toast/CustomToast';
 
 function Archive(props) {
 	// const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
@@ -93,6 +94,14 @@ function Archive(props) {
 			})
 			.catch((err) => {
 				console.log(err);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 	};
 
