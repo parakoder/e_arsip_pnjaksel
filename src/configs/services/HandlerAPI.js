@@ -24,6 +24,7 @@ export const HandlerAPI = async (
 	params,
 	data,
 	headers,
+	responType,
 	cancelToken
 ) => {
 	const service = await instance({
@@ -32,6 +33,7 @@ export const HandlerAPI = async (
 		params: params,
 		data: data,
 		headers: headers,
+		responseType: responType,
 		cancelToken: cancelToken,
 	});
 

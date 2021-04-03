@@ -12,6 +12,7 @@ import {
 } from '../../configs/handler/ExportHandler';
 import { IoMdClose } from 'react-icons/io';
 import '../../styles/archive.scss';
+import axios from 'axios';
 
 function ModalDeleteArchive(props) {
 	const [startDate, setStartDate] = useState(new Date());
@@ -32,37 +33,20 @@ function ModalDeleteArchive(props) {
 		setEndDate(end);
 	};
 
-	const [fileDownload, setFileDownload] = useState('');
-
-	// function base64ToArrayBuffer(base64) {
-	// 	var binaryString = window.atob(base64);
-	// 	var binaryLen = binaryString.length;
-	// 	var bytes = new Uint8Array(binaryLen);
-	// 	for (var i = 0; i < binaryLen; i++) {
-	// 		var ascii = binaryString.charCodeAt(i);
-	// 		bytes[i] = ascii;
-	// 	}
-	// 	return bytes;
-	// }
-
-	// function saveByteArray(reportName, byte) {
-	// 	var blob = new Blob([byte], {
-	// 		type:
-	// 			'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-	// 			'application/vnd.ms-excel',
-	// 	});
-	// 	var link = document.createElement('a');
-	// 	link.href = window.URL.createObjectURL(blob);
-	// 	var fileName = reportName;
-	// 	link.download = fileName;
-	// 	link.click();
-	// }
+	const [fileNameExport, setFileNameExport] = useState('');
 
 	const onSaveExport = () => {
 		var fd = new FormData();
 		fd.append('before', formattedStartDate);
 		fd.append('after', formattedEndDate);
-		fd.append('file_name', 'Dummy Arsip');
+		fd.append('file_name', fileNameExport);
+
+		if (startDate === null || endDate === null) {
+			OnError({
+				title: 'Terjadi Kesalahan',
+				text: 'Silahkan Masukkan Tanggal',
+			});
+		}
 
 		if (startDate === '' || endDate === '') {
 			OnError({
@@ -71,57 +55,42 @@ function ModalDeleteArchive(props) {
 			});
 		}
 
-		if (startDate !== '' && endDate !== '') {
+		if (fileNameExport === '') {
+			OnError({
+				title: 'Terjadi Kesalahan',
+				text: 'Silahkan Masukkan Nama',
+			});
+		}
+
+		if (startDate !== '' && endDate !== '' && fileNameExport !== '') {
 			if (props.title === 'Perdata') {
 				ExportPerdata(fd)
 					.then((res) => {
-						console.log('res sssssssssss', res);
-
-						// var sampleArr = base64ToArrayBuffer(res);
-						// saveByteArray("Sample Report", sampleArr);
-
-						const byteArray = new Uint8Array(res);
-						const a = window.document.createElement('a');
-						a.href = window.URL.createObjectURL(
-							new Blob([byteArray], {
-								type:
-									'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-									'application/vnd.ms-excel',
-							})
-						);
-						a.download = `Export Report Perdata ${new Date().toDateString()}`;
-						document.body.appendChild(a);
-						a.click();
-						document.body.removeChild(a);
+						console.log('bct response', res);
+						const url = window.URL.createObjectURL(new Blob([res.data]));
+						const link = document.createElement('a');
+						link.href = url;
+						link.setAttribute('download', `${fileNameExport}.xlsx`);
+						document.body.appendChild(link);
+						link.click();
 					})
-					// .then((resBlob) => console.log('resBlob', resBlob))
-					.catch((err) => console.log('export err perdata', err));
+					.catch((err) => {
+						console.log('err export perdata', err);
+					});
 			} else if (props.title === 'Pidana') {
 				ExportPidana(fd)
 					.then((res) => {
-						console.log('export res pidana', res);
-						// const type = res.headers['content-type']
-						const url = new Blob([res], { encoding: 'UTF-8' });
+						console.log('bct response', res);
+						const url = window.URL.createObjectURL(new Blob([res.data]));
 						const link = document.createElement('a');
-						link.href = window.URL.createObjectURL(url);
-						link.download = `Export Report Pidana ${new Date().toDateString()}.xlsx`;
-						// link.download = 'file.xlsx'
-
-						link.dispatchEvent(
-							new MouseEvent('click', {
-								bubbles: true,
-								cancelable: true,
-								view: window,
-							})
-						);
-
-						setTimeout(function () {
-							// For Firefox it is necessary to delay revoking the ObjectURL
-							window.URL.revokeObjectURL(url);
-							link.remove();
-						}, 100);
+						link.href = url;
+						link.setAttribute('download', `${fileNameExport}.xlsx`);
+						document.body.appendChild(link);
+						link.click();
 					})
-					.catch((err) => console.log('export err pidana', err));
+					.catch((err) => {
+						console.log('err export perdata', err);
+					});
 			} else {
 				OnError({
 					title: 'Terjadi Kesalahan',
@@ -135,6 +104,11 @@ function ModalDeleteArchive(props) {
 		setStartDate('');
 		setEndDate('');
 	};
+
+	console.log('startDate', startDate);
+	console.log('formattedSTart', formattedStartDate);
+	console.log('endDate', endDate);
+	console.log('formattedSTart', formattedEndDate);
 
 	return (
 		<Modal
@@ -156,26 +130,6 @@ function ModalDeleteArchive(props) {
 					</div>
 					<div className='form-group'>
 						<div className='text'>Rentang Tanggal</div>
-						{/* <div className='wrapper-select-date mb-10px ml-20px'>
-							<RiCalendar2Line
-								size={20}
-								style={{
-									position: 'absolute',
-									zIndex: '2',
-									margin: '12px 0px 0px 12px',
-								}}
-							/>
-							<DatePicker
-								className='select-date'
-								monthsShown={2}
-								selected={startDate}
-								onChange={onChange}
-								startDate={startDate}
-								endDate={endDate}
-								selectsRange
-							/>
-
-						</div> */}
 						<div className='wrapperFilter-date mb-10px ml-20px'>
 							<RiCalendar2Line />
 							<DatePicker
@@ -208,10 +162,14 @@ function ModalDeleteArchive(props) {
 							) : null}
 						</div>
 					</div>
-					{/* <div className='form-group'>
+					<div className='form-group'>
 						<div className='text'>Nama File</div>
-						<input className='input' placeholder='Arsip.xlsx' />
-					</div> */}
+						<input
+							className='filenameInput'
+							placeholder='Arsip (tanpa ekstensi)'
+							onChange={(e) => setFileNameExport(e.target.value)}
+						/>
+					</div>
 				</div>
 
 				<div className='modal-export-body-action'>

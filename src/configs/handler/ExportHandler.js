@@ -7,10 +7,11 @@ export const ExportPerdata = async (data) => {
 			'post',
 			null,
 			data,
-			{ headers: { 'Content-Type': 'multipart/form-data' } }
+			{ Accept: 'application/vnd.ms-excel' },
+			'blob'
 		);
-		console.log('res awal export perdata', response.data);
-		return Promise.resolve(response.data);
+		console.log('res awal export perdata', response);
+		return Promise.resolve(response);
 	} catch (error) {
 		console.log('error awal export perdata', error);
 		return Promise.reject(error);
@@ -24,10 +25,11 @@ export const ExportPidana = async (data) => {
 			'post',
 			null,
 			data,
-			{ headers: { 'Content-Type': 'multipart/form-data' } }
+			{ Accept: 'application/vnd.ms-excel' },
+			'blob'
 		);
-		console.log('res awal export pidana', response.data);
-		return Promise.resolve(response.data);
+		console.log('res awal export pidana', response);
+		return Promise.resolve(response);
 	} catch (error) {
 		console.log('error awal export pidana', error);
 		return Promise.reject(error);

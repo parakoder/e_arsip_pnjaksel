@@ -299,7 +299,19 @@
                     border-radius: 3px;
                     text-align: center;
                     padding: 5px;
-                    max-width: 160px;
+                    max-width: 320px;
+                    outline: none;
+                    font-size: 12;
+                }
+
+                .filenameInput {
+                    // flex: 1;
+                    font-weight: bold;
+                    border: 1px solid #8BA577;
+                    border-radius: 3px;
+                    text-align: center;
+                    padding: 5px;
+                    max-width: 320px;
                     outline: none;
                     font-size: 12;
                 }
