@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, {
 	// useState
 } from 'react';
@@ -55,14 +56,14 @@ function ModalViewPDF(props) {
 					{props.data &&
 						props.data.map((o) => (
 							<div className='form-group'>
-								<div className='text'>{o}adwdawdabwdabwdawd</div>
-								<div className='text'>
+								<div className='text'>{o}</div>
+								<a href={o}  target="_blank" className='text'>
 									<IoDocumentTextOutline
 										size={30}
 										color='black'
 										style={{ cursor: 'pointer' }}
 									/>
-								</div>
+								</a>
 							</div>
 						))}
 				</div>
