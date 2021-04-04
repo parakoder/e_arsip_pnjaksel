@@ -1,7 +1,10 @@
 import React, {  } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss'
-import { OnSuccess, OnError } from '../../components/toast/CustomToast'
+import {
+    // OnSuccess,
+    OnError
+} from '../../components/toast/CustomToast'
 // import { RiDeleteBinLine } from "react-icons/ri";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 

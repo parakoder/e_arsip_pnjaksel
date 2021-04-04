@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, {
+	// useState
+} from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss';
-import { OnError } from '../toast/CustomToast';
-import DatePicker from 'react-datepicker';
+// import { OnError } from '../toast/CustomToast';
+// import DatePicker from 'react-datepicker';
 import { BsDownload } from 'react-icons/bs';
-import { RiCalendar2Line } from 'react-icons/ri';
-import moment from 'moment';
+// import { RiCalendar2Line } from 'react-icons/ri';
+// import moment from 'moment';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import '../../styles/archive.scss';
 
 function ModalViewPDF(props) {
-	const [fileDownload, setFileDownload] = useState('');
+	// const [fileDownload, setFileDownload] = useState('');
 
 	// function base64ToArrayBuffer(base64) {
 	// 	var binaryString = window.atob(base64);
