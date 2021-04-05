@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import {
-	HiHome,
-	HiOutlineHome,
-	HiInformationCircle,
-	HiOutlineInformationCircle,
-} from 'react-icons/hi';
-import {
-	RiArchiveDrawerFill,
-	RiArchiveDrawerLine,
-	RiStackFill,
-	RiStackLine,
-} from 'react-icons/ri';
-import { IoPersonOutline } from 'react-icons/io5';
+// import {
+// 	HiHome,
+// 	HiOutlineHome,
+// 	HiInformationCircle,
+// 	HiOutlineInformationCircle,
+// } from 'react-icons/hi';
+// import {
+// 	RiArchiveDrawerFill,
+// 	RiArchiveDrawerLine,
+// 	RiStackFill,
+// 	RiStackLine,
+// } from 'react-icons/ri';
+// import { IoPersonOutline } from 'react-icons/io5';
 import { LogoutHandler } from '../../configs/handler/AuthHandler';
 import { OnError } from '../toast/CustomToast';
 

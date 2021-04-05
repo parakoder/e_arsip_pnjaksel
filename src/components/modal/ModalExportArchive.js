@@ -12,7 +12,6 @@ import {
 } from '../../configs/handler/ExportHandler';
 import { IoMdClose } from 'react-icons/io';
 import '../../styles/archive.scss';
-import axios from 'axios';
 
 function ModalDeleteArchive(props) {
 	const [startDate, setStartDate] = useState(new Date());

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 
-import Gap from '../../components/Gap';
+// import Gap from '../../components/Gap';
 import './home.scss';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../../configs/handler/GraphHandler';
 import { GetLogActivity } from '../../configs/handler/HomeHandler';
 import { GetArsipSum } from '../../configs/handler/ArsipHandler';
-import moment from 'moment';
+// import moment from 'moment';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { OnError } from '../../components/toast/CustomToast';

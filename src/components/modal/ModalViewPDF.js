@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-no-target-blank */
+import React, {
+	// useState
+} from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss';
-import { OnError } from '../toast/CustomToast';
-import DatePicker from 'react-datepicker';
+// import { OnError } from '../toast/CustomToast';
+// import DatePicker from 'react-datepicker';
 import { BsDownload } from 'react-icons/bs';
-import { RiCalendar2Line } from 'react-icons/ri';
-import moment from 'moment';
+// import { RiCalendar2Line } from 'react-icons/ri';
+// import moment from 'moment';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import '../../styles/archive.scss';
 
 function ModalViewPDF(props) {
-	const [fileDownload, setFileDownload] = useState('');
+	// const [fileDownload, setFileDownload] = useState('');
 
 	// function base64ToArrayBuffer(base64) {
 	// 	var binaryString = window.atob(base64);
@@ -53,14 +56,14 @@ function ModalViewPDF(props) {
 					{props.data &&
 						props.data.map((o) => (
 							<div className='form-group'>
-								<div className='text'>{o}adwdawdabwdabwdawd</div>
-								<div className='text'>
+								<div className='text'>{o}</div>
+								<a href={o}  target="_blank" className='text'>
 									<IoDocumentTextOutline
 										size={30}
 										color='black'
 										style={{ cursor: 'pointer' }}
 									/>
-								</div>
+								</a>
 							</div>
 						))}
 				</div>
