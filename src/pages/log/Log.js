@@ -150,16 +150,6 @@ function Log(props) {
 	};
 
 	useEffect(() => {
-		// var dat = [...listUser];
-
-		// if (findDataFilter !== '') {
-		// 	for (var i = 0; i < dat.length; i++) {
-		// 		dat[i].isChecked = false;
-		// 		setListUser(dat);
-		// 	}
-		// 	setSelectedFilterAdmin([].toString());
-		// }
-
 		if (
 			listUser.filter((e) => e.isChecked === false).length === listUser.length
 		) {
@@ -172,7 +162,7 @@ function Log(props) {
 			console.log('filterNamecuk', filterName);
 			let arrNewFilter = [];
 			filterName.map((o) => {
-				return arrNewFilter.push(o.name);
+				return arrNewFilter.push(o.username);
 			});
 			console.log('arrNewFilter', arrNewFilter);
 			setSelectedFilterAdmin(arrNewFilter.toString());
