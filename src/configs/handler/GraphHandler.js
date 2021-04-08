@@ -28,3 +28,18 @@ export const GraphYearsHandler = async () => {
 		return Promise.reject(error);
 	}
 };
+
+export const GraphStat = async (year) => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/do/graph-statistik`,
+			'get',
+			{ year: year }
+		);
+		console.log('res awal graph stat', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal graph stat', error);
+		return Promise.reject(error);
+	}
+};

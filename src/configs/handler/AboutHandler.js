@@ -10,6 +10,7 @@ export const AboutHandler = async () => {
 		return Promise.resolve(response.data);
 	} catch (error) {
 		console.log('error awal about', error);
+
 		return Promise.reject(error);
 	}
 };

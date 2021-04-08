@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import './about.scss';
 import Gap from '../../components/Gap';
 import { AboutHandler } from '../../configs/handler/AboutHandler';
+import { useHistory } from 'react-router-dom';
+import { OnError } from '../../components/toast/CustomToast';
 
 const About = () => {
+	let history = useHistory();
 	const [dataAbout, setDataAbout] = useState(null);
 
 	useEffect(() => {
@@ -13,9 +17,20 @@ const About = () => {
 					console.log('res about', res.data);
 					setDataAbout(res.data);
 				}
+				if (res.status === 403) {
+					console.log('res 403');
+				}
 			})
 			.catch((err) => {
-				console.log('err about', err);
+				console.log('err about', err.request.status);
+				if (err.request.status === 403) {
+					OnError({
+						title: 'Error Code: 403',
+						text: 'Kesalahan Autentikasi, silahkan Login Kembali',
+					});
+					history.replace('/login');
+					localStorage.clear();
+				}
 			});
 		return () => {};
 	}, []);
@@ -26,7 +41,9 @@ const About = () => {
 				<div className='row wrapperAbout'>
 					<div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-30px'>
 						<div className='card-about'>
-							<p className='title'>Informasi Aplikasi</p>
+							<div style={{ margin: '10px 15px' }}>
+								<p className='title'>Informasi Aplikasi</p>
+							</div>
 							<Gap height={50} />
 							<div className='wrapper-detail'>
 								<div className='left'>
@@ -66,7 +83,9 @@ const About = () => {
 
 					<div className='col-xl-6 col-lg-6 col-md-6 col-sm-12'>
 						<div className='card-about'>
-							<p className='title'>Informasi Layanan</p>
+							<div style={{ margin: '10px 15px' }}>
+								<p className='title'>Informasi Layanan</p>
+							</div>
 							<Gap height={50} />
 							<div className='wrapper-detail'>
 								<div className='left'>

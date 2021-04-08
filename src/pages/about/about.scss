@@ -1,22 +1,30 @@
+@import '../../styles/breakpoints.scss';
+
 .wrapperAbout {
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
+    // box-sizing: border-box;
 
     .card-about {
         display: flex;
         flex: 1;
         flex-direction: column;
         border: 1px solid #CCCCCC;
-        margin: 10px;
+        // margin: 10px;
         border-radius: 5px;
-        padding: 50px;
+        // padding: 30px;
         width: 75vw;
         background-color: white;
 
         .wrapper-detail {
             display: flex;
             flex-direction: row;
+            margin: 0px 10px;
+
+            @media screen and (max-width: 900px) {
+                display: flex;
+                flex-direction: column;
+              }
 
             .left {
                 flex: 1;

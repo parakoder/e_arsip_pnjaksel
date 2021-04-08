@@ -35,3 +35,17 @@ export const GetUserDetail = async (username) => {
 		return Promise.reject(error);
 	}
 };
+
+export const GetUserList = async () => {
+	try {
+		const response = await HandlerAPI(
+			`${process.env.REACT_APP_ROOT_API}/userlist`,
+			'get'
+		);
+		console.log('res awal get user list', response.data);
+		return Promise.resolve(response.data);
+	} catch (error) {
+		console.log('error awal get user list', error);
+		return Promise.reject(error);
+	}
+};
