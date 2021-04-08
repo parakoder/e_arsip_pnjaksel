@@ -36,9 +36,9 @@ function Archive(props) {
 	};
 
 	const [dataFilePDFPerItem, setDataFilePDFPerItem] = useState(null);
-	const toggleModalViewPDF = (data) => {
+	const toggleModalViewPDF = (data, id) => {
 		setModalViewPDFisOpen(!modalViewPDFisOpen);
-		setDataFilePDFPerItem(data);
+		setDataFilePDFPerItem({ data, id });
 	};
 
 	const [findDataFilter, setFindDataFilter] = useState('');
@@ -355,7 +355,7 @@ function Archive(props) {
 													style={{
 														cursor: 'pointer',
 													}}
-													onClick={() => toggleModalViewPDF(dt.file)}
+													onClick={() => toggleModalViewPDF(dt.file, dt.id)}
 												/>
 											</td>
 											<td className='table-main-td'>

@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, {
-	// useState
-} from 'react';
+import React from 'react'; // useState
 import { Modal, ModalBody } from 'reactstrap';
 import './modalConf.scss';
 // import { OnError } from '../toast/CustomToast';
@@ -39,6 +37,8 @@ function ModalViewPDF(props) {
 	// 	link.click();
 	// }
 
+	console.log('datadimodal', props.data);
+
 	const onSaveExport = () => {};
 
 	return (
@@ -54,10 +54,15 @@ function ModalViewPDF(props) {
 				<div className='modal-view-body-header'>Lihat Berkas PDF</div>
 				<div className='modal-view-body-content'>
 					{props.data &&
-						props.data.map((o) => (
-							<div className='form-group'>
+						props.data.data.map((o, i) => (
+							<div className='form-group' key={i}>
 								<div className='text'>{o}</div>
-								<a href={o}  target="_blank" className='text'>
+								{/* <a href={o}  target="_blank" className='text'> */}
+								<a
+									href={`../../../public/file/${o}`}
+									target='_blank'
+									className='text'
+								>
 									<IoDocumentTextOutline
 										size={30}
 										color='black'
@@ -69,7 +74,11 @@ function ModalViewPDF(props) {
 				</div>
 
 				<div className='modal-view-body-action'>
-					<div className='apply' onClick={onSaveExport}>
+					{/* <a className='apply' onClick={onSaveExport}> */}
+					<a
+						className='apply'
+						href={`../../../public/file/${props.data.id}.zip`}
+					>
 						<BsDownload
 							size={20}
 							color={'#FAFAFA'}
@@ -78,7 +87,7 @@ function ModalViewPDF(props) {
 							}}
 						/>
 						Simpan Semua Dokumen
-					</div>
+					</a>
 
 					<button className='cancel'>
 						<span style={{ cursor: 'pointer' }} onClick={() => props.toggle()}>

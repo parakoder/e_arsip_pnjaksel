@@ -29,9 +29,9 @@ function Archive(props) {
 	const [dataPidana, setDataPidana] = useState(null);
 
 	const [dataFilePDFPerItem, setDataFilePDFPerItem] = useState(null);
-	const toggleModalViewPDF = (data) => {
+	const toggleModalViewPDF = (data, id) => {
 		setModalViewPDFisOpen(!modalViewPDFisOpen);
-		setDataFilePDFPerItem(data);
+		setDataFilePDFPerItem({ data, id });
 	};
 
 	const toggleModalExport = () => {
@@ -379,7 +379,7 @@ function Archive(props) {
 													style={{
 														cursor: 'pointer',
 													}}
-													onClick={() => toggleModalViewPDF(dt.file)}
+													onClick={() => toggleModalViewPDF(dt.file, dt.id)}
 												/>
 											</td>
 											<td
