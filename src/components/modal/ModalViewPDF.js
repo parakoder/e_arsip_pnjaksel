@@ -77,6 +77,7 @@ function ModalViewPDF(props) {
 					{/* <a className='apply' onClick={onSaveExport}> */}
 					<a
 						className='apply'
+						target='_blank'
 						href={`../../../public/file/${props.data.id}.zip`}
 					>
 						<BsDownload
