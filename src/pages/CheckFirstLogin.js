@@ -10,6 +10,8 @@ import { FirstLoginHandler } from '../configs/handler/AuthHandler';
 import { OnError } from '../components/toast/CustomToast';
 import { useHistory } from 'react-router-dom';
 
+import { GetUserDetail } from '../configs/handler/UsersHandler';
+
 function CheckFirstLogin(props) {
 	let history = useHistory();
 	const [isSuccess, setIsSuccess] = useState(false);
@@ -56,6 +58,30 @@ function CheckFirstLogin(props) {
 			alert('Kata Sandi atau ulangi kata sandi tidak boleh kosong');
 		}
 	};
+
+
+	const OnCheckValidFirstLogin = () => {
+		GetUserDetail(datUser.username)
+			.then(res => {
+				console.log('res', res)
+				if (res && res.data) {
+					var newvalcheck = res.data.first_login
+
+					console.log('newvalcheck', newvalcheck)
+
+					var newarr = {
+						...datUser,
+						is_first_login: newvalcheck
+						// is_first_login: true
+					}
+
+					localStorage.setItem('@user', JSON.stringify(newarr))
+					window.location.reload()
+				}
+		})
+	}
+
+	console.log('datUser', datUser)
 
 	return (
 		<div className='c-main'>
@@ -167,7 +193,8 @@ function CheckFirstLogin(props) {
 							<button
 								className='btn-action mt-120px '
 								// onClick={() => props.history.push('/sys/home')}
-								onClick={() => window.location.reload()}
+								// onClick={() => window.location.reload()}
+									onClick={() => OnCheckValidFirstLogin()}
 							>
 								Akses Dashboard Sekarang
 							</button>

@@ -22,8 +22,9 @@ function DashboardLayout(props) {
 			setIsFirstLogin(check_first_login);
 		} else {
 			setIsFirstLogin(check_first_login);
+			props.history.push('/sys/home');
 		}
-	}, [isFirstLogin]);
+	}, [isFirstLogin, check_first_login]);
 
 	const getRoutes = (routeList) => {
 		return routeList.map((prop, key) => {
