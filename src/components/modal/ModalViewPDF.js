@@ -5,43 +5,15 @@ import './modalConf.scss';
 // import { OnError } from '../toast/CustomToast';
 // import DatePicker from 'react-datepicker';
 import { BsDownload } from 'react-icons/bs';
-// import { RiCalendar2Line } from 'react-icons/ri';
-// import moment from 'moment';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import '../../styles/archive.scss';
 import { DownloadFile } from '../../configs/handler/DownloadHandler';
 
 function ModalViewPDF(props) {
-    // const [fileDownload, setFileDownload] = useState('');
-
-    // function base64ToArrayBuffer(base64) {
-    // 	var binaryString = window.atob(base64);
-    // 	var binaryLen = binaryString.length;
-    // 	var bytes = new Uint8Array(binaryLen);
-    // 	for (var i = 0; i < binaryLen; i++) {
-    // 		var ascii = binaryString.charCodeAt(i);
-    // 		bytes[i] = ascii;
-    // 	}
-    // 	return bytes;
-    // }
-
-    // function saveByteArray(reportName, byte) {
-    // 	var blob = new Blob([byte], {
-    // 		type:
-    // 			'application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-    // 			'application/vnd.ms-excel',
-    // 	});
-    // 	var link = document.createElement('a');
-    // 	link.href = window.URL.createObjectURL(blob);
-    // 	var fileName = reportName;
-    // 	link.download = fileName;
-    // 	link.click();
-    // }
-
     console.log('props.data', props.data);
 
     const onSaveExport = (id) => {
-        DownloadFile({ file_name: id + '.zip' })
+        DownloadFile({ file_name: id + '.zip' }, 'zip')
             .then((res) => {
                 console.log('res download', res);
                 console.log('res download', res);
@@ -60,8 +32,7 @@ function ModalViewPDF(props) {
     };
 
     const onPDFDownload = (file) => {
-        const splitc = file.replace(/\s/g, '%20');
-        DownloadFile({ file_name: file })
+        DownloadFile({ file_name: file }, 'pdf')
             .then((res) => {
                 console.log('res download', res);
                 const url = window.URL.createObjectURL(
@@ -72,20 +43,6 @@ function ModalViewPDF(props) {
                 link.setAttribute('download', file);
                 document.body.appendChild(link);
                 link.click();
-
-
-                // var blob=new Blob([res.data], {type:"application/pdf"});
-                // var link=document.createElement('a');
-                // link.href=window.URL.createObjectURL(blob);
-                // link.download="Report_"+new Date()+".pdf";
-                // link.click();                link.click();
-
-
-                // const file = new Blob([res.data], { type: 'application/pdf' });
-
-                // const fileURL = URL.createObjectURL(file);
-    
-                // window.open(fileURL, "_blank");
             })
             .catch((err) => {
                 console.log(err);
