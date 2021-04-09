@@ -7,11 +7,11 @@ export const DownloadFile = async (params) => {
             'get',
             params,
             null,
-            { Accept: 'application/*' },
-            'blob'
+            { Accept: 'application/pdf' },
+            'arraybuffer'
         );
         console.log('res awal download file', response);
-        return Promise.resolve(response.data);
+        return Promise.resolve(response);
     } catch (error) {
         console.log('error awal download file', error);
         return Promise.reject(error);

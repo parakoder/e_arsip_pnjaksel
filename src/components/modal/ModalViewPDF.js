@@ -44,6 +44,15 @@ function ModalViewPDF(props) {
         DownloadFile({ file_name: id + '.zip' })
             .then((res) => {
                 console.log('res download', res);
+                console.log('res download', res);
+                const url = window.URL.createObjectURL(
+                    new Blob([res.data], { type: 'application/zip' })
+                );
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', id + '.zip');
+                document.body.appendChild(link);
+                link.click();
             })
             .catch((err) => {
                 console.log(err);
@@ -52,7 +61,7 @@ function ModalViewPDF(props) {
 
     const onPDFDownload = (file) => {
         const splitc = file.replace(/\s/g, '%20');
-        DownloadFile({ file_name: splitc })
+        DownloadFile({ file_name: file })
             .then((res) => {
                 console.log('res download', res);
                 const url = window.URL.createObjectURL(
@@ -63,6 +72,20 @@ function ModalViewPDF(props) {
                 link.setAttribute('download', file);
                 document.body.appendChild(link);
                 link.click();
+
+
+                // var blob=new Blob([res.data], {type:"application/pdf"});
+                // var link=document.createElement('a');
+                // link.href=window.URL.createObjectURL(blob);
+                // link.download="Report_"+new Date()+".pdf";
+                // link.click();                link.click();
+
+
+                // const file = new Blob([res.data], { type: 'application/pdf' });
+
+                // const fileURL = URL.createObjectURL(file);
+    
+                // window.open(fileURL, "_blank");
             })
             .catch((err) => {
                 console.log(err);
