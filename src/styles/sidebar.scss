@@ -97,11 +97,11 @@
         vertical-align: bottom;
         background-color: white;
         padding: 10px;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         color: $errorColor;
         background-image: url('../assets/images/bgLogin2.png');
         background-size:contain;
-        height: 228px;
+        height: 20%;
 
         @include media("<tablet") {
             height: 200px;
@@ -113,7 +113,7 @@
             padding: 5px 30px 5px 30px;
             border: 2px solid $errorColor;
             border-radius: 50px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
 
             @include media("<tablet") {
                 margin-bottom: 25px;
