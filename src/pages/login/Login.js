@@ -18,10 +18,10 @@ const Login = (props) => {
 	const [onSubmit, setOnSubmit] = useState(false);
 
 	const [authForm, setAuthForm] = useState({
-		// username: 'alvinski',
-		// password: 'alvin123',
-		username: 'ferdinand',
-		password: '123',
+		username: '',
+		password: '',
+		// username: 'ferdinand',
+		// password: '123',
 		// username: '',
 		// password: '',
 	});
