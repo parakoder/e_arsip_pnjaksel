@@ -111,6 +111,7 @@ function AddArchive(props) {
             dataArchive.file.length > 0
         ) {
             setLoadingSubmit(true);
+            // openModal();
             let noper = noper1 + '/PDT/' + noper2 + '/' + year + '/PNJS';
             let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
                 'yyyy-MM-DD'
@@ -130,7 +131,7 @@ function AddArchive(props) {
             for (let i = 0; i < dataArchive.file.length; i++) {
                 fd.append('file', dataArchive.file[i]);
             }
-            // dataArchive.file.map((item) => fd.append('file', item.File));
+
             AddNewArsipPerdata(fd)
                 .then((res) => {
                     console.log('res add data', res);
@@ -150,6 +151,7 @@ function AddArchive(props) {
                             file: [],
                             klasifikasi_perkara: '',
                         });
+
                         // window.location.reload();
                     }
                 })
@@ -166,6 +168,8 @@ function AddArchive(props) {
                         localStorage.clear();
                     }
                 });
+
+            // dataArchive.file.map((item) => fd.append('file', item.File));
         } else {
             OnError({ title: 'Kesalahan', text: 'Mohon Input Semua Field' });
         }
@@ -284,6 +288,15 @@ function AddArchive(props) {
                             <Select
                                 options={options}
                                 placeholder='Klasifikasi Perkara'
+                                value={
+                                    dataArchive.klasifikasi_perkara === ''
+                                        ? ''
+                                        : options.find(
+                                              (e) =>
+                                                  e.value ===
+                                                  dataArchive.klasifikasi_perkara
+                                          )
+                                }
                                 className={
                                     isKlasiError
                                         ? 'form-select-error'
@@ -500,7 +513,6 @@ function AddArchive(props) {
                         <ModalLoading
                             isLoading={loadingSubmit}
                             modal={loadingSubmit}
-                            toggle={loadingSubmit}
                         />
                     ) : null}
                 </div>

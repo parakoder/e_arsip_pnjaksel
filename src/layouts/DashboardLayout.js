@@ -6,54 +6,54 @@ import Sidebar from '../components/sidebar/Sidebar';
 import '../styles/sidebar.scss';
 
 function DashboardLayout(props) {
-	const lclstrg = localStorage.getItem('@user')
-		? JSON.parse(localStorage.getItem('@user'))
-		: null;
+    const lclstrg = localStorage.getItem('@user')
+        ? JSON.parse(localStorage.getItem('@user'))
+        : null;
 
-	const check_first_login =
-		lclstrg !== null ? lclstrg && lclstrg.is_first_login : null;
+    const check_first_login =
+        lclstrg !== null ? lclstrg && lclstrg.is_first_login : null;
 
-	const [isFirstLogin, setIsFirstLogin] = useState(false);
+    const [isFirstLogin, setIsFirstLogin] = useState(false);
 
-	useEffect(() => {
-		if (check_first_login === true) {
-			// console.log('tesss')
-			props.history.push('/sys/check-first-login');
-			setIsFirstLogin(check_first_login);
-		} else {
-			setIsFirstLogin(check_first_login);
-			props.history.push('/sys/home');
-		}
-	}, [isFirstLogin, check_first_login]);
+    useEffect(() => {
+        if (check_first_login === true) {
+            // console.log('tesss')
+            props.history.push('/sys/check-first-login');
+            setIsFirstLogin(check_first_login);
+        } else {
+            setIsFirstLogin(check_first_login);
+            // props.history.push('/sys/home');
+        }
+    }, [isFirstLogin, check_first_login]);
 
-	const getRoutes = (routeList) => {
-		return routeList.map((prop, key) => {
-			// console.log('prop.layout', prop.layout)
+    const getRoutes = (routeList) => {
+        return routeList.map((prop, key) => {
+            // console.log('prop.layout', prop.layout)
 
-			if (prop.layout === '/sys') {
-				return (
-					<Route
-						path={prop.layout + prop.path}
-						component={prop.component}
-						key={key}
-						layout={prop.layout}
-						// role={prop.role}
-					/>
-				);
-			} else {
-				return null;
-			}
-		});
-	};
+            if (prop.layout === '/sys') {
+                return (
+                    <Route
+                        path={prop.layout + prop.path}
+                        component={prop.component}
+                        key={key}
+                        layout={prop.layout}
+                        // role={prop.role}
+                    />
+                );
+            } else {
+                return null;
+            }
+        });
+    };
 
-	return (
-		<div className='c-layout'>
-			<Sidebar history={props.history} isFirstLogin={isFirstLogin} />
-			<div className='c-wrapper-content'>
-				<Switch>{getRoutes(routes)}</Switch>
-			</div>
-		</div>
-	);
+    return (
+        <div className='c-layout'>
+            <Sidebar history={props.history} isFirstLogin={isFirstLogin} />
+            <div className='c-wrapper-content'>
+                <Switch>{getRoutes(routes)}</Switch>
+            </div>
+        </div>
+    );
 }
 
 export default DashboardLayout;

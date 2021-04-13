@@ -18,6 +18,7 @@ import {
 import Select from 'react-select';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
 import LoadingOverlay from 'react-loading-overlay-ts';
+import ModalLoading from '../../components/modal/ModalLoading';
 
 function EditArchive(props) {
     let history = useHistory();
@@ -168,7 +169,8 @@ function EditArchive(props) {
                             title: 'Berhasil',
                             text: 'Berhasil Mengubah Arsip Perdata',
                         });
-                        history.goBack();
+                        history.replace('/sys/archive-perdata');
+                        // history.goBack();
                     }
                 })
                 .catch((err) => {
@@ -205,12 +207,6 @@ function EditArchive(props) {
                         Kembali ke Arsip Perdata
                     </div>
                 </div>
-
-                <LoadingOverlay
-                    text='Proses Submit Data'
-                    active={loadingSubmit}
-                    spinner
-                />
 
                 <div className='c-archive-form row'>
                     <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
@@ -572,6 +568,12 @@ function EditArchive(props) {
                         txtBtnNo='Cancel'
                         onSubmit={() => history.goBack()}
                     />
+                    {loadingSubmit ? (
+                        <ModalLoading
+                            isLoading={loadingSubmit}
+                            modal={loadingSubmit}
+                        />
+                    ) : null}
                 </div>
             </div>
         </div>

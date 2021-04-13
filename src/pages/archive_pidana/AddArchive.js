@@ -15,6 +15,7 @@ import Select from 'react-select';
 import { AddNewArsipPidana } from '../../configs/handler/ArsipHandler';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
 import LoadingOverlay from 'react-loading-overlay-ts';
+import ModalLoading from '../../components/modal/ModalLoading';
 
 function AddArchive(props) {
     const [date, setDate] = useState(new Date());
@@ -212,12 +213,6 @@ function AddArchive(props) {
                     </div>
                 </div>
 
-                <LoadingOverlay
-                    text='Proses Submit Data'
-                    active={loadingSubmit}
-                    spinner
-                />
-
                 <div className='c-archive-form row'>
                     <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
                         <div className='form-input-group mb-30px'>
@@ -312,6 +307,15 @@ function AddArchive(props) {
                             <Select
                                 options={options}
                                 placeholder='Klasifikasi Perkara'
+                                value={
+                                    dataArchive.klasifikasi_perkara === ''
+                                        ? ''
+                                        : options.find(
+                                              (e) =>
+                                                  e.value ===
+                                                  dataArchive.klasifikasi_perkara
+                                          )
+                                }
                                 className={
                                     isKlasiError
                                         ? 'form-select-error'
@@ -574,6 +578,12 @@ function AddArchive(props) {
                         txtBtnNo='Cancel'
                         onSubmit={onSubmitData}
                     />
+                    {loadingSubmit ? (
+                        <ModalLoading
+                            isLoading={loadingSubmit}
+                            modal={loadingSubmit}
+                        />
+                    ) : null}
                 </div>
             </div>
         </div>
