@@ -14,7 +14,7 @@ import { YearPicker } from 'react-dropdown-date';
 import Select from 'react-select';
 import { AddNewArsipPidana } from '../../configs/handler/ArsipHandler';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
-import LoadingOverlay from 'react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 function AddArchive(props) {
     const [date, setDate] = useState(new Date());

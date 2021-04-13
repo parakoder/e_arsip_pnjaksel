@@ -8,6 +8,10 @@
     font-weight: bold;
 }
 
+.modal-content {
+    border: none;
+}
+
 .wrapperModal {
     padding: 10px 50px;
     display: flex;
@@ -15,7 +19,6 @@
     justify-content: space-evenly;
     align-items: center;
     height: 40vh;
-
 
     .titleModal {
         font-weight: bold;
@@ -58,17 +61,16 @@
     // max-width: 160px;
     z-index: 100;
     height: 35px;
-        padding: 0px 10px;
-        border: 1px solid #8BA577;
-        border-radius: 3px;
-        display: flex;
-        flex-direction: row;
-        background-color: white;
-        align-items: center;
-        justify-content: center;
+    padding: 0px 10px;
+    border: 1px solid #8ba577;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
 
-
-    .filter-date{
+    .filter-date {
         // width: 100% !important;
         max-width: 100px;
         height: 30px;
@@ -80,10 +82,10 @@
         align-self: center;
     }
 
-    .react-datepicker__tab-loop  .react-datepicker-popper{
+    .react-datepicker__tab-loop .react-datepicker-popper {
         margin-left: -300px !important;
 
-        .react-datepicker__triangle{
+        .react-datepicker__triangle {
             left: 370px !important;
         }
     }
@@ -92,13 +94,13 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        background-color: #F0F0F0;
+        background-color: #f0f0f0;
         position: absolute;
         left: -105px;
         height: 235px;
         max-height: 235px;
         padding: 15px 15px;
-        border: 1px solid #768E7C;
+        border: 1px solid #768e7c;
         border-radius: 3px;
 
         .date-code {
@@ -107,50 +109,45 @@
             border-radius: 3px;
         }
     }
-
 }
-
 
 .c-modal-del {
     max-width: 450px;
     padding: 0 !important;
 
-
-    .modal-del-body{
+    .modal-del-body {
         text-align: center;
         padding: 30px !important;
 
-        .modal-del-body-header{
+        .modal-del-body-header {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
         }
 
-        .modal-del-body-content{
+        .modal-del-body-content {
             font-weight: normal;
             font-size: 16px;
             margin-bottom: 50px;
         }
 
-        .modal-del-body-action{
+        .modal-del-body-action {
             display: inline-flex;
             align-items: center;
             flex-wrap: wrap;
 
-            .apply{
+            .apply {
                 @include btn-modal();
                 background-color: $errorColor;
                 color: white;
-
             }
 
-            .cancel{
+            .cancel {
                 @include btn-modal();
                 background-color: white;
                 color: $black;
                 cursor: auto;
             }
-
         }
     }
 }
@@ -159,36 +156,36 @@
     max-width: 515px;
     padding: 0 !important;
 
-    .modal-export-body{
+    .modal-export-body {
         text-align: left;
         padding: 50px !important;
         color: $black;
 
-        .modal-export-body-header{
+        .modal-export-body-header {
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 40px;
         }
 
-        .modal-export-body-content{
+        .modal-export-body-content {
             width: 100%;
             margin-bottom: 90px;
 
-            .form-group{
+            .form-group {
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
                 margin-bottom: 20px;
 
-                .text{
+                .text {
                     font-size: 14px;
                     flex: 1;
                 }
 
-                .input{
+                .input {
                     flex: 1;
                     font-weight: bold;
-                    border: 1px solid #8BA577;
+                    border: 1px solid #8ba577;
                     border-radius: 3px;
                     text-align: center;
                     padding: 5px;
@@ -197,13 +194,13 @@
                     font-size: 12;
                 }
 
-                .wrapper-select-date{
+                .wrapper-select-date {
                     flex: 1;
                     max-width: 160px;
                     display: flex;
 
-                    .select-date{
-                        border: 1px solid #8BA577;
+                    .select-date {
+                        border: 1px solid #8ba577;
                         border-radius: 3px;
                         max-width: 160px;
                         outline: none;
@@ -212,144 +209,30 @@
                         text-indent: 30px;
                     }
 
-                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker{
+                    .react-datepicker__tab-loop
+                        .react-datepicker-popper
+                        .react-datepicker {
                         margin-left: -290px;
                     }
 
-                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__triangle {
+                    .react-datepicker__tab-loop
+                        .react-datepicker-popper
+                        .react-datepicker
+                        .react-datepicker__triangle {
                         left: 370px !important;
                     }
                 }
             }
         }
 
-        .modal-export-body-action{
+        .modal-export-body-action {
             width: 100%;
             display: inline-flex;
             align-items: center;
             flex-wrap: wrap;
             justify-content: center;
 
-            .apply{
-                @include btn-modal();
-                background-color: $primaryDark;
-                color: white;
-                border-radius: 213px;
-                font-weight: 600 !important;
-                font-size: 12px !important;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer
-            }
-
-            .cancel{
-                @include btn-modal();
-                background-color: white;
-                color: $errorColor;
-                cursor: auto;
-                font-weight: 600 !important;
-                font-size: 12px !important;
-            }
-
-        }
-    }
-}
-
-.c-modal-view-pdf {
-    max-width: 60vw;
-    padding: 0 !important;
-
-    .modal-view-body{
-        text-align: left;
-        padding: 50px !important;
-        color: $black;
-
-        .modal-view-body-header{
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 40px;
-
-            // display: flex;
-            // flex-direction: row;
-            // align-items: center;
-            // justify-content: space-between;
-        }
-
-        .modal-view-body-content{
-            width: 100%;
-            margin-bottom: 90px;
-
-            .form-group{
-                display: flex;
-                // flex-wrap: wrap;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 20px;
-
-                .text{
-                    font-size: 14px;
-                    // flex: 1;
-                }
-
-                .input{
-                    flex: 1;
-                    font-weight: bold;
-                    border: 1px solid #8BA577;
-                    border-radius: 3px;
-                    text-align: center;
-                    padding: 5px;
-                    max-width: 320px;
-                    outline: none;
-                    font-size: 12;
-                }
-
-                .filenameInput{
-                    // flex: 1;
-                    font-weight: bold;
-                    border: 1px solid #8BA577;
-                    border-radius: 3px;
-                    text-align: center;
-                    padding: 5px;
-                    max-width: 320px;
-                    outline: none;
-                    font-size: 12;
-                }
-
-                .wrapper-select-date{
-                    flex: 1;
-                    max-width: 160px;
-                    display: flex;
-
-                    .select-date{
-                        border: 1px solid #8BA577;
-                        border-radius: 3px;
-                        max-width: 160px;
-                        outline: none;
-                        padding: 10px;
-                        font-size: 12;
-                        text-indent: 30px;
-                    }
-
-                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker{
-                        margin-left: -290px;
-                    }
-
-                    .react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__triangle {
-                        left: 370px !important;
-                    }
-                }
-            }
-        }
-
-        .modal-view-body-action{
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-
-            .apply{
+            .apply {
                 @include btn-modal();
                 background-color: $primaryDark;
                 color: white;
@@ -360,10 +243,9 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                width: 250px
             }
 
-            .cancel{
+            .cancel {
                 @include btn-modal();
                 background-color: white;
                 color: $errorColor;
@@ -371,7 +253,130 @@
                 font-weight: 600 !important;
                 font-size: 12px !important;
             }
+        }
+    }
+}
 
+.c-modal-view-pdf {
+    max-width: 60vw;
+    padding: 0 !important;
+
+    .modal-view-body {
+        text-align: left;
+        padding: 50px !important;
+        color: $black;
+
+        .modal-view-body-header {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+
+            // display: flex;
+            // flex-direction: row;
+            // align-items: center;
+            // justify-content: space-between;
+        }
+
+        .modal-view-body-content {
+            width: 100%;
+            margin-bottom: 90px;
+
+            .form-group {
+                display: flex;
+                // flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+
+                .text {
+                    font-size: 14px;
+                    // flex: 1;
+                }
+
+                .input {
+                    flex: 1;
+                    font-weight: bold;
+                    border: 1px solid #8ba577;
+                    border-radius: 3px;
+                    text-align: center;
+                    padding: 5px;
+                    max-width: 320px;
+                    outline: none;
+                    font-size: 12;
+                }
+
+                .filenameInput {
+                    // flex: 1;
+                    font-weight: bold;
+                    border: 1px solid #8ba577;
+                    border-radius: 3px;
+                    text-align: center;
+                    padding: 5px;
+                    max-width: 320px;
+                    outline: none;
+                    font-size: 12;
+                }
+
+                .wrapper-select-date {
+                    flex: 1;
+                    max-width: 160px;
+                    display: flex;
+
+                    .select-date {
+                        border: 1px solid #8ba577;
+                        border-radius: 3px;
+                        max-width: 160px;
+                        outline: none;
+                        padding: 10px;
+                        font-size: 12;
+                        text-indent: 30px;
+                    }
+
+                    .react-datepicker__tab-loop
+                        .react-datepicker-popper
+                        .react-datepicker {
+                        margin-left: -290px;
+                    }
+
+                    .react-datepicker__tab-loop
+                        .react-datepicker-popper
+                        .react-datepicker
+                        .react-datepicker__triangle {
+                        left: 370px !important;
+                    }
+                }
+            }
+        }
+
+        .modal-view-body-action {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .apply {
+                @include btn-modal();
+                background-color: $primaryDark;
+                color: white;
+                border-radius: 213px;
+                font-weight: 600 !important;
+                font-size: 12px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                width: 250px;
+            }
+
+            .cancel {
+                @include btn-modal();
+                background-color: white;
+                color: $errorColor;
+                cursor: auto;
+                font-weight: 600 !important;
+                font-size: 12px !important;
+            }
         }
     }
 }

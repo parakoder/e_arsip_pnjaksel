@@ -17,7 +17,7 @@ import {
 } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
-import LoadingOverlay from 'react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 function EditArchive(props) {
     let history = useHistory();

@@ -14,7 +14,8 @@ import { YearPicker } from 'react-dropdown-date';
 import { AddNewArsipPerdata } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
-import LoadingOverlay from 'react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay-ts';
+import ModalLoading from '../../components/modal/ModalLoading';
 
 function AddArchive(props) {
     const [date, setDate] = useState(new Date());
@@ -109,12 +110,11 @@ function AddArchive(props) {
             dataArchive.nama_terdakwa !== '' &&
             dataArchive.file.length > 0
         ) {
+            setLoadingSubmit(true);
             let noper = noper1 + '/PDT/' + noper2 + '/' + year + '/PNJS';
             let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
                 'yyyy-MM-DD'
             );
-
-            setLoadingSubmit(true);
 
             console.log('dataArfile', dataArchive.file);
 
@@ -140,6 +140,8 @@ function AddArchive(props) {
                             title: 'Berhasil',
                             text: 'Berhasil Menambahkan Arsip Perdata',
                         });
+                        setNoper1('');
+                        setNoper2('');
                         setDataArchive({
                             no_perkara: '',
                             no_box: '',
@@ -186,12 +188,6 @@ function AddArchive(props) {
                     </div>
                 </div>
 
-                <LoadingOverlay
-                    text='Proses Submit Data'
-                    active={loadingSubmit}
-                    spinner
-                />
-
                 <div className='c-archive-form row'>
                     <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
                         <div className='form-input-group mb-30px'>
@@ -207,6 +203,7 @@ function AddArchive(props) {
                                     placeholder='1234'
                                     className='input-sub-perkara'
                                     maxLength='4'
+                                    value={noper1}
                                     type='text'
                                     pattern='\d*'
                                     onChange={(e) => {
@@ -224,6 +221,7 @@ function AddArchive(props) {
                                 <input
                                     placeholder='SUS'
                                     className='input-sub-perkara'
+                                    value={noper2}
                                     maxLength='3'
                                     onChange={(e) => {
                                         setNoper2(e.target.value);
@@ -498,6 +496,13 @@ function AddArchive(props) {
                         txtBtnNo='Cancel'
                         onSubmit={onSubmitData}
                     />
+                    {loadingSubmit ? (
+                        <ModalLoading
+                            isLoading={loadingSubmit}
+                            modal={loadingSubmit}
+                            toggle={loadingSubmit}
+                        />
+                    ) : null}
                 </div>
             </div>
         </div>
