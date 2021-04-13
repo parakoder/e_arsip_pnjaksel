@@ -65,7 +65,7 @@ function Archive(props) {
 	const [totalItem, setTotalItem] = useState(0);
 
 	const [pagination, setPagination] = useState({
-		page: 4,
+		page: 1,
 		limit: 20,
 	});
 
