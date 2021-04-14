@@ -23,13 +23,12 @@ function AddArchive(props) {
 
     const options = [
         { value: 'Pid. B', label: 'Pid. B' },
-		{ value: 'Pid. S', label: 'Pid. S' },
-		{ value: 'Pid. C', label: 'Pid. C' },
-		{ value: 'Pid. Sus', label: 'Pid. Sus' },
-		{ value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
+	{ value: 'Pid. S', label: 'Pid. S' },
+	{ value: 'Pid. C', label: 'Pid. C' },
+	{ value: 'Pid. Sus', label: 'Pid. Sus' },
+	{ value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
         { value: 'Pid. Pra', label: 'Pid. Pra' },
     ];
-
     const [showCalendar, setShowCalendar] = useState(false);
 
     const [dataArchive, setDataArchive] = useState({
