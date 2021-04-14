@@ -29,7 +29,6 @@ function AddArchive(props) {
         { value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
         { value: 'Pid. Pra', label: 'Pid. Pra' },
     ];
-
     const [showCalendar, setShowCalendar] = useState(false);
 
     const [dataArchive, setDataArchive] = useState({
