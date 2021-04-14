@@ -39,9 +39,11 @@ function EditArchive(props) {
         klasifikasi_perkara: locState.klasifikasi_perkara,
     });
     const options = [
-        { value: 'Pid. G', label: 'Pid. G' },
-        { value: 'Pid. P', label: 'Pid. P' },
-        { value: 'Pid. G.S', label: 'Pid. G.S' },
+        { value: 'Pid. B', label: 'Pid. B' },
+        { value: 'Pid. S', label: 'Pid. S' },
+        { value: 'Pid. C', label: 'Pid. C' },
+        { value: 'Pid. Sus', label: 'Pid. Sus' },
+        { value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
         { value: 'Pid. Pra', label: 'Pid. Pra' },
     ];
 

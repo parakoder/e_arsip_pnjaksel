@@ -25,7 +25,6 @@ function AddArchive(props) {
         { value: 'Pdt. G', label: 'Pdt. G' },
         { value: 'Pdt. P', label: 'Pdt. P' },
         { value: 'Pdt. G.S', label: 'Pdt. G.S' },
-        { value: 'Pdt. Pra', label: 'Pdt. Pra' },
     ];
 
     const [loadingSubmit, setLoadingSubmit] = useState(false);
