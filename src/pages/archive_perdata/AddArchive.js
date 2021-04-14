@@ -22,11 +22,9 @@ function AddArchive(props) {
     let history = useHistory();
 
     const options = [
-        { value: 'Pdt. B', label: 'Pdt. B' },
-        { value: 'Pdt. S', label: 'Pdt. S' },
-        { value: 'Pdt. C', label: 'Pdt. C' },
-        { value: 'Pdt. Sus', label: 'Pdt. Sus' },
-        { value: 'Pdt. Sus-anak', label: 'Pdt. Sus-anak' },
+        { value: 'Pdt. G', label: 'Pdt. G' },
+        { value: 'Pdt. P', label: 'Pdt. P' },
+        { value: 'Pdt. G.S', label: 'Pdt. G.S' },
         { value: 'Pdt. Pra', label: 'Pdt. Pra' },
     ];
 
