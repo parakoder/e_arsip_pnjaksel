@@ -38,7 +38,7 @@ function EditArchive(props) {
         file: locState.file,
         klasifikasi_perkara: locState.klasifikasi_perkara,
     });
-    const options = [  
+    const options = [
       	{ value: 'Pid. B', label: 'Pid. B' },
 	{ value: 'Pid. S', label: 'Pid. S' },
 	{ value: 'Pid. C', label: 'Pid. C' },
@@ -46,7 +46,6 @@ function EditArchive(props) {
 	{ value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
         { value: 'Pid. Pra', label: 'Pid. Pra' },  
     ];
-
     const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [additionalFile, setAdditionalFile] = useState([]);
