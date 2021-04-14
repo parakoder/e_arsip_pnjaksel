@@ -6,34 +6,39 @@ import { RiCalendar2Line } from 'react-icons/ri';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
-import { IoDocumentTextOutline } from 'react-icons/io5';
 import '../../styles/archive.scss';
 import { MdModeEdit } from 'react-icons/md';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import ModalExportArchive from '../../components/modal/ModalExportArchive';
 import DatePicker from 'react-datepicker';
 import { GetArsipPerdata } from '../../configs/handler/ArsipHandler';
+import { useHistory } from 'react-router-dom';
 import PaginationComponent from '../../components/Pagination/PaginationComponent';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import moment from 'moment';
-import { useHistory } from 'react-router';
 import { OnError } from '../../components/toast/CustomToast';
 import ModalViewPDF from '../../components/modal/ModalViewPDF';
 
 function Archive(props) {
-    let history = useHistory();
+    // const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
     const [modalExportisOpen, setModalExportisOpen] = useState(false);
     const [modalViewPDFisOpen, setModalViewPDFisOpen] = useState(false);
-
     const [dataPerdata, setDataPerdata] = useState(null);
+
+    const history = useHistory();
+
+    // const toggleModalDel = () => {
+    //     setModalDeleteIsOpen(!modalDeleteIsOpen);
+    // };
+
+    const toggleModalExport = () => {
+        setModalExportisOpen(!modalExportisOpen);
+    };
 
     const [dataFilePDFPerItem, setDataFilePDFPerItem] = useState(null);
     const toggleModalViewPDF = (data, id) => {
         setModalViewPDFisOpen(!modalViewPDFisOpen);
         setDataFilePDFPerItem({ data, id });
-    };
-
-    const toggleModalExport = () => {
-        setModalExportisOpen(!modalExportisOpen);
     };
 
     const [findDataFilter, setFindDataFilter] = useState('');
@@ -44,15 +49,15 @@ function Archive(props) {
     const [formattedStartDate, setFormattedStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [formattedEndDate, setFormattedEndDate] = useState('');
+
     const onChange = (dates) => {
-        console.log('dates', dates);
         const [start, end] = dates;
+
         var formatStart = moment(start).format('yyyy-MM-DD').toString();
         var formatEnd = moment(end).format('yyyy-MM-DD').toString();
 
         setFormattedStartDate(formatStart);
         setFormattedEndDate(formatEnd);
-
         setStartDate(start);
         setEndDate(end);
     };
@@ -73,8 +78,8 @@ function Archive(props) {
 
     const getDtArsipPerdata = () => {
         var findData = findDataFilter === '' ? null : findDataFilter;
-        var dateStart = formattedStartDate === '' ? null : formattedStartDate;
-        var dateEnd = formattedEndDate === '' ? null : formattedEndDate;
+        var dateStart = startDate === '' ? null : formattedStartDate;
+        var dateEnd = endDate === '' ? null : formattedEndDate;
         var dateCode = dateCodePick === null ? null : dateCodePick;
 
         var ofset =
@@ -116,9 +121,7 @@ function Archive(props) {
     }, [pagination.page, findDataFilter, startDate, endDate, dateCodePick]);
 
     const debounceOnFilter = AwesomeDebouncePromise(getDtArsipPerdata, 700);
-
     const onClearFilter = () => {
-        // setFindDataFilter(null);
         setDateCodePick(null);
         setStartDate('');
         setEndDate('');
@@ -130,6 +133,13 @@ function Archive(props) {
 
     return (
         <div className='c-main'>
+            {/* {modalDeleteIsOpen ? (
+                <ModalDeleteArchive
+                    modal={modalDeleteIsOpen}
+                    toggle={toggleModalDel}
+                />
+            ) : null} */}
+
             {modalExportisOpen ? (
                 <ModalExportArchive
                     modal={modalExportisOpen}
@@ -137,7 +147,6 @@ function Archive(props) {
                     title='Perdata'
                 />
             ) : null}
-
             {modalViewPDFisOpen ? (
                 <ModalViewPDF
                     modal={modalViewPDFisOpen}
@@ -145,7 +154,6 @@ function Archive(props) {
                     data={dataFilePDFPerItem}
                 />
             ) : null}
-
             <div className='container-fluid custom-container-fluid fade show mb-5'>
                 <div className='wrapperArchive mb-20px'>
                     <div className='headerArchive'>
@@ -192,6 +200,7 @@ function Archive(props) {
                                     selectsRange
                                     dateFormat='dd MMM'
                                     placeholderText={'1 Jan'}
+                                    // inline
                                 >
                                     <div className='date-code-container'>
                                         <div
@@ -353,29 +362,25 @@ function Archive(props) {
                             <tr>
                                 <th
                                     className='table-main-th'
-                                    style={{
-                                        width: '5%',
-                                        position: 'sticky',
-                                        top: 0,
-                                    }}
+                                    style={{ width: '5%' }}
                                 >
                                     No.
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{ width: '22%' }}
+                                    style={{ width: '17%' }}
                                 >
                                     No. Perkara
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{ width: '8%' }}
+                                    style={{ width: '7%' }}
                                 >
                                     BOX
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{ width: '17%' }}
+                                    style={{ width: '15%' }}
                                 >
                                     Klasifikasi Perkara
                                 </th>
@@ -383,43 +388,23 @@ function Archive(props) {
                                     className='table-main-th'
                                     style={{ width: '22%' }}
                                 >
-                                    Nama Tergugat
+                                    Nama Terdakwa
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{ width: '22%' }}
+                                    style={{ width: '15%' }}
                                 >
-                                    Nama Penggugat
+                                    Tanggal Peringiriman
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{ width: '22%' }}
-                                >
-                                    Nama Turut Tergugat
-                                </th>
-                                <th
-                                    className='table-main-th'
-                                    style={{ width: '17%' }}
-                                >
-                                    Tanggal Pengiriman
-                                </th>
-                                <th
-                                    className='table-main-th'
-                                    style={{
-                                        width: '13%',
-                                        position: 'sticky',
-                                        top: 0,
-                                    }}
+                                    style={{ width: '13%' }}
                                 >
                                     PDF
                                 </th>
                                 <th
                                     className='table-main-th'
-                                    style={{
-                                        width: '13%',
-                                        position: 'sticky',
-                                        top: 0,
-                                    }}
+                                    style={{ width: '13%' }}
                                 >
                                     Edit
                                 </th>
@@ -434,13 +419,7 @@ function Archive(props) {
                                           key={i}
                                           className='table-main-nth-child'
                                       >
-                                          <td
-                                              className='table-main-td'
-                                              style={{
-                                                  position: 'sticky',
-                                                  top: 0,
-                                              }}
-                                          >
+                                          <td className='table-main-td'>
                                               {i + 1}
                                           </td>
                                           <td
@@ -456,24 +435,12 @@ function Archive(props) {
                                               {dt.klasifikasi_perkara}
                                           </td>
                                           <td className='table-main-td'>
-                                              {dt.nama_tergugat.toString()}
-                                          </td>
-                                          <td className='table-main-td'>
-                                              {dt.nama_penggugat.toString()}
-                                          </td>
-                                          <td className='table-main-td'>
-                                              {dt.nama_turut_tergugat.toString()}
+                                              {dt.nama_terdakwa}
                                           </td>
                                           <td className='table-main-td'>
                                               {dt.tanggal_pengiriman}
                                           </td>
-                                          <td
-                                              className='table-main-td'
-                                              style={{
-                                                  position: 'sticky',
-                                                  top: 0,
-                                              }}
-                                          >
+                                          <td className='table-main-td'>
                                               <IoDocumentTextOutline
                                                   size={22}
                                                   style={{
@@ -487,24 +454,22 @@ function Archive(props) {
                                                   }
                                               />
                                           </td>
-                                          <td
-                                              className='table-main-td'
-                                              style={{
-                                                  position: 'sticky',
-                                                  top: 0,
-                                              }}
-                                          >
+                                          <td className='table-main-td'>
                                               <MdModeEdit
                                                   size={22}
                                                   style={{
                                                       cursor: 'pointer',
                                                   }}
-                                                  onClick={() =>
-                                                      history.push({
-                                                          pathname:
-                                                              '/sys/archive-perdata/edit',
-                                                          state: dt,
-                                                      })
+                                                  onClick={
+                                                      () =>
+                                                          history.push({
+                                                              pathname:
+                                                                  '/sys/archive-perdata/edit',
+                                                              state: dt,
+                                                          })
+                                                      //   props.history.push(
+                                                      //       "/sys/archive-perdata/edit"
+                                                      //   )
                                                   }
                                               />
                                           </td>

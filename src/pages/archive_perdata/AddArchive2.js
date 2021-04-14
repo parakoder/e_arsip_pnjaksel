@@ -1,77 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoIosArrowBack, IoMdCloudUpload, IoMdClose } from 'react-icons/io';
 
 import { IoDocumentOutline } from 'react-icons/io5';
-import { RiCalendar2Line, RiDeleteBinLine } from 'react-icons/ri';
+import { RiCalendar2Line } from 'react-icons/ri';
 import Gap from '../../components/Gap';
 import '../../styles/archive.scss';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import ModalConfirmation from '../../components/modal/ModalConfirmation';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { YearPicker } from 'react-dropdown-date';
-import {
-    DeleteArsipPerdata,
-    EditArsipPerdata,
-} from '../../configs/handler/ArsipHandler';
+import { AddNewArsipPerdata } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
 import ModalLoading from '../../components/modal/ModalLoading';
 
-function EditArchive(props) {
+function AddArchive(props) {
+    const [date, setDate] = useState(new Date());
+
     let history = useHistory();
 
-    let location = useLocation();
-    let locState = location.state;
-    console.log('loc', locState);
-
     const options = [
-        { value: 'Pdt. B', label: 'Pdt. B' },
-        { value: 'Pdt. S', label: 'Pdt. S' },
-        { value: 'Pdt. C', label: 'Pdt. C' },
-        { value: 'Pdt. Sus', label: 'Pdt. Sus' },
-        { value: 'Pdt. Sus-anak', label: 'Pdt. Sus-anak' },
-        { value: 'Pdt. Pra', label: 'Pdt. Pra' },
+        { value: 'Pdt. G', label: 'Pdt. G' },
+        { value: 'Pdt. P', label: 'Pdt. P' },
+        { value: 'Pdt. G.S', label: 'Pdt. G.S' },
     ];
-
-    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [showCalendar, setShowCalendar] = useState(false);
 
-    const [additionalFile, setAdditionalFile] = useState([]);
-
-    const [noper1, setNoper1] = useState('');
-    const [noper2, setNoper2] = useState('');
-
     const [dataArchive, setDataArchive] = useState({
         no_perkara: '',
-        no_box: locState.box,
-        klasifikasi_perkara: locState.klasifikasi_perkara,
-        nama_tergugat: locState.nama_tergugat.toString(),
-        nama_penggugat: locState.nama_penggugat.toString(),
-        nama_turut_tergugat: locState.nama_turut_tergugat.toString(),
-        tgl_pengiriman: locState.tanggal_pengiriman,
-        file: locState.file,
+        no_box: '',
+        nama_terdakwa: '',
+        tgl_pengiriman: date,
+        file: [],
+        klasifikasi_perkara: '',
     });
-
-    const [date, setDate] = useState(locState.tanggal_pengiriman);
-
-    const [year, setYear] = useState(new Date().getFullYear());
-
-    const [isNoperError, setIsNoperError] = useState(false);
-    const [isBoxError, setIsBoxError] = useState(false);
-    const [isTergugatError, setIsTergugatError] = useState(false);
-    const [isPenggugatError, setIsPenggugatError] = useState(false);
-    const [isTurutError, setIsTurutError] = useState(false);
-
-    useEffect(() => {
-        const splitNoper = locState.no_perkara.split('/');
-        setNoper1(splitNoper[0]);
-        setNoper2(splitNoper[2]);
-        setYear(splitNoper[3]);
-        return () => {};
-    }, [locState.no_perkara]);
 
     const onChangeCalendar = (date) => {
         setDate(date);
@@ -79,63 +44,43 @@ function EditArchive(props) {
         setShowCalendar(false);
     };
 
+    const [noper1, setNoper1] = useState('');
+    const [noper2, setNoper2] = useState('');
+
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    const [isNoperError, setIsNoperError] = useState(false);
+    const [isBoxError, setIsBoxError] = useState(false);
+    const [isKlasiError, setIsKlasiError] = useState(false);
+    const [isTerdakwaError, setIsTerdakwaError] = useState(false);
+
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+
     const browseHandler = (e) => {
         console.log('errweradawd', e);
-        let newArr = [...additionalFile];
+        let newArr = [...dataArchive.file];
 
         for (let index = 0; index < e.length; index++) {
             const element = e[index];
             newArr.push(element);
         }
-        setAdditionalFile(newArr);
+        setDataArchive({ ...dataArchive, file: newArr });
     };
 
     const onDeleteFile = (i) => {
         const arrFile = [...dataArchive.file];
-        const filteredFile = arrFile.filter((_, idx) => idx !== i);
+        const filteredFile = arrFile.filter((val, idx) => idx !== i);
+        console.log('dataFIle', filteredFile);
         setDataArchive({ ...dataArchive, file: filteredFile });
-    };
 
-    const onDeleteAdditionalFile = (i) => {
-        const arrFile = [...additionalFile];
-        const filteredFile = arrFile.filter((_, idx) => idx !== i);
-        console.log('additionaldataFIle', filteredFile);
-        setAdditionalFile(filteredFile);
-    };
-
-    const onDeleteArsip = () => {
-        setLoadingSubmit(true);
-        DeleteArsipPerdata({ id: locState.id })
-            .then((res) => {
-                console.log('res del', res);
-                if (res.status === 200) {
-                    setLoadingSubmit(false);
-                    OnSuccess({
-                        title: 'Berhasil',
-                        text: 'Berhasil Menghapus Arsip Perdata',
-                    });
-                    history.replace('/sys/archive-perdata');
-                }
-            })
-            .catch((err) => {
-                console.log('err del', err);
-                OnError({ title: 'Gagal', text: err.message });
-                if (err.request.status === 403) {
-                    OnError({
-                        title: 'Error Code: 403',
-                        text: 'Kesalahan Autentikasi, silahkan Login Kembali',
-                    });
-                    history.replace('/login');
-                    localStorage.clear();
-                }
-            });
+        // const filteredPureFile =
     };
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    const onUpdateData = () => {
+    const onSubmitData = () => {
         if (noper1 === '' || noper2 === '') {
             setIsNoperError(true);
         }
@@ -144,16 +89,12 @@ function EditArchive(props) {
             setIsBoxError(true);
         }
 
-        if (dataArchive.nama_tergugat === '') {
-            setIsTergugatError(true);
+        if (dataArchive.klasifikasi_perkara === '') {
+            setIsKlasiError(true);
         }
 
-        if (dataArchive.nama_penggugat === '') {
-            setIsPenggugatError(true);
-        }
-
-        if (dataArchive.nama_turut_tergugat === '') {
-            setIsTurutError(true);
+        if (dataArchive.nama_terdakwa === '') {
+            setIsTerdakwaError(true);
         }
 
         if (dataArchive.file.length === 0) {
@@ -164,55 +105,53 @@ function EditArchive(props) {
             noper1 !== '' &&
             noper2 !== '' &&
             dataArchive.no_box !== '' &&
-            dataArchive.nama_tergugat !== '' &&
-            dataArchive.nama_penggugat !== '' &&
-            dataArchive.nama_turut_tergugat !== '' &&
+            dataArchive.klasifikasi_perkara !== '' &&
+            dataArchive.nama_terdakwa !== '' &&
             dataArchive.file.length > 0
         ) {
+            setLoadingSubmit(true);
+            // openModal();
             let noper = noper1 + '/PDT/' + noper2 + '/' + year + '/PNJS';
             let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
                 'yyyy-MM-DD'
             );
 
-            setLoadingSubmit(true);
-
-            console.log('left_over', dataArchive.file.toString());
+            console.log('dataArfile', dataArchive.file);
 
             var fd = new FormData();
-            fd.append('id_arsip', locState.id);
             fd.append('no_perkara', noper.toUpperCase());
             fd.append('box', dataArchive.no_box);
+            fd.append(
+                'nama_terdakwa',
+                capitalizeFirstLetter(dataArchive.nama_terdakwa)
+            );
             fd.append('tanggal_pengiriman', formatTglPengiriman);
             fd.append('klasifikasi_perkara', dataArchive.klasifikasi_perkara);
-            fd.append(
-                'nama_tergugat',
-                capitalizeFirstLetter(dataArchive.nama_tergugat)
-            );
-            fd.append(
-                'nama_penggugat',
-                capitalizeFirstLetter(dataArchive.nama_penggugat)
-            );
-            fd.append(
-                'nama_turut_tergugat',
-                capitalizeFirstLetter(dataArchive.nama_turut_tergugat)
-            );
-            fd.append('left_over', dataArchive.file.toString());
-            if (additionalFile.length > 0) {
-                for (let i = 0; i < additionalFile.length; i++) {
-                    fd.append('file', additionalFile[i]);
-                }
+            for (let i = 0; i < dataArchive.file.length; i++) {
+                fd.append('file', dataArchive.file[i]);
             }
 
-            EditArsipPerdata(fd)
+            AddNewArsipPerdata(fd)
                 .then((res) => {
-                    console.log('res edit data', res);
+                    console.log('res add data', res);
                     if (res.status === 200) {
                         setLoadingSubmit(false);
                         OnSuccess({
                             title: 'Berhasil',
-                            text: 'Berhasil Mengubah Arsip Perdata',
+                            text: 'Berhasil Menambahkan Arsip Perdata',
                         });
-                        history.replace('/sys/archive-perdata');
+                        setNoper1('');
+                        setNoper2('');
+                        setDataArchive({
+                            no_perkara: '',
+                            no_box: '',
+                            nama_terdakwa: '',
+                            tgl_pengiriman: date,
+                            file: [],
+                            klasifikasi_perkara: '',
+                        });
+
+                        // window.location.reload();
                     }
                 })
                 .catch((err) => {
@@ -228,6 +167,8 @@ function EditArchive(props) {
                         localStorage.clear();
                     }
                 });
+
+            // dataArchive.file.map((item) => fd.append('file', item.File));
         } else {
             OnError({ title: 'Kesalahan', text: 'Mohon Input Semua Field' });
         }
@@ -265,9 +206,9 @@ function EditArchive(props) {
                                     placeholder='1234'
                                     className='input-sub-perkara'
                                     maxLength='4'
+                                    value={noper1}
                                     type='text'
                                     pattern='\d*'
-                                    value={noper1}
                                     onChange={(e) => {
                                         setNoper1(e.target.value);
                                         if (e.target.value.length === 0) {
@@ -283,8 +224,8 @@ function EditArchive(props) {
                                 <input
                                     placeholder='SUS'
                                     className='input-sub-perkara'
-                                    maxLength='3'
                                     value={noper2}
+                                    maxLength='3'
                                     onChange={(e) => {
                                         setNoper2(e.target.value);
                                         if (e.target.value.length === 0) {
@@ -346,96 +287,53 @@ function EditArchive(props) {
                             <Select
                                 options={options}
                                 placeholder='Klasifikasi Perkara'
-                                className='form-select-1'
-                                value={options.find(
-                                    (o) =>
-                                        o.value ===
-                                        dataArchive.klasifikasi_perkara
-                                )}
-                                onChange={(e) =>
+                                value={
+                                    dataArchive.klasifikasi_perkara === ''
+                                        ? ''
+                                        : options.find(
+                                              (e) =>
+                                                  e.value ===
+                                                  dataArchive.klasifikasi_perkara
+                                          )
+                                }
+                                className={
+                                    isKlasiError
+                                        ? 'form-select-error'
+                                        : 'form-select-1'
+                                }
+                                onChange={(e) => {
                                     setDataArchive({
                                         ...dataArchive,
                                         klasifikasi_perkara: e.value,
-                                    })
-                                }
-                            />
-                        </div>
-                        <div className='form-input-group mb-30px'>
-                            <p className='text-input-title-1'>Nama Tergugat</p>
-                            <input
-                                className={
-                                    isTergugatError
-                                        ? 'form-input-error'
-                                        : 'form-input-1'
-                                }
-                                placeholder='Masukkan Nama Tergugat'
-                                value={dataArchive.nama_tergugat}
-                                onChange={(e) => {
-                                    setDataArchive({
-                                        ...dataArchive,
-                                        nama_tergugat: e.target.value,
                                     });
-
-                                    if (e.target.value.length === 0) {
-                                        setIsTergugatError(true);
-                                    } else {
-                                        setIsTergugatError(false);
-                                    }
+                                    setIsKlasiError(false);
                                 }}
                             />
                         </div>
                         <div className='form-input-group mb-30px'>
-                            <p className='text-input-title-1'>Nama Penggugat</p>
+                            <p className='text-input-title-1'>Nama Terdakwa</p>
                             <input
                                 className={
-                                    isPenggugatError
+                                    isTerdakwaError
                                         ? 'form-input-error'
                                         : 'form-input-1'
                                 }
-                                placeholder='Masukkan Nama Penggugat'
-                                value={dataArchive.nama_penggugat}
+                                placeholder='Masukkan Nama Terdakwa'
+                                value={dataArchive.nama_terdakwa}
                                 onChange={(e) => {
                                     setDataArchive({
                                         ...dataArchive,
-                                        nama_penggugat: e.target.value,
+                                        nama_terdakwa: e.target.value,
                                     });
-
                                     if (e.target.value.length === 0) {
-                                        setIsPenggugatError(true);
+                                        setIsTerdakwaError(true);
                                     } else {
-                                        setIsPenggugatError(false);
+                                        setIsTerdakwaError(false);
                                     }
                                 }}
                             />
                         </div>
-                        <div className='form-input-group mb-30px'>
-                            <p className='text-input-title-1'>
-                                Nama Turut Tergugat
-                            </p>
-                            <input
-                                className={
-                                    isTurutError
-                                        ? 'form-input-error'
-                                        : 'form-input-1'
-                                }
-                                placeholder='Masukkan Nama Turut Tergugat'
-                                value={dataArchive.nama_turut_tergugat}
-                                onChange={(e) => {
-                                    setDataArchive({
-                                        ...dataArchive,
-                                        nama_turut_tergugat: e.target.value,
-                                    });
 
-                                    if (e.target.value.length === 0) {
-                                        setIsTurutError(true);
-                                    } else {
-                                        setIsTurutError(false);
-                                    }
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
                         <div className='form-input-group mb-30px'>
                             <p className='text-input-title-1'>
                                 Tanggal Pengiriman
@@ -480,13 +378,14 @@ function EditArchive(props) {
                                 </div>
                             ) : null}
                         </div>
+                    </div>
+                    <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12'>
                         <div className='form-input-group mb-30px'>
                             <p className='text-input-title-1'>
                                 Upload PDF Arsip Perdata
                             </p>
                             <div className='wrapperUpload'>
-                                {dataArchive.file.length === 0 &&
-                                additionalFile.length === 0 ? (
+                                {dataArchive.file.length === 0 ? (
                                     <>
                                         <label
                                             htmlFor='upload-pdf'
@@ -521,40 +420,12 @@ function EditArchive(props) {
                                                                 className='doc-uploaded'
                                                             >
                                                                 <div className='txt-filename'>
-                                                                    {val}
+                                                                    {val.name}
                                                                 </div>
                                                                 <IoMdClose
                                                                     onClick={() =>
                                                                         onDeleteFile(
                                                                             i
-                                                                        )
-                                                                    }
-                                                                    color='red'
-                                                                    style={{
-                                                                        display:
-                                                                            'flex',
-                                                                        flex: 0.5,
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        );
-                                                    }
-                                                )}
-                                            {additionalFile &&
-                                                additionalFile.map(
-                                                    (item, idx) => {
-                                                        return (
-                                                            <div
-                                                                key={idx}
-                                                                className='doc-uploaded'
-                                                            >
-                                                                <div className='txt-filename'>
-                                                                    {item.name}
-                                                                </div>
-                                                                <IoMdClose
-                                                                    onClick={() =>
-                                                                        onDeleteAdditionalFile(
-                                                                            idx
                                                                         )
                                                                     }
                                                                     color='red'
@@ -601,7 +472,7 @@ function EditArchive(props) {
                         <div
                             className='btn-submit mb-20px col-sm-12'
                             data-bs-toggle='modal'
-                            data-bs-target='#updateModal'
+                            data-bs-target='#submitModal'
                         >
                             <IoDocumentOutline
                                 size={20}
@@ -612,21 +483,6 @@ function EditArchive(props) {
                         </div>
 
                         <div
-                            className='btn-delete mb-20px ml-20px col-sm-12'
-                            data-bs-toggle='modal'
-                            data-bs-target='#deleteModal'
-                            onClick={() =>
-                                console.log('dataarchive', dataArchive)
-                            }
-                        >
-                            <RiDeleteBinLine
-                                size={20}
-                                color='white'
-                                style={{ marginRight: 5 }}
-                            />
-                            <div>Delete</div>
-                        </div>
-                        <div
                             className='btn-cancel ml-20px col-sm-12'
                             data-bs-toggle='modal'
                             data-bs-target='#cancelModal'
@@ -635,25 +491,6 @@ function EditArchive(props) {
                         </div>
                     </div>
                     <ModalConfirmation
-                        id='updateModal'
-                        title='Update Data'
-                        description='Apa kamu yakin untuk mengupdate Data kedalam Arsip?.'
-                        classBtnYes='btn-modal-yes-green'
-                        txtBtnYes='Submit'
-                        txtBtnNo='Cancel'
-                        onSubmit={onUpdateData}
-                    />
-                    <ModalConfirmation
-                        id='deleteModal'
-                        title='Hapus Data'
-                        description='Apa Anda yakin ingin menghapus data? Tindakan ini tidak bisa
-										dikembalikan.'
-                        classBtnYes='btn-modal-yes-red'
-                        txtBtnYes='Ya, Hapus'
-                        txtBtnNo='Cancel'
-                        onSubmit={onDeleteArsip}
-                    />
-                    <ModalConfirmation
                         id='cancelModal'
                         title='Batalkan Proses Input Data'
                         description='Apa Anda yakin ingin membatalkan inputan? Anda harus menginput datanya kembali apabila membatalkan.'
@@ -661,6 +498,15 @@ function EditArchive(props) {
                         txtBtnYes='Ya, Batalkan'
                         txtBtnNo='Cancel'
                         onSubmit={() => history.goBack()}
+                    />
+                    <ModalConfirmation
+                        id='submitModal'
+                        title='Submit Data'
+                        description='Apa kamu yakin untuk mensubmit Data kedalam Arsip?'
+                        classBtnYes='btn-modal-yes-green'
+                        txtBtnYes='Submit'
+                        txtBtnNo='Cancel'
+                        onSubmit={onSubmitData}
                     />
                     {loadingSubmit ? (
                         <ModalLoading
@@ -674,4 +520,4 @@ function EditArchive(props) {
     );
 }
 
-export default EditArchive;
+export default AddArchive;

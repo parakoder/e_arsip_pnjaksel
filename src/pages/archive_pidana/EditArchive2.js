@@ -12,11 +12,12 @@ import ModalConfirmation from '../../components/modal/ModalConfirmation';
 import { useHistory, useLocation } from 'react-router';
 import { YearPicker } from 'react-dropdown-date';
 import {
-    DeleteArsipPerdata,
-    EditArsipPerdata,
+    DeleteArsipPidana,
+    EditArsipPidana,
 } from '../../configs/handler/ArsipHandler';
 import Select from 'react-select';
 import { OnError, OnSuccess } from '../../components/toast/CustomToast';
+import LoadingOverlay from 'react-loading-overlay-ts';
 import ModalLoading from '../../components/modal/ModalLoading';
 
 function EditArchive(props) {
@@ -27,12 +28,11 @@ function EditArchive(props) {
     console.log('loc', locState);
 
     const options = [
-        { value: 'Pdt. B', label: 'Pdt. B' },
-        { value: 'Pdt. S', label: 'Pdt. S' },
-        { value: 'Pdt. C', label: 'Pdt. C' },
-        { value: 'Pdt. Sus', label: 'Pdt. Sus' },
-        { value: 'Pdt. Sus-anak', label: 'Pdt. Sus-anak' },
-        { value: 'Pdt. Pra', label: 'Pdt. Pra' },
+        { value: 'Pid. B', label: 'Pid. B' },
+        { value: 'Pid. S', label: 'Pid. S' },
+        { value: 'Pid. C', label: 'Pid. C' },
+        { value: 'Pid. Sus', label: 'Pid. Sus' },
+        { value: 'Pid. Sus-anak', label: 'Pid. Sus-anak' },
     ];
 
     const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -104,31 +104,14 @@ function EditArchive(props) {
     };
 
     const onDeleteArsip = () => {
-        setLoadingSubmit(true);
-        DeleteArsipPerdata({ id: locState.id })
+        DeleteArsipPidana({ id: locState.id })
             .then((res) => {
                 console.log('res del', res);
                 if (res.status === 200) {
-                    setLoadingSubmit(false);
-                    OnSuccess({
-                        title: 'Berhasil',
-                        text: 'Berhasil Menghapus Arsip Perdata',
-                    });
-                    history.replace('/sys/archive-perdata');
+                    history.goBack();
                 }
             })
-            .catch((err) => {
-                console.log('err del', err);
-                OnError({ title: 'Gagal', text: err.message });
-                if (err.request.status === 403) {
-                    OnError({
-                        title: 'Error Code: 403',
-                        text: 'Kesalahan Autentikasi, silahkan Login Kembali',
-                    });
-                    history.replace('/login');
-                    localStorage.clear();
-                }
-            });
+            .catch((err) => console.log('err del', err));
     };
 
     function capitalizeFirstLetter(string) {
@@ -169,7 +152,7 @@ function EditArchive(props) {
             dataArchive.nama_turut_tergugat !== '' &&
             dataArchive.file.length > 0
         ) {
-            let noper = noper1 + '/PDT/' + noper2 + '/' + year + '/PNJS';
+            let noper = noper1 + '/PID/' + noper2 + '/' + year + '/PNJS';
             let formatTglPengiriman = moment(dataArchive.tgl_pengiriman).format(
                 'yyyy-MM-DD'
             );
@@ -203,16 +186,16 @@ function EditArchive(props) {
                 }
             }
 
-            EditArsipPerdata(fd)
+            EditArsipPidana(fd)
                 .then((res) => {
                     console.log('res edit data', res);
                     if (res.status === 200) {
                         setLoadingSubmit(false);
                         OnSuccess({
                             title: 'Berhasil',
-                            text: 'Berhasil Mengubah Arsip Perdata',
+                            text: 'Berhasil Mengubah Arsip Pidana',
                         });
-                        history.replace('/sys/archive-perdata');
+                        history.replace('/sys/archive-pidana');
                     }
                 })
                 .catch((err) => {
@@ -246,7 +229,7 @@ function EditArchive(props) {
                             color={'#000000'}
                             style={{ marginRight: '18px', marginTop: '-2px' }}
                         />
-                        Kembali ke Arsip Perdata
+                        Kembali ke Arsip Pidana
                     </div>
                 </div>
 
@@ -278,7 +261,7 @@ function EditArchive(props) {
                                     }}
                                 />
                                 <span className='input-txt-perkara'>
-                                    / PDT /
+                                    / PID /
                                 </span>
                                 <input
                                     placeholder='SUS'
@@ -482,7 +465,7 @@ function EditArchive(props) {
                         </div>
                         <div className='form-input-group mb-30px'>
                             <p className='text-input-title-1'>
-                                Upload PDF Arsip Perdata
+                                Upload PDF Arsip Pidana
                             </p>
                             <div className='wrapperUpload'>
                                 {dataArchive.file.length === 0 &&
