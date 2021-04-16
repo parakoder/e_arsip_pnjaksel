@@ -76,7 +76,7 @@ function Sidebar(props) {
 				/>
 
 				<div className='sidebar-brand-text'>
-					e-Arsip Pengadilan Tinggi Jakarta Selatan
+					e-Arsip Pengadilan Negeri Jakarta Selatan
 				</div>
 			</div>
 
